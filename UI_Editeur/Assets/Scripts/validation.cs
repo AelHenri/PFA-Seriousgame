@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class validation : MonoBehaviour {
 
@@ -7,7 +8,20 @@ public class validation : MonoBehaviour {
     public CanvasGroup canvasGValidation;
     public CanvasGroup canvasGConfirmation;
     public ajout_image ajt;
-    
+
+    public InputField inputReponse1;
+    public InputField inputReponse2;
+    public InputField inputReponse3;
+    public InputField inputExemple;
+
+    string text_reponse1;
+    string text_reponse2;
+    string text_reponse3;
+    string text_exemple;
+
+    public Toggle toggleRep1;
+    public Toggle toggleRep2;
+    public Toggle toggleRep3;
 
     bool showConfirmation = false;
 
@@ -23,6 +37,24 @@ public class validation : MonoBehaviour {
         System.IO.File.Copy(ajt.imagePathIndic, destFile, true);
 
         showConfirmation = true;
+
+        text_reponse1 = inputReponse1.text;
+        text_reponse2 = inputReponse2.text;
+        text_reponse3 = inputReponse3.text;
+        text_exemple = inputExemple.text;
+
+        Debug.Log(text_reponse1);
+        Debug.Log(text_reponse2);
+        Debug.Log(text_reponse3);
+        Debug.Log(text_exemple);
+ 
+
+
+        Debug.Log(toggleRep1.ToString() + " : " + toggleRep1.isOn);
+        Debug.Log(toggleRep2.ToString() + " : " + toggleRep2.isOn);
+        Debug.Log(toggleRep3.ToString() + " : " + toggleRep3.isOn);
+
+
     }
 
     public void onClickConfirmation()
