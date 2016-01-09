@@ -63,6 +63,12 @@ public class validation : MonoBehaviour {
     }
 
 
+    void genererFicheXML()
+    {
+        
+    }
+
+
 	// Use this for initialization
 	void Start ()
     {

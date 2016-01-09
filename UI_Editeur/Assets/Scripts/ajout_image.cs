@@ -6,9 +6,10 @@ using System.Collections;
 
 public class ajout_image : MonoBehaviour
 {
+    /* Sert a afficher ou non l'explorateur de fichiers */
 	private bool guiEnable = false;
 
-
+    /* Variables pour afficher & charger le images */
     public string imagePathIndic = null;
     private bool showAjoutImageIndic = true; 
     private bool loadImageIndic = false;
@@ -23,18 +24,22 @@ public class ajout_image : MonoBehaviour
     public Texture2D img_question = null;
     WWW www;
 
-    public CanvasGroup canvasGImgButton1; // Set in Unity IDE.
-    public CanvasGroup canvasGimgAnnule; // Set in Unity IDE.
+    /* Variables permettant d'afficher ou non les bouttons correspondants, CF fonction Update() */
+    public CanvasGroup canvasGImgButton1; 
+    public CanvasGroup canvasGimgAnnule; 
     public CanvasGroup canvasGImgAjouetImg2;
     public CanvasGroup canvasGImgAnnule2;
 
     /* Pour obtenir la taille du Panel et bien positionner l'image */
-    public GameObject PanelExemple; // Set in Unity IDE.
+    public GameObject PanelExemple; 
     float panelHeightExemple;
     float panelWidthExemple;
     public GameObject Canvas;
     float canvasHeight;
     float canvasWidth;
+    float imageWitdh;
+    float imageHeight;
+
 
     /* Paramètres pour le skin de l'explorateur de fichier */
     public GUISkin[] skins;
@@ -44,17 +49,16 @@ public class ajout_image : MonoBehaviour
 
 
 
+
     public void onClick()
     {
         guiEnable = true;
         loadImageIndic = true;
-        //img_indication = new Texture2D(960, 720, TextureFormat.DXT1, false);
-
     }
 
     public void onClickAnnuler()
     {
-        //img_indication = null;
+        
         showAjoutImageIndic = true;
         imagePathIndic = null;
     }
@@ -63,12 +67,10 @@ public class ajout_image : MonoBehaviour
     {
         guiEnable = true;
         loadImageQues = true;
-        //img_question = new Texture2D(960, 720, TextureFormat.DXT1, false);
     }
 
     public void onClickAnnuler2()
     {
-        //img_question = null;
         showAjoutImageQues = true;
         imagePathQues = null;
     }
@@ -101,6 +103,12 @@ public class ajout_image : MonoBehaviour
         img_question = new Texture2D(960, 720, TextureFormat.DXT1, false);
         imagePathQues = null;
 
+        imageWitdh = Screen.width / 3;
+        imageHeight = imageWitdh;
+
+        Debug.Log(panelWidthExemple);
+        Debug.Log(panelHeightExemple);
+
     }
    
     
@@ -128,13 +136,13 @@ public class ajout_image : MonoBehaviour
         /* Partie qui affiche l'image sélectionnée */
         if (img_indication != null && imagePathIndic != null)
         {
-            GUI.DrawTexture(new Rect((panelWidthExemple / 2) - 250, (panelHeightExemple / 2) - 250, 500, 500), img_indication);
+            GUI.DrawTexture(new Rect((panelWidthExemple / 2) - imageWitdh/2, (panelHeightExemple / 2) - imageHeight/2, imageWitdh, imageHeight), img_indication);
             showAjoutImageIndic = false;
         }
 
         if (img_question != null && imagePathQues != null)
         {
-            GUI.DrawTexture(new Rect(canvasWidth - panelWidthExemple + 100, canvasHeight - panelHeightExemple + 100, 500, 500), img_question);
+            GUI.DrawTexture(new Rect(canvasWidth - panelWidthExemple + imageWitdh/6, canvasHeight - panelHeightExemple + imageHeight/6, imageWitdh, imageHeight), img_question);
             showAjoutImageQues = false;
         }
 
@@ -192,8 +200,8 @@ public class ajout_image : MonoBehaviour
                 }
 
 					
-				}
 			}
+		}
 		
 
 
