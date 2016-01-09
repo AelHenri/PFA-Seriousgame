@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labyrinthe3D.CSharp", "Labyrinthe3D.CSharp.csproj", "{DD4EE3B8-5BF1-81B6-E6A0-936FB40279CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD4EE3B8-5BF1-81B6-E6A0-936FB40279CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4EE3B8-5BF1-81B6-E6A0-936FB40279CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4EE3B8-5BF1-81B6-E6A0-936FB40279CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4EE3B8-5BF1-81B6-E6A0-936FB40279CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
