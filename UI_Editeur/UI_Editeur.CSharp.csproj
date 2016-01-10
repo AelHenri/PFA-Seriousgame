@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{32681B93-0A49-A1D3-C073-11800033E471}</ProjectGuid>
+    <ProjectGuid>{E79E8669-429C-1952-5D67-12F8E7655F00}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Assets\FileBrowser\Script\FileBrowser.cs" />
     <Compile Include="Assets\FileBrowser\Script\testFileBrowser.cs" />
+    <Compile Include="Assets\Scripts\FicheXml.cs" />
     <Compile Include="Assets\Scripts\ajout_image.cs" />
     <Compile Include="Assets\Scripts\menu.cs" />
     <Compile Include="Assets\Scripts\validation.cs" />
