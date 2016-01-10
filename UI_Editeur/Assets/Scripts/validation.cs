@@ -2,9 +2,11 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
 public class validation : MonoBehaviour {
 
-    
+    public FicheXml fiche;
+
     public CanvasGroup canvasGValidation;
     public CanvasGroup canvasGConfirmation;
     public ajout_image ajt;
@@ -13,11 +15,9 @@ public class validation : MonoBehaviour {
     public InputField inputReponse2;
     public InputField inputReponse3;
     public InputField inputExemple;
+    public InputField nomFiche;
 
-    string text_reponse1;
-    string text_reponse2;
-    string text_reponse3;
-    string text_exemple;
+
 
     public Toggle toggleRep1;
     public Toggle toggleRep2;
@@ -30,31 +30,11 @@ public class validation : MonoBehaviour {
 
     public void onClickValidation()
     {
-        destFile = System.IO.Path.Combine(targetPath, "image_exemple.jpg");
-        System.IO.File.Copy(ajt.imagePathIndic, destFile, true);
 
-        destFile = System.IO.Path.Combine(targetPath, "image_question.jpg");
-        System.IO.File.Copy(ajt.imagePathIndic, destFile, true);
-
+        fiche.creerDossierFiche();
+        fiche.copierImages();
+        fiche.genererFiche();
         showConfirmation = true;
-
-        text_reponse1 = inputReponse1.text;
-        text_reponse2 = inputReponse2.text;
-        text_reponse3 = inputReponse3.text;
-        text_exemple = inputExemple.text;
-
-        Debug.Log(text_reponse1);
-        Debug.Log(text_reponse2);
-        Debug.Log(text_reponse3);
-        Debug.Log(text_exemple);
- 
-
-
-        Debug.Log(toggleRep1.ToString() + " : " + toggleRep1.isOn);
-        Debug.Log(toggleRep2.ToString() + " : " + toggleRep2.isOn);
-        Debug.Log(toggleRep3.ToString() + " : " + toggleRep3.isOn);
-
-
     }
 
     public void onClickConfirmation()
@@ -63,10 +43,7 @@ public class validation : MonoBehaviour {
     }
 
 
-    void genererFicheXML()
-    {
-        
-    }
+ 
 
 
 	// Use this for initialization
@@ -76,7 +53,7 @@ public class validation : MonoBehaviour {
 
         if (!System.IO.Directory.Exists(targetPath))
             System.IO.Directory.CreateDirectory(targetPath);
-      
+        
     }
 	
 	// Update is called once per frame

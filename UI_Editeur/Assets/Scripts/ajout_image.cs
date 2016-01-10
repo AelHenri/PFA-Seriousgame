@@ -106,8 +106,7 @@ public class ajout_image : MonoBehaviour
         imageWitdh = Screen.width / 3;
         imageHeight = imageWitdh;
 
-        Debug.Log(panelWidthExemple);
-        Debug.Log(panelHeightExemple);
+
 
     }
    
@@ -182,7 +181,7 @@ public class ajout_image : MonoBehaviour
                 else if (loadImageIndic)
                 {
                     imagePathIndic = fb.outputFile.FullName﻿.ToString();
-                    Debug.Log("imagePathIndic" + " = " + imagePathIndic);
+
 
                     StartCoroutine(LoadATexture( ("file:///" + imagePathIndic), img_indication));
                     guiEnable = false;
@@ -191,7 +190,7 @@ public class ajout_image : MonoBehaviour
                 else if(loadImageQues)
                 {
                     imagePathQues = fb.outputFile.FullName﻿.ToString();
-                    Debug.Log("imagePathQues" + " = " + imagePathQues);
+
 
                     StartCoroutine(LoadATexture( ("file:///" + imagePathQues), img_question));
                     guiEnable = false;
