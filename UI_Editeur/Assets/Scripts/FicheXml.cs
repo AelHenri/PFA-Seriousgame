@@ -4,8 +4,8 @@ using System.Xml.Linq;
 
 
 public class FicheXml : MonoBehaviour {
-    public ajout_image ajt;
-    public validation vali;
+    public AjoutImage ajt;
+    public Validation vali;
     XDocument fiche;
 
     string valueRep1;

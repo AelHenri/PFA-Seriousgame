@@ -4,23 +4,27 @@ using System.Collections;
 
 
 
-public class ajout_image : MonoBehaviour
+public class AjoutImage : MonoBehaviour
 {
     /* Sert a afficher ou non l'explorateur de fichiers */
 	private bool guiEnable = false;
 
     /* Variables pour afficher & charger le images */
+    [HideInInspector]
     public string imagePathIndic = null;
     private bool showAjoutImageIndic = true; 
     private bool loadImageIndic = false;
 
+    [HideInInspector]
     public string imagePathQues = null;
     private bool showAjoutImageQues = true;
     private bool loadImageQues = false;
     
 
 	FileBrowser fb = new FileBrowser();
+    [HideInInspector]
     public Texture2D img_indication = null;
+    [HideInInspector]
     public Texture2D img_question = null;
     WWW www;
 
@@ -50,26 +54,26 @@ public class ajout_image : MonoBehaviour
 
 
 
-    public void onClick()
+    public void ajouterImageExemple()
     {
         guiEnable = true;
         loadImageIndic = true;
     }
 
-    public void onClickAnnuler()
+    public void enleverImageExemple()
     {
         
         showAjoutImageIndic = true;
         imagePathIndic = null;
     }
 
-    public void onClickAjoutImageQuestion()
+    public void ajouterImageQuestion()
     {
         guiEnable = true;
         loadImageQues = true;
     }
 
-    public void onClickAnnuler2()
+    public void enleverImageQuestion()
     {
         showAjoutImageQues = true;
         imagePathQues = null;
@@ -149,6 +153,8 @@ public class ajout_image : MonoBehaviour
 
 
         if (guiEnable) {
+            Debug.Log(guiEnable);
+
             /*
              * Pour gérer les skins/ modes de vues
              */

@@ -70,10 +70,11 @@
   <ItemGroup>
     <Compile Include="Assets\FileBrowser\Script\FileBrowser.cs" />
     <Compile Include="Assets\FileBrowser\Script\testFileBrowser.cs" />
+    <Compile Include="Assets\Scripts\AjoutImage.cs" />
     <Compile Include="Assets\Scripts\FicheXml.cs" />
-    <Compile Include="Assets\Scripts\ajout_image.cs" />
+    <Compile Include="Assets\Scripts\OuvrirFicheXml.cs" />
+    <Compile Include="Assets\Scripts\Validation.cs" />
     <Compile Include="Assets\Scripts\menu.cs" />
-    <Compile Include="Assets\Scripts\validation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FileBrowser\readme.txt" />
