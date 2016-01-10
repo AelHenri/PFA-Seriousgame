@@ -82,8 +82,6 @@ public class FicheXml : MonoBehaviour {
     public void creerDossierFiche()
     {
         this.Start();
-
-        Debug.Log("cheminFiche = " + cheminFiche);
         if (!System.IO.Directory.Exists(cheminFiche))
             System.IO.Directory.CreateDirectory(cheminFiche);
     }

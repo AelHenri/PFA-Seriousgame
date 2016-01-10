@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Xml.Linq;
+using System.Collections.Generic;
 
 public class OuvrirFicheXml : MonoBehaviour {
 
     bool showFileBrowser = false;
     string xmlFilePath;
 
+    public AjoutImage ajt;
+    public Validation vali;
+
+    XElement fiche;
     FileBrowser fileBrowser = new FileBrowser();
 
 
@@ -19,8 +25,31 @@ public class OuvrirFicheXml : MonoBehaviour {
     public void openXmlFile()
     {
         showFileBrowser = true;
+
     }
 
+    public void readXmlFile()
+    {
+        IEnumerable<XElement> FicheQCM = fiche.Elements();
+        /*foreach (var titre in FicheQCM)
+        {
+            Debug.Log(titre);
+            Debug.Log(titre.Element("Titre").Value);
+        }*/
+
+
+    }
+
+
+    void Update()
+    {
+        if (xmlFilePath != null)
+        {
+            Debug.Log("KOUKOU");
+            fiche = XElement.Load(xmlFilePath);
+            this.readXmlFile();
+        }
+    }
 
     void Start() {
 
@@ -35,9 +64,6 @@ public class OuvrirFicheXml : MonoBehaviour {
 
     void OnGUI()
     {
-
-
-
 
         if (showFileBrowser)
         {
@@ -73,6 +99,7 @@ public class OuvrirFicheXml : MonoBehaviour {
                 {
                     xmlFilePath = fileBrowser.outputFile.FullName﻿.ToString();
                     Debug.Log(xmlFilePath);
+                    showFileBrowser = false;
                 }
 
             }

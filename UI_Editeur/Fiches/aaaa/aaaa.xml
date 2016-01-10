@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FicheQCM>
+  <titre>aaaa</titre>
+  <partieExemple>
+    <texte></texte>
+    <image>C:/Users/Thomas/Documents/PFA-Seriousgame/UI_Editeur/Assets/../Fiches/aaaa\image_exemple.jpg</image>
+  </partieExemple>
+  <partieQuestion>
+    <question />
+    <image>C:/Users/Thomas/Documents/PFA-Seriousgame/UI_Editeur/Assets/../Fiches/aaaa\image_question.jpg</image>
+    <reponse value="false"></reponse>
+    <reponse value="false"></reponse>
+    <reponse value="false"></reponse>
+  </partieQuestion>
+</FicheQCM>
