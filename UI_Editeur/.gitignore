@@ -7,6 +7,11 @@
 [Ll]ibrary/
 sysinfo.txt
 *.stackdump
+
+# ============== #
+# Our files      #
+# ============== #
+ Fiches/
  
 # ===================================== #
 # Visual Studio / MonoDevelop generated #

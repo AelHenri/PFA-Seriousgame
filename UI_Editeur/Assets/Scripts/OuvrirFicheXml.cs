@@ -2,16 +2,21 @@
 using System.Collections;
 using System.Xml.Linq;
 using System.Collections.Generic;
-
+using UnityEngine.UI;
+using System;
 public class OuvrirFicheXml : MonoBehaviour {
 
+    bool updateFile = false;
     bool showFileBrowser = false;
     string xmlFilePath;
 
     public AjoutImage ajt;
     public Validation vali;
 
+    string cheminFiche;
+
     XElement fiche;
+    XDocument ffs;
     FileBrowser fileBrowser = new FileBrowser();
 
 
@@ -25,28 +30,51 @@ public class OuvrirFicheXml : MonoBehaviour {
     public void openXmlFile()
     {
         showFileBrowser = true;
-
+        updateFile = true;
     }
 
     public void readXmlFile()
     {
-        IEnumerable<XElement> FicheQCM = fiche.Elements();
-        foreach (var titre in FicheQCM)
-        {
-            Debug.Log(titre);
-            Debug.Log(titre.Element("Titre").Value);
-        }
+
+        InputField[] reponses = new InputField[3];
+        reponses[0] = vali.inputReponse1;
+        reponses[1] = vali.inputReponse2;
+        reponses[2] = vali.inputReponse3;
 
 
+        vali.nomFiche.text = ffs.Root.Element("titre").Value;
+        vali.inputExemple.text = ffs.Root.Element("partieExemple").Element("texte").Value;
+        vali.inputReponse1.text = ffs.Root.Element("partieQuestion").Element("reponse1").Value;
+        vali.inputReponse2.text = ffs.Root.Element("partieQuestion").Element("reponse2").Value;
+        vali.inputReponse3.text = ffs.Root.Element("partieQuestion").Element("reponse3").Value;
+
+        if (ffs.Root.Element("partieQuestion").Element("reponse1").Attribute("value").ToString().Equals("value=\"true\""))
+            vali.toggleRep1.isOn = true;
+        else if (ffs.Root.Element("partieQuestion").Element("reponse2").Attribute("value").ToString() == "value=\"true\"")
+            vali.toggleRep2.isOn = true;
+        else
+            vali.toggleRep3.isOn = true;
+
+        cheminFiche = Application.dataPath + "/../Fiches/";
+        cheminFiche = System.IO.Path.Combine(cheminFiche, vali.nomFiche.text);
+
+        ajt.imagePathIndic = System.IO.Path.Combine(cheminFiche, "image_exemple.jpg");
+        ajt.imagePathQues = System.IO.Path.Combine(cheminFiche, "image_question.jpg");
+
+
+        StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathQues), ajt.img_question));
+        StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathIndic), ajt.img_indication));
+
+        updateFile = false;
     }
 
 
     void Update()
     {
-        if (xmlFilePath != null)
+        if (xmlFilePath != null && updateFile == true)
         {
-            Debug.Log("KOUKOU");
             fiche = XElement.Load(xmlFilePath);
+            ffs = XDocument.Load(xmlFilePath);
             this.readXmlFile();
         }
     }
@@ -98,7 +126,6 @@ public class OuvrirFicheXml : MonoBehaviour {
                 else
                 {
                     xmlFilePath = fileBrowser.outputFile.FullName﻿.ToString();
-                    Debug.Log(xmlFilePath);
                     showFileBrowser = false;
                 }
 

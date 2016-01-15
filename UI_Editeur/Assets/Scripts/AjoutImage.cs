@@ -118,7 +118,7 @@ public class AjoutImage : MonoBehaviour
     /*
      * Fonction qui charge l'image dans la texture "img_indication" pour pouvoir être affichée
      */
-    IEnumerator LoadATexture(string st, Texture2D img)
+   public IEnumerator LoadATexture(string st, Texture2D img)
     {
         www = new WWW(st);
         yield return www;

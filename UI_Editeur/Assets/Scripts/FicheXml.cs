@@ -61,9 +61,9 @@ public class FicheXml : MonoBehaviour {
                                    new XElement("partieQuestion",
                                         new XElement("question"),             //utile ?
                                         new XElement("image", destImageQuestion),
-                                        new XElement("reponse", textReponse1, new XAttribute("value", valueRep1)),
-                                        new XElement("reponse", textReponse2, new XAttribute("value", valueRep2)),
-                                        new XElement("reponse", textReponse3, new XAttribute("value", valueRep3))
+                                        new XElement("reponse1", textReponse1, new XAttribute("value", valueRep1)),
+                                        new XElement("reponse2", textReponse2, new XAttribute("value", valueRep2)),
+                                        new XElement("reponse3", textReponse3, new XAttribute("value", valueRep3))
                                         )//</partieQuestion>
                                             )//</FicheQCM>
                                     );
