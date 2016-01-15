@@ -31,11 +31,11 @@ public class OuvrirFicheXml : MonoBehaviour {
     public void readXmlFile()
     {
         IEnumerable<XElement> FicheQCM = fiche.Elements();
-        /*foreach (var titre in FicheQCM)
+        foreach (var titre in FicheQCM)
         {
             Debug.Log(titre);
             Debug.Log(titre.Element("Titre").Value);
-        }*/
+        }
 
 
     }
