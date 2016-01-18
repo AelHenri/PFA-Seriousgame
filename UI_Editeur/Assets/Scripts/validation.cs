@@ -3,13 +3,15 @@ using System.Collections;
 using UnityEngine.UI;
 
 
-public class validation : MonoBehaviour {
+
+
+public class Validation : MonoBehaviour {
 
     public FicheXml fiche;
 
     public CanvasGroup canvasGValidation;
     public CanvasGroup canvasGConfirmation;
-    public ajout_image ajt;
+    public AjoutImage ajt;
 
     public InputField inputReponse1;
     public InputField inputReponse2;
@@ -28,7 +30,7 @@ public class validation : MonoBehaviour {
     string targetPath;
     string destFile;
 
-    public void onClickValidation()
+    public void validation()
     {
 
         fiche.creerDossierFiche();
@@ -37,7 +39,7 @@ public class validation : MonoBehaviour {
         showConfirmation = true;
     }
 
-    public void onClickConfirmation()
+    public void confirmation()
     {
         showConfirmation = false;
     }
