@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 
+
+
 public class Validation : MonoBehaviour {
 
     public FicheXml fiche;

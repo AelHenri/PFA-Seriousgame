@@ -3,6 +3,14 @@ using System.Collections;
 using System.Xml.Linq;
 
 
+/* 
+ * C'est ce scrpit qui s'occupe de tout ce qui est génération :
+ * Créer le dossier
+ * Generer la Fiche xml
+ * Copier les images
+ */
+
+
 public class FicheXml : MonoBehaviour {
     public AjoutImage ajt;
     public Validation vali;
@@ -44,7 +52,10 @@ public class FicheXml : MonoBehaviour {
         cheminFiche = System.IO.Path.Combine(cheminFiche, nomFiche);
 
         destImageExemple = System.IO.Path.Combine(cheminFiche, "image_exemple.jpg");
+        destImageExemple = System.IO.Path.GetFullPath(destImageExemple);
+
         destImageQuestion = System.IO.Path.Combine(cheminFiche, "image_question.jpg");
+        destImageQuestion = System.IO.Path.GetFullPath(destImageQuestion);
         
     }
 	
@@ -74,9 +85,13 @@ public class FicheXml : MonoBehaviour {
     }
 
     public void copierImages()
-    {   
-        System.IO.File.Copy(ajt.imagePathIndic, destImageExemple, true);
-        System.IO.File.Copy(ajt.imagePathIndic, destImageQuestion, true);
+    {
+
+        if (ajt.imagePathIndic != destImageExemple)
+            System.IO.File.Copy(ajt.imagePathIndic, destImageExemple, true);
+
+        if (ajt.imagePathQues != destImageQuestion)
+            System.IO.File.Copy(ajt.imagePathIndic, destImageQuestion, true);
     }
 
     public void creerDossierFiche()

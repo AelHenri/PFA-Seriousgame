@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System;
 public class OuvrirFicheXml : MonoBehaviour {
 
-    bool updateFile = false;
+    bool updateFile = false; // pour controler le fait que Update() ne recharge pas la fiche continuellement
     bool showFileBrowser = false;
     string xmlFilePath;
 
@@ -15,8 +15,8 @@ public class OuvrirFicheXml : MonoBehaviour {
 
     string cheminFiche;
 
-    XElement fiche;
     XDocument ffs;
+    XElement partieQuestion, partieExemple;
     FileBrowser fileBrowser = new FileBrowser();
 
 
@@ -31,6 +31,27 @@ public class OuvrirFicheXml : MonoBehaviour {
     {
         showFileBrowser = true;
         updateFile = true;
+    }
+
+    void Start()
+    {
+
+        /* Initialisation du File Browser */
+        fileBrowser.fileTexture = file;
+        fileBrowser.directoryTexture = folder;
+        fileBrowser.backTexture = back;
+        fileBrowser.driveTexture = drive;
+        fileBrowser.showSearch = true;
+        fileBrowser.searchRecursively = true;
+    }
+
+    /* Fonction qui récupère les chemin des images */
+    void getImagesPath() {
+
+        cheminFiche = System.IO.Path.GetDirectoryName(xmlFilePath);
+
+        ajt.imagePathIndic = System.IO.Path.Combine(cheminFiche, "image_exemple.jpg");
+        ajt.imagePathQues = System.IO.Path.Combine(cheminFiche, "image_question.jpg");
     }
 
     public void readXmlFile()
@@ -55,12 +76,8 @@ public class OuvrirFicheXml : MonoBehaviour {
         else
             vali.toggleRep3.isOn = true;
 
-        cheminFiche = Application.dataPath + "/../Fiches/";
-        cheminFiche = System.IO.Path.Combine(cheminFiche, vali.nomFiche.text);
 
-        ajt.imagePathIndic = System.IO.Path.Combine(cheminFiche, "image_exemple.jpg");
-        ajt.imagePathQues = System.IO.Path.Combine(cheminFiche, "image_question.jpg");
-
+        getImagesPath();
 
         StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathQues), ajt.img_question));
         StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathIndic), ajt.img_indication));
@@ -73,22 +90,11 @@ public class OuvrirFicheXml : MonoBehaviour {
     {
         if (xmlFilePath != null && updateFile == true)
         {
-            fiche = XElement.Load(xmlFilePath);
             ffs = XDocument.Load(xmlFilePath);
             this.readXmlFile();
         }
     }
 
-    void Start() {
-
-        /* Initialisation du File Browser */
-        fileBrowser.fileTexture = file;
-        fileBrowser.directoryTexture = folder;
-        fileBrowser.backTexture = back;
-        fileBrowser.driveTexture = drive;
-        fileBrowser.showSearch = true;
-        fileBrowser.searchRecursively = true;
-    }
 
     void OnGUI()
     {
