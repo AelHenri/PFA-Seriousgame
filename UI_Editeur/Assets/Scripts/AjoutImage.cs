@@ -7,7 +7,7 @@ using System.Collections;
 public class AjoutImage : MonoBehaviour
 {
     /* Sert a afficher ou non l'explorateur de fichiers */
-	private bool guiEnable = false;
+	private bool showFileBrowser = false;
 
     /* Variables pour afficher & charger le images */
     [HideInInspector]
@@ -56,7 +56,7 @@ public class AjoutImage : MonoBehaviour
 
     public void ajouterImageExemple()
     {
-        guiEnable = true;
+        showFileBrowser = true;
         loadImageIndic = true;
     }
 
@@ -69,7 +69,7 @@ public class AjoutImage : MonoBehaviour
 
     public void ajouterImageQuestion()
     {
-        guiEnable = true;
+        showFileBrowser = true;
         loadImageQues = true;
     }
 
@@ -146,10 +146,10 @@ public class AjoutImage : MonoBehaviour
             /* affiche un bouton pour changer l'image quand les souris survole l'image */
             Input.GetMouseButton(1);
                 {
-                if (rectImgExemple.Contains(Event.current.mousePosition) && guiEnable == false)
+                if (rectImgExemple.Contains(Event.current.mousePosition) && showFileBrowser == false)
                     if (GUI.Button(rectImgExemple, "Changer l'image"))
                     {
-                        guiEnable = true;
+                        showFileBrowser = true;
                         loadImageIndic = true;
                     }
             }
@@ -165,10 +165,10 @@ public class AjoutImage : MonoBehaviour
             /* affiche un bouton pour changer l'image quand les souris survole l'image */
             Input.GetMouseButton(1);
             {
-                if (rectImgQuestion.Contains(Event.current.mousePosition) && guiEnable == false)
+                if (rectImgQuestion.Contains(Event.current.mousePosition) && showFileBrowser == false)
                     if (GUI.Button(rectImgQuestion, "Changer l'image"))
                     {
-                        guiEnable = true;
+                        showFileBrowser = true;
                         loadImageQues = true;
                     }
             }
@@ -181,7 +181,7 @@ public class AjoutImage : MonoBehaviour
 
 
 
-        if (guiEnable) {
+        if (showFileBrowser) {
             /*
              * Pour gérer les skins/ modes de vues
              */
@@ -209,7 +209,7 @@ public class AjoutImage : MonoBehaviour
                 if (fb.outputFile == null)
                 {
                     Debug.Log("Cancel hit");
-                    guiEnable = false;
+                    showFileBrowser = false;
                 }
                 else if (loadImageIndic)
                 {
@@ -217,7 +217,7 @@ public class AjoutImage : MonoBehaviour
 
 
                     StartCoroutine(LoadATexture( ("file:///" + imagePathIndic), img_indication));
-                    guiEnable = false;
+                    showFileBrowser = false;
                     loadImageIndic = false;
                 }
                 else if(loadImageQues)
@@ -226,7 +226,7 @@ public class AjoutImage : MonoBehaviour
 
 
                     StartCoroutine(LoadATexture( ("file:///" + imagePathQues), img_question));
-                    guiEnable = false;
+                    showFileBrowser = false;
                     loadImageQues = false;
 
                 }
