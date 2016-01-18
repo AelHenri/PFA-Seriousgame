@@ -135,26 +135,53 @@ public class AjoutImage : MonoBehaviour
      */   
     void OnGUI(){
 
+        Rect rectImgExemple = new Rect( (panelWidthExemple / 2) - imageWitdh / 2, (panelHeightExemple / 2) - imageHeight / 2, imageWitdh, imageHeight);
+        Rect rectImgQuestion = new Rect(canvasWidth - panelWidthExemple + imageWitdh / 6, canvasHeight - panelHeightExemple + imageHeight / 6, imageWitdh, imageHeight);
 
         /* Partie qui affiche l'image sélectionnée */
         if (img_indication != null && imagePathIndic != null)
         {
-            GUI.DrawTexture(new Rect((panelWidthExemple / 2) - imageWitdh/2, (panelHeightExemple / 2) - imageHeight/2, imageWitdh, imageHeight), img_indication);
+            GUI.DrawTexture(rectImgExemple, img_indication);
+
+            /* affiche un bouton pour changer l'image quand les souris survole l'image */
+            Input.GetMouseButton(1);
+                {
+                if (rectImgExemple.Contains(Event.current.mousePosition) && guiEnable == false)
+                    if (GUI.Button(rectImgExemple, "Changer l'image"))
+                    {
+                        guiEnable = true;
+                        loadImageIndic = true;
+                    }
+            }
+
             showAjoutImageIndic = false;
         }
 
         if (img_question != null && imagePathQues != null)
         {
-            GUI.DrawTexture(new Rect(canvasWidth - panelWidthExemple + imageWitdh/6, canvasHeight - panelHeightExemple + imageHeight/6, imageWitdh, imageHeight), img_question);
+            
+            GUI.DrawTexture(rectImgQuestion, img_question);
+
+            /* affiche un bouton pour changer l'image quand les souris survole l'image */
+            Input.GetMouseButton(1);
+            {
+                if (rectImgQuestion.Contains(Event.current.mousePosition) && guiEnable == false)
+                    if (GUI.Button(rectImgQuestion, "Changer l'image"))
+                    {
+                        guiEnable = true;
+                        loadImageQues = true;
+                    }
+            }
+
+
             showAjoutImageQues = false;
+
         }
 
 
 
 
         if (guiEnable) {
-            Debug.Log(guiEnable);
-
             /*
              * Pour gérer les skins/ modes de vues
              */
