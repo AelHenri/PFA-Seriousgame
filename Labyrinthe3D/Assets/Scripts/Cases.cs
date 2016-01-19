@@ -10,8 +10,8 @@ public class Cases : MonoBehaviour {
     public GameObject rightWall;//reference to right wall
     public GameObject downWall;//reference to down wall
 
-    public int rows;
-    public int columns;
+    public int rows = 10;
+    public int columns = 10;
     //Data used as information on labyrinth generated
     public Vector2 entrance;//Position of entrance
     public Vector2 exit;//Position of exit
@@ -22,8 +22,8 @@ public class Cases : MonoBehaviour {
 
     public void Awake()//called as constructor
     {
-        rows = 10;
-        columns = 10;
+        //rows = 10;
+        //columns = 10;
         entrance = new Vector2(-1, -1);
         exit = new Vector2(-1, -1);
         cases = new GameObject[columns, rows];
