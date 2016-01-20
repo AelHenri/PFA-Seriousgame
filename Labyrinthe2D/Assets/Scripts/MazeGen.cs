@@ -28,14 +28,25 @@ public class MazeGen : MonoBehaviour {
 		// Placement de la case de fin
 		mazeData [width - 1, height / 2].right = true;
 
+		// generation de la sortie et de l'entrée
+		Cell tempCell = new Cell();
+		tempCell.left = true;
+		tempCell.right = true;
+		int pattern = getPatternFromCell(tempCell);
+
 		// Placement de début
 		mazeData [0, height / 2].left = true;
+		Instantiate(wallPrefab[pattern], new Vector2(-1, height/2), Quaternion.identity);
+
+		// Placement de la fin
+		mazeData [0, height / 2].left = true;
+		Instantiate(wallPrefab[pattern], new Vector2(width, height/2), Quaternion.identity);
 
 
 		// Affichage du labyrinthe
 		for (int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++){
-				int pattern = getPatternFromCell(mazeData[i, j]);
+				pattern = getPatternFromCell(mazeData[i, j]);
 				Instantiate(wallPrefab[pattern], new Vector2(i, j), Quaternion.identity);
 			}
 		}
