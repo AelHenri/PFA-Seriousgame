@@ -17,17 +17,19 @@ public class MazeGen : MonoBehaviour {
 	public int height;
 	
 	Cell[,] mazeData;
-	Vector2 startCell;
-	Vector2 endCell;
 
 	void Start () {
 		// Inititalisation des données du labyrinthe
 		mazeData = new Cell[width, height];
-		startCell = new Vector2 (0, height / 2);
-		startCell = new Vector2 (width - 1, height / 2);
 
 		// Génération du labyrinthe
 		generateMaze ();
+
+		// Placement de la case de fin
+		mazeData [width - 1, height / 2].right = true;
+
+		// Placement de début
+		mazeData [0, height / 2].left = true;
 
 
 		// Affichage du labyrinthe
@@ -67,7 +69,7 @@ public class MazeGen : MonoBehaviour {
 		isVisited = new bool[width, height];
 
 		// on lance la generation
-		recursiveGeneration (0, 0);
+		recursiveGeneration (width - 1, height / 2);
 	}
 	
 	private void recursiveGeneration(int x, int y){
