@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MazeGen.cs">
     <Files>
-      <File FileName="Assets\Scripts\MazeGen.cs" Line="89" Column="72" />
+      <File FileName="Assets\Scripts\MazeGen.cs" Line="87" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

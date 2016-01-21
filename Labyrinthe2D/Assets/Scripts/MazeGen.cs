@@ -70,6 +70,12 @@ public class MazeGen : MonoBehaviour {
 		return r;
 	}
 
+	// créer et affiche une cellule du labyrinthe
+	private void printCell(Cell c, int x, int y){
+		int pattern = getPatternFromCell(c);
+		Transform newCell = Instantiate(wallPrefab[pattern], new Vector2(x, y), Quaternion.identity) as Transform;
+		newCell.parent = GameObject.Find("Maze").transform;
+	}
 
 	private bool[,] isVisited; // Les variables statiques n'existant pas en c# on utilise un attribut.
 	private void generateMaze(){
@@ -80,13 +86,6 @@ public class MazeGen : MonoBehaviour {
 		recursiveGeneration (width - 1, height / 2);
 	}
 
-	// créer et affiche une cellule du labyrinthe
-	private void printCell(Cell c, int x, int y){
-		int pattern = getPatternFromCell(c);
-		Transform newCell = Instantiate(wallPrefab[pattern], new Vector2(x, y), Quaternion.identity) as Transform;
-		newCell.parent = GameObject.Find("Maze").transform;
-	}
-	
 	private void recursiveGeneration(int x, int y){
 		// on marque la case courante comme visitee
 		isVisited [x, y] = true;
