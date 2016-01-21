@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		transform.position = new Vector3 (1.0f, 5.0f, 0);
+		transform.position = new Vector3 (-1.0f, 5.0f, 0);
 		}
 	
 	// Update is called once per frame
