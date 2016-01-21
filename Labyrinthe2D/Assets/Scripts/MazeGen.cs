@@ -32,22 +32,19 @@ public class MazeGen : MonoBehaviour {
 		Cell tempCell = new Cell();
 		tempCell.left = true;
 		tempCell.right = true;
-		int pattern = getPatternFromCell(tempCell);
 
 		// Placement de début
 		mazeData [0, height / 2].left = true;
-		Instantiate(wallPrefab[pattern], new Vector2(-1, height/2), Quaternion.identity);
+		printCell (tempCell, -1, height/2);
 
 		// Placement de la fin
 		mazeData [0, height / 2].left = true;
-		Instantiate(wallPrefab[pattern], new Vector2(width, height/2), Quaternion.identity);
-
+		printCell (tempCell, width, height/2);
 
 		// Affichage du labyrinthe
 		for (int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++){
-				pattern = getPatternFromCell(mazeData[i, j]);
-				Instantiate(wallPrefab[pattern], new Vector2(i, j), Quaternion.identity);
+				printCell(mazeData[i, j], i, j);
 			}
 		}
 	}
@@ -81,6 +78,13 @@ public class MazeGen : MonoBehaviour {
 
 		// on lance la generation
 		recursiveGeneration (width - 1, height / 2);
+	}
+
+	// créer et affiche une cellule du labyrinthe
+	private void printCell(Cell c, int x, int y){
+		int pattern = getPatternFromCell(c);
+		Transform newCell = Instantiate(wallPrefab[pattern], new Vector2(x, y), Quaternion.identity) as Transform;
+		newCell.parent = GameObject.Find("Maze").transform;
 	}
 	
 	private void recursiveGeneration(int x, int y){
