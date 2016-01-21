@@ -10,8 +10,8 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float moveHorizontal = Input.GetAxis ("Horizontal")*0.05f;
-		float moveVertical = Input.GetAxis ("Vertical")*0.05f;
+		float moveHorizontal = Input.GetAxis ("Horizontal")*0.01f;
+		float moveVertical = Input.GetAxis ("Vertical")*0.01f;
 		if (moveHorizontal < 0) {
 			//float speed = 1.0f;
 			transform.Translate (Mathf.Max ( moveHorizontal, -transform.position.x), 0, 0);
