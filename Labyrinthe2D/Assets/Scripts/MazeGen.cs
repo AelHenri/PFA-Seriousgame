@@ -98,8 +98,8 @@ public class MazeGen : MonoBehaviour {
 
 		// on lance la generation
 		recursiveGeneration (width - 1, height / 2);
-		for (int i = 0; i < deadEnd.Count; i++)
-			Debug.Log (deadEnd [i].x + " " + deadEnd [i].y + "\n");
+		//for (int i = 0; i < deadEnd.Count; i++)
+		//	Debug.Log (deadEnd [i].x + " " + deadEnd [i].y + "\n");
 	}
 
 	private void recursiveGeneration(int x, int y){
