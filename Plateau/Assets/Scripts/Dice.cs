@@ -15,6 +15,7 @@ public class Dice : MonoBehaviour {
     public bool doubleClickMode = false;
     private int loopCounter = 0;
     public int nbLoopInit = 20;
+    private int nbLoop;
 
 	// Use this for initialization
 	void Start () 
@@ -24,6 +25,7 @@ public class Dice : MonoBehaviour {
             nbFrameToChange = nbFrameToChangeMax;
         else
             nbFrameToChange = 1;
+        nbLoop = nbLoopInit;
 	}
 	
 	// Update is called once per frame
@@ -36,16 +38,16 @@ public class Dice : MonoBehaviour {
                 currentValue = Random.Range(1, 7);
                 sr.sprite = sprites[currentValue - 1];
                 loopCounter++;
-                if (loopCounter == nbLoopInit && !doubleClickMode)
+                if (loopCounter == nbLoop && !doubleClickMode)
                 {
                     loopCounter = 0;
-                    nbLoopInit--;
+                    nbLoop -= 2;
                     nbFrameToChange++;
                     if (nbFrameToChange == nbFrameToChangeMax)
                     {
                         roll = false;
                         hasBeenRolled = true;
-                        nbLoopInit += loopCounter;
+                        nbLoop = nbLoopInit;
                         indicator.SetActive(!roll);
                         nbFrameToChange = 1;
                     }    
