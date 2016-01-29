@@ -6,14 +6,17 @@ using UnityEngine.UI;
 using System;
 public class OuvrirFicheXml : MonoBehaviour {
 
+    private int topLayerNumber = 0;
+
     bool updateFile = false; // pour controler le fait que Update() ne recharge pas la fiche continuellement
     bool showFileBrowser = false;
     string xmlFilePath;
 
     public AjoutImage ajt;
     public Validation vali;
-
+    public CanvasGroup canvasOuvrirFiche;
     string cheminFiche;
+
 
     XDocument ffs;
     XElement partieQuestion, partieExemple;
@@ -85,6 +88,20 @@ public class OuvrirFicheXml : MonoBehaviour {
         updateFile = false;
     }
 
+    public bool isSearchingFile()
+    {
+        return showFileBrowser;
+    }
+
+    public void desactiverBouttonOuvrir()
+    {
+        canvasOuvrirFiche.interactable = false;
+    }
+
+    public void activerBouttonOuvrir()
+    {
+        canvasOuvrirFiche.interactable = true;
+    }
 
     void Update()
     {
@@ -93,12 +110,18 @@ public class OuvrirFicheXml : MonoBehaviour {
             ffs = XDocument.Load(xmlFilePath);
             this.readXmlFile();
         }
+
+        if (showFileBrowser)
+            ajt.desactiverBouttonAjout();
+        else
+            ajt.activerBouttonAjout();
+   
     }
 
 
     void OnGUI()
     {
-
+        GUI.depth = topLayerNumber;
         if (showFileBrowser)
         {
 

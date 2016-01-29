@@ -66,12 +66,12 @@ public class FicheXml : MonoBehaviour {
                                    new XElement("title", nomFiche ),
 
                                    new XElement("partieExemple",
-                                        new XElement("text", textExemple),
-                                        new XElement("image", destImageExemple) // Path a modifier vu que les images seront copiées dans le même dossier que la fiche
+                                        new XElement("text", textExemple)
+                                        //new XElement("image", destImageExemple) // Path a modifier vu que les images seront copiées dans le même dossier que la fiche
                                                 ),//</partieExemple>
                                    new XElement("partieQuestion",
                                         new XElement("question"),             //utile ?
-                                        new XElement("image", destImageQuestion),
+                                        //new XElement("image", destImageQuestion),
                                         new XElement("answer1", textReponse1, new XAttribute("value", valueRep1)),
                                         new XElement("answer2", textReponse2, new XAttribute("value", valueRep2)),
                                         new XElement("answer3", textReponse3, new XAttribute("value", valueRep3))

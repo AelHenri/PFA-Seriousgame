@@ -6,6 +6,8 @@ using System.Collections;
 
 public class AjoutImage : MonoBehaviour
 {
+    private int bottomLayerNumber = 1;
+    public OuvrirFicheXml ovFich;
     /* Sert a afficher ou non l'explorateur de fichiers */
 	private bool showFileBrowser = false;
 
@@ -56,6 +58,7 @@ public class AjoutImage : MonoBehaviour
 
     public void ajouterImageExemple()
     {
+        Debug.Log("click ajout img ex");
         showFileBrowser = true;
         loadImageIndic = true;
     }
@@ -69,8 +72,10 @@ public class AjoutImage : MonoBehaviour
 
     public void ajouterImageQuestion()
     {
+
         showFileBrowser = true;
         loadImageQues = true;
+        Debug.Log("click ajout img ques");
     }
 
     public void enleverImageQuestion()
@@ -126,7 +131,19 @@ public class AjoutImage : MonoBehaviour
         www.LoadImageIntoTexture(img);
     }
 
+    public void desactiverBouttonAjout()
+    {
+        canvasGImgButton1.interactable = false;
+        canvasGImgButton1.alpha = 0;
+        canvasGImgAjouetImg2.interactable = false;
+        canvasGImgAjouetImg2.alpha = 0;
+    }
 
+    public void activerBouttonAjout(){
+        canvasGImgButton1.interactable = true;
+        canvasGImgAjouetImg2.interactable = true;
+
+    }
 
     /* 
      * Cette fonction est appelée avant chaque rendu d'image 
@@ -134,6 +151,8 @@ public class AjoutImage : MonoBehaviour
      * l'explorateur de fichier, les images des QCM
      */   
     void OnGUI(){
+
+        GUI.depth = bottomLayerNumber;
 
         Rect rectImgExemple = new Rect( (panelWidthExemple / 2) - imageWitdh / 2, (panelHeightExemple / 2) - imageHeight / 2, imageWitdh, imageHeight);
         Rect rectImgQuestion = new Rect(canvasWidth - panelWidthExemple + imageWitdh / 6, canvasHeight - panelHeightExemple + imageHeight / 6, imageWitdh, imageHeight);
@@ -146,7 +165,7 @@ public class AjoutImage : MonoBehaviour
             /* affiche un bouton pour changer l'image quand les souris survole l'image */
             Input.GetMouseButton(1);
                 {
-                if (rectImgExemple.Contains(Event.current.mousePosition) && showFileBrowser == false)
+                if (rectImgExemple.Contains(Event.current.mousePosition) && showFileBrowser == false && !ovFich.isSearchingFile())
                     if (GUI.Button(rectImgExemple, "Changer l'image"))
                     {
                         showFileBrowser = true;
@@ -165,7 +184,7 @@ public class AjoutImage : MonoBehaviour
             /* affiche un bouton pour changer l'image quand les souris survole l'image */
             Input.GetMouseButton(1);
             {
-                if (rectImgQuestion.Contains(Event.current.mousePosition) && showFileBrowser == false)
+                if (rectImgQuestion.Contains(Event.current.mousePosition) && showFileBrowser == false && !ovFich.isSearchingFile())
                     if (GUI.Button(rectImgQuestion, "Changer l'image"))
                     {
                         showFileBrowser = true;
@@ -210,6 +229,8 @@ public class AjoutImage : MonoBehaviour
                 {
                     Debug.Log("Cancel hit");
                     showFileBrowser = false;
+                    loadImageIndic = false;
+                    loadImageQues = false;
                 }
                 else if (loadImageIndic)
                 {
@@ -219,6 +240,7 @@ public class AjoutImage : MonoBehaviour
                     StartCoroutine(LoadATexture( ("file:///" + imagePathIndic), img_indication));
                     showFileBrowser = false;
                     loadImageIndic = false;
+                    loadImageQues = false;
                 }
                 else if(loadImageQues)
                 {
@@ -227,7 +249,9 @@ public class AjoutImage : MonoBehaviour
 
                     StartCoroutine(LoadATexture( ("file:///" + imagePathQues), img_question));
                     showFileBrowser = false;
+                    loadImageIndic = false;
                     loadImageQues = false;
+                    
 
                 }
 
@@ -245,43 +269,53 @@ public class AjoutImage : MonoBehaviour
      */
     void Update()
     {
-        
-        if (showAjoutImageIndic == false)
-        {
-            canvasGImgButton1.interactable = false;
-            canvasGImgButton1.alpha = 0;
 
-            canvasGimgAnnule.interactable = true;
-            canvasGimgAnnule.alpha = 1;
+        if (showFileBrowser)
+        {
+            this.desactiverBouttonAjout();
+            ovFich.desactiverBouttonOuvrir();
         }
-
-        else if (showAjoutImageIndic == true)
+        else
         {
-            canvasGImgButton1.interactable = true;
-            canvasGImgButton1.alpha = 1 ;
+            activerBouttonAjout();
+            ovFich.activerBouttonOuvrir();
 
-            canvasGimgAnnule.interactable = false;
-            canvasGimgAnnule.alpha = 0;
+            if (showAjoutImageIndic == false)
+            {
+                canvasGImgButton1.interactable = false;
+                canvasGImgButton1.alpha = 0;
+
+                canvasGimgAnnule.interactable = true;
+                canvasGimgAnnule.alpha = 1;
+            }
+
+            else if (showAjoutImageIndic == true)
+            {
+                //canvasGImgButton1.interactable = true;
+                canvasGImgButton1.alpha = 1;
+
+                canvasGimgAnnule.interactable = false;
+                canvasGimgAnnule.alpha = 0;
+            }
+
+            if (showAjoutImageQues == false)
+            {
+                canvasGImgAjouetImg2.interactable = false;
+                canvasGImgAjouetImg2.alpha = 0;
+
+                canvasGImgAnnule2.interactable = true;
+                canvasGImgAnnule2.alpha = 1;
+            }
+
+            else if (showAjoutImageQues == true)
+            {
+                //canvasGImgAjouetImg2.interactable = true;
+                canvasGImgAjouetImg2.alpha = 1;
+
+                canvasGImgAnnule2.interactable = false;
+                canvasGImgAnnule2.alpha = 0;
+            }
         }
-
-        if (showAjoutImageQues == false)
-        {
-            canvasGImgAjouetImg2.interactable = false;
-            canvasGImgAjouetImg2.alpha = 0;
-
-            canvasGImgAnnule2.interactable = true;
-            canvasGImgAnnule2.alpha = 1;
-        }
-         
-        else if (showAjoutImageQues == true)
-        {
-            canvasGImgAjouetImg2.interactable = true;
-            canvasGImgAjouetImg2.alpha = 1;
-
-            canvasGImgAnnule2.interactable = false;
-            canvasGImgAnnule2.alpha = 0;
-        }      
-
 
     }
 

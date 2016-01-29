@@ -25,7 +25,11 @@ public class Validation : MonoBehaviour {
     public Toggle toggleRep2;
     public Toggle toggleRep3;
 
+    /* Pour le placement de la fenêtre de confirmation */
+    Rect windowRect = new Rect((Screen.width / 2) - 100, (Screen.height / 2) - 50, 200, 100);
+
     bool showConfirmation = false;
+    private int topLayerNumber = 0;
 
     string targetPath;
     string destFile;
@@ -44,8 +48,6 @@ public class Validation : MonoBehaviour {
         showConfirmation = false;
     }
 
-
- 
 
 
 	// Use this for initialization
@@ -79,5 +81,18 @@ public class Validation : MonoBehaviour {
         canvasGConfirmation.interactable = showConfirmation;
     }
 
+    void DoMyWindow(int windowID)
+    {
+        if (GUI.Button(new Rect(50, 50, 100, 20), "Ok"))
+            this.confirmation();
 
+    }
+
+    
+    void OnGUI()
+    {
+        GUI.depth = topLayerNumber;
+        if(showConfirmation)
+            windowRect = GUI.Window(0, windowRect, DoMyWindow, "Fiche générée !");
+    }
 }
