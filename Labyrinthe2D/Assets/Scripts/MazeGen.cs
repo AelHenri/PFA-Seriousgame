@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /* Structure des cellules du labyrinthe
  * true si on peut passer, false sinon
@@ -11,30 +12,53 @@ struct Cell{
 	public bool down;
 }
 
+public struct Point{
+	public int x;
+	public int y;
+
+	public Point(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+
+}
+
 public class MazeGen : MonoBehaviour {
 	public Transform[] wallPrefab;
 	public int width;
 	public int height;
+	public List<Point> deadEnd;
 	
 	Cell[,] mazeData;
-	Vector2 startCell;
-	Vector2 endCell;
 
 	void Start () {
 		// Inititalisation des données du labyrinthe
 		mazeData = new Cell[width, height];
-		startCell = new Vector2 (0, height / 2);
-		startCell = new Vector2 (width - 1, height / 2);
+		deadEnd = new List<Point>();
 
 		// Génération du labyrinthe
 		generateMaze ();
 
+		// Placement de la case de fin
+		mazeData [width - 1, height / 2].right = true;
+
+		// generation de la sortie et de l'entrée
+		Cell tempCell = new Cell();
+		tempCell.left = true;
+		tempCell.right = true;
+
+		// Placement de début
+		mazeData [0, height / 2].left = true;
+		printCell (tempCell, -1, height/2);
+
+		// Placement de la fin
+		mazeData [0, height / 2].left = true;
+		printCell (tempCell, width, height/2);
 
 		// Affichage du labyrinthe
 		for (int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++){
-				int pattern = getPatternFromCell(mazeData[i, j]);
-				Instantiate(wallPrefab[pattern], new Vector2(i, j), Quaternion.identity);
+				printCell(mazeData[i, j], i, j);
 			}
 		}
 	}
@@ -60,6 +84,12 @@ public class MazeGen : MonoBehaviour {
 		return r;
 	}
 
+	// créer et affiche une cellule du labyrinthe
+	private void printCell(Cell c, int x, int y){
+		int pattern = getPatternFromCell(c);
+		Transform newCell = Instantiate(wallPrefab[pattern], new Vector2(x, y), Quaternion.identity) as Transform;
+		newCell.parent = GameObject.Find("Maze").transform;
+	}
 
 	private bool[,] isVisited; // Les variables statiques n'existant pas en c# on utilise un attribut.
 	private void generateMaze(){
@@ -67,9 +97,11 @@ public class MazeGen : MonoBehaviour {
 		isVisited = new bool[width, height];
 
 		// on lance la generation
-		recursiveGeneration (0, 0);
+		recursiveGeneration (width - 1, height / 2);
+		//for (int i = 0; i < deadEnd.Count; i++)
+		//	Debug.Log (deadEnd [i].x + " " + deadEnd [i].y + "\n");
 	}
-	
+
 	private void recursiveGeneration(int x, int y){
 		// on marque la case courante comme visitee
 		isVisited [x, y] = true;
@@ -94,33 +126,41 @@ public class MazeGen : MonoBehaviour {
 			}
 		}
 
+		// On initialise un booleen qui permettra de savoir si on doit ajouter la case au cul de sac
+		bool isDeadEnd = true;
 		// Et enfin, on effectue les visites selon l'ordre defini precedemment
 		for(int i = 0; i < 4; i++){
 			// haut
 			if(order[i] == 0 && y < (height - 1) && (!isVisited[x, y + 1])){
 				mazeData[x, y].up = true;
 				mazeData[x, y + 1].down = true;
+				isDeadEnd = false;
 				recursiveGeneration(x, y + 1);
 			}
 			// gauche
 			else if(order[i] == 1 && x > 0 && (!isVisited[x - 1, y])){
 				mazeData[x, y].left = true;
 				mazeData[x - 1, y].right = true;
+				isDeadEnd = false;
 				recursiveGeneration(x - 1, y);
 			}
 			// bas
 			else if(order[i] == 2 && y > 0 && (!isVisited[x, y - 1])){
 				mazeData[x, y].down = true;
 				mazeData[x, y - 1].up = true;
+				isDeadEnd = false;
 				recursiveGeneration(x, y - 1);
 			}
 			// droite
 			else if(order[i] == 3 && x < (width - 1) && (!isVisited[x + 1, y])){
 				mazeData[x, y].right = true;
 				mazeData[x + 1, y].left = true;
+				isDeadEnd = false;
 				recursiveGeneration(x + 1, y);
 			}
 		}
-		//Debug.Log("qsd" + order[0] + order[1] + order[2] + order[3]);
+
+		if(isDeadEnd)
+			deadEnd.Add(new Point(x, y));
 	}
 }
