@@ -11,24 +11,34 @@ public class LoadOnClick : MonoBehaviour
 
     public void SetActiveRecursively(GameObject rootObject, bool active)
     {
+        Debug.Log("Censé passer ici pour activer loading image");
         rootObject.SetActive(active);
 
         foreach (Transform childTransform in rootObject.transform)
         {
             SetActiveRecursively(childTransform.gameObject, active);
+
         }
     }
 
     public void LoadScene(int level)
     {
         Debug.Log("Launched");
-        SetActiveRecursively(loadingImage, true);
+        loadingImage.SetActive(true);
         Debug.Log("Loading screen loaded, trying to load async");
-        AsyncOperation async = SceneManager.LoadSceneAsync(level);
-        Debug.Log("Attempting to load asynchronously");
-        //yield return async;
-        //yield return 0;
-        //SceneManager.LoadScene(level);
+        if (level >= 10)
+        {
+            Debug.Log("WIP, not ready yet!!");
+        }
+        else
+        {
+            AsyncOperation async = SceneManager.LoadSceneAsync(level);
+            Debug.Log("Attempting to load asynchronously");
+            //yield return async;
+            //yield return 0;
+            //SceneManager.LoadScene(level);
+        }
+        //SetActiveRecursively(loadingImage, false);
     }
 
     public void BeginLoadScene(int level)
