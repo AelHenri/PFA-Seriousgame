@@ -62,7 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Games\Board\Assets\Scripts\Coordinator.cs" />
+    <Compile Include="Assets\Games\Board\Assets\Scripts\Dice.cs" />
+    <Compile Include="Assets\Games\Board\Assets\Scripts\Map.cs" />
+    <Compile Include="Assets\Games\Board\Assets\Scripts\Move.cs" />
+    <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\CamCentering.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\MazeGen.cs" />
+    <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\keyscript.cs" />
     <Compile Include="Assets\Scripts\Games.cs" />
     <Compile Include="Assets\Scripts\LoadOnClick.cs" />
     <Compile Include="Assets\Scripts\Navigator.cs" />

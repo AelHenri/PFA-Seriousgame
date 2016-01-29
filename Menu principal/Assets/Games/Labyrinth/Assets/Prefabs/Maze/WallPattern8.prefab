@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 482928}
   - 212: {fileID: 21211752}
+  - 68: {fileID: 6864754}
   m_Layer: 0
   m_Name: WallPattern8
   m_TagString: Untagged
@@ -28,6 +29,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!68 &6864754
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118860}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+  - {x: .445099652, y: -.504356027}
+  - {x: .454562545, y: .499812245}
 --- !u!212 &21211752
 SpriteRenderer:
   m_ObjectHideFlags: 1
