@@ -12,6 +12,7 @@ public class Move : MonoBehaviour {
 
     private int currentStep = 0;
     private Animator an;
+    public bool moving = false;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,7 @@ public class Move : MonoBehaviour {
                 endPosition = new List<Vector3>();
                 an.SetInteger("State", 0);
                 i = 0;
+                moving = false;
             }
             else
                 i += 1;

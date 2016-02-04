@@ -38,7 +38,7 @@ public class Dice : MonoBehaviour {
                 currentValue = Random.Range(1, 7);
                 sr.sprite = sprites[currentValue - 1];
                 loopCounter++;
-                if (loopCounter == nbLoop && !doubleClickMode)
+                if ((loopCounter == nbLoop || nbLoop < 0) && !doubleClickMode)
                 {
                     loopCounter = 0;
                     nbLoop -= 2;
