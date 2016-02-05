@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-
 public class Player : MonoBehaviour {
-	public float speed = 0.1f;
+	public int speed = 10;
 	public Rigidbody2D rb;
 	float moveHorizontal;
 	float moveVertical;

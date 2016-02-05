@@ -31,23 +31,33 @@ public class Map : MonoBehaviour {
         for (int k = 0; k < nbTiles; k++)
         {
             float x = -1 * width + k * ((float)2 * width / (nbTiles - 1));
+            Vector3 pos = new Vector3(x, 2 * (k % 3) - height, 0);
             //tiles[k] = (GameObject)Instantiate(r, new Vector3(Random.Range(-1 * width, width), Random.Range(0, -1 * height), 0), Quaternion.identity);
-            if(k == 0)
-                tiles[k] = (GameObject)Instantiate(start, new Vector3(x, k % 3 - 1, 0), Quaternion.identity);
+            if (k == 0)
+                tiles[k] = (GameObject)Instantiate(start, pos, Quaternion.identity);
             else if(k == nbTiles - 1)
-                tiles[k] = (GameObject)Instantiate(cross, new Vector3(x, k % 3 - 1, 0), Quaternion.identity);
+                tiles[k] = (GameObject)Instantiate(cross, pos, Quaternion.identity);
             else if ((k % 3 == 2 && k / 3 == 3) || (k % 3 == 2 && k / 3 == 5))
-                tiles[k] = (GameObject)Instantiate(warp, new Vector3(x, k % 3 - 1, 0), Quaternion.identity);
+                tiles[k] = (GameObject)Instantiate(warp, pos, Quaternion.identity);
             else if (k % 3 == 2)
             {
                 int r = Random.Range(1, 3);
                 if (r == 1)
-                    tiles[k] = (GameObject)Instantiate(eventt, new Vector3(x, k % 3 - 1, 0), Quaternion.identity);
+                    tiles[k] = (GameObject)Instantiate(eventt, pos, Quaternion.identity);
                 else
-                    tiles[k] = (GameObject)Instantiate(dice, new Vector3(x, k % 3 - 1, 0), Quaternion.identity);
+                    tiles[k] = (GameObject)Instantiate(dice, pos, Quaternion.identity);
             }
             else
-                tiles[k] = (GameObject)Instantiate(neutral, new Vector3(x, k % 3 - 1, 0), Quaternion.identity);
+                tiles[k] = (GameObject)Instantiate(neutral, pos, Quaternion.identity);
+            tiles[k].transform.parent = transform;
+        }
+        for(int k = 0; k < nbTiles - 1; ++k)
+        {
+            GameObject line = (GameObject)Resources.Load("Line", typeof(GameObject));
+            GameObject l = (GameObject)Instantiate(line, Vector3.zero, Quaternion.identity);
+            Line li = l.GetComponent<Line>();
+            li.begin = tiles[k];
+            li.end = tiles[k + 1];
         }
         isReady = true;
     }

@@ -20,7 +20,7 @@ public class Navigator : MonoBehaviour {
     void Start()
     //Game loading?
     {
-        SceneManager.LoadScene(1, LoadSceneMode.Additive);
+        SceneManager.LoadScene("TitleScreen", LoadSceneMode.Additive);
         Debug.Log("Loading complete");
     }
 
@@ -38,10 +38,15 @@ public class Navigator : MonoBehaviour {
             yield return null;
         }*/
         //Verifier les input du joueur
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Detects keycode escape");
-            SceneManager.LoadScene(1);
+            Debug.Log("menu loaded: " + GameState.pauseMenuLoaded);
+            if (!GameState.pauseMenuLoaded)
+            {
+                SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+                GameState.pauseMenuLoaded = true;
+            }
         }
         //Verifier les achievements du joueur
         //Verifier les statistiques du joueur

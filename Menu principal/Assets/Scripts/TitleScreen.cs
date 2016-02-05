@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Titlescreen : MonoBehaviour {
+public class TitleScreen : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
