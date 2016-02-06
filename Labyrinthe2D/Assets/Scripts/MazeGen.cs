@@ -15,54 +15,57 @@ struct Cell{
 public struct Point{
 	public int x;
 	public int y;
-
+	
 	public Point(int x, int y){
 		this.x = x;
 		this.y = y;
 	}
-
+	
 }
 
 public class MazeGen : MonoBehaviour {
 	public Transform[] wallPrefab;
+	public Transform exit;
 	public int width;
 	public int height;
 	public List<Point> deadEnd;
 	
 	Cell[,] mazeData;
-
-	void Start () {
+	
+	public void SetupScene (int level) {
 		// Inititalisation des données du labyrinthe
 		mazeData = new Cell[width, height];
 		deadEnd = new List<Point>();
-
+		
 		// Génération du labyrinthe
 		generateMaze ();
-
+		
 		// Placement de la case de fin
 		mazeData [width - 1, height / 2].right = true;
-
+		
 		// generation de la sortie et de l'entrée
 		Cell tempCell = new Cell();
 		tempCell.left = true;
 		tempCell.right = true;
-
+		
 		// Placement de début
 		mazeData [0, height / 2].left = true;
 		printCell (tempCell, -1, height/2);
-
+		
 		// Placement de la fin
 		mazeData [0, height / 2].left = true;
 		printCell (tempCell, width, height/2);
-
+		
 		// Affichage du labyrinthe
 		for (int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++){
 				printCell(mazeData[i, j], i, j);
 			}
 		}
-	}
+		Transform newCell = Instantiate(exit, new Vector2(width, height/2), Quaternion.identity) as Transform;
 
+	}
+	
 	/* Les numeros des patterns respectent une conversion binaire
 	 * Le  bit le plus faible correspont au booleen up, le second left, puis down, et enfin right.
 	 * EX : 1101 correspond au pattern avec juste un mur a gauche
@@ -83,29 +86,29 @@ public class MazeGen : MonoBehaviour {
 		
 		return r;
 	}
-
+	
 	// créer et affiche une cellule du labyrinthe
 	private void printCell(Cell c, int x, int y){
 		int pattern = getPatternFromCell(c);
 		Transform newCell = Instantiate(wallPrefab[pattern], new Vector2(x, y), Quaternion.identity) as Transform;
 		newCell.parent = GameObject.Find("Maze").transform;
 	}
-
+	
 	private bool[,] isVisited; // Les variables statiques n'existant pas en c# on utilise un attribut.
 	private void generateMaze(){
 		// on initialise les donnees de l'algorithme
 		isVisited = new bool[width, height];
-
+		
 		// on lance la generation
 		recursiveGeneration (width - 1, height / 2);
 		//for (int i = 0; i < deadEnd.Count; i++)
 		//	Debug.Log (deadEnd [i].x + " " + deadEnd [i].y + "\n");
 	}
-
+	
 	private void recursiveGeneration(int x, int y){
 		// on marque la case courante comme visitee
 		isVisited [x, y] = true;
-
+		
 		/* Generation de l'ordre de visite des cases voisines dans 
 		 * un tableau de taille 4 (nombre de direction possible
 		 * Pour cela on creer le tableau et on le melange.
@@ -115,7 +118,7 @@ public class MazeGen : MonoBehaviour {
 		int [] order = new int[4];
 		for(int i = 0; i < 4; i++)
 			order[i] = i;
-
+		
 		// Puis on mélange l'ordre de visite 3 fois
 		for(int j = 0; j < 3; j++){
 			for(int i = 0; i < 4; i++){
@@ -125,7 +128,7 @@ public class MazeGen : MonoBehaviour {
 				order[i] = tmp;
 			}
 		}
-
+		
 		// On initialise un booleen qui permettra de savoir si on doit ajouter la case au cul de sac
 		bool isDeadEnd = true;
 		// Et enfin, on effectue les visites selon l'ordre defini precedemment
@@ -159,7 +162,7 @@ public class MazeGen : MonoBehaviour {
 				recursiveGeneration(x + 1, y);
 			}
 		}
-
+		
 		if(isDeadEnd)
 			deadEnd.Add(new Point(x, y));
 	}
