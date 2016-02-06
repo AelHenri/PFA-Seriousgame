@@ -15,6 +15,7 @@ public class keyscript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log("coucou");
 		if (MazeAccess.mazeSet == 0) {
 			MazeAccess.maze = (MazeGen)FindObjectOfType (typeof(MazeGen));
 			MazeAccess.mazeSet = 1;

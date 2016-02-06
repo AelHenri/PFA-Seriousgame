@@ -1,18 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 
 public class Player : MonoBehaviour {
 	public int speed = 10;
 	public Rigidbody2D rb;
+	public int keys;
+	public Text KeyText;
+
 	float moveHorizontal;
 	float moveVertical;
 	float restartLevelDelay = 1f;
-	public int keys;
+
+
 	// Use this for initialization
 	void Start () {
 		transform.position = new Vector3 (-1.0f, 5.0f, 0);
 		rb = GetComponent<Rigidbody2D> ();
 		keys = GameManager.instance.keys;
+		KeyText.text = "Keys : " + keys;
 	}
 
 	private void OnDisable(){
@@ -26,13 +33,18 @@ public class Player : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other){
-		Debug.Log (other.tag);
 		if (other.tag == "exit") {
-			Invoke ("Restart", restartLevelDelay);
+
 			enabled = false;
+			Invoke ("Restart", restartLevelDelay);
+
 		} 
 		else if (other.tag == "key") {
+			Debug.Log ("clé");
 			keys = keys + 1;
+			other.gameObject.SetActive(false);
+			KeyText.text = "Keys : " + keys;
+
 		}
 	}
 	// Update is called once per frame

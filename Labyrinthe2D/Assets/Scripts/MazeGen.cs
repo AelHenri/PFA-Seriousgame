@@ -25,7 +25,9 @@ public struct Point{
 
 public class MazeGen : MonoBehaviour {
 	public Transform[] wallPrefab;
+	public GameObject[] keys;
 	public Transform exit;
+	public Transform key;
 	public int width;
 	public int height;
 	public List<Point> deadEnd;
@@ -63,6 +65,8 @@ public class MazeGen : MonoBehaviour {
 			}
 		}
 		Transform newCell = Instantiate(exit, new Vector2(width, height/2), Quaternion.identity) as Transform;
+		LayoutKeys (keys, level);
+		Debug.Log (level);
 
 	}
 	
@@ -70,6 +74,14 @@ public class MazeGen : MonoBehaviour {
 	 * Le  bit le plus faible correspont au booleen up, le second left, puis down, et enfin right.
 	 * EX : 1101 correspond au pattern avec juste un mur a gauche
 	 */
+	public void LayoutKeys(GameObject[] keys,int nbkeys){
+		for (int i = 0; i < nbkeys; i++) {
+			Instantiate(key, new Vector2(1,i), Quaternion.identity);
+		
+		}	
+	
+	}
+
 	private int getPatternFromCell(Cell c){
 		int r = 0;
 		if (!c.right)
