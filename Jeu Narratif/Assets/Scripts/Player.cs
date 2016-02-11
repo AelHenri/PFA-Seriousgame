@@ -32,11 +32,24 @@ public class Player : MonoBehaviour {
         
 	}
 
-    void OnCollisionEnter2D()
+    /*void OnCollisionEnter2D()
+    {
+        Debug.Log("Hello");
+        collided = true;
+    }*/
+
+    void OnCollisionEnter2D(Collision2D col)
     {
         collided = true;
-        /*rb.isKinematic = true;
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = 0f;*/
+        Debug.Log("Hello");
+        if (col.gameObject.tag == "PNJ")
+        {
+            //SceneManager sceneManager = GameObject.Find("GameManager").GetComponent(SceneManager);
+            SceneManager sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
+            sceneManager.PlaceArrows();
+
+            Debug.Log("Coucou");
+        }
     }
+
 }
