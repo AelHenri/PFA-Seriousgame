@@ -19,7 +19,7 @@ public class Player : MonoBehaviour {
 		transform.position = new Vector3 (-1.0f, GameManager.instance.maze.height / 2, 0);
 		rb = GetComponent<Rigidbody2D> ();
 		keys = GameManager.instance.nbKeys;
-		KeyText.text = "Keys : " + keys;
+		KeyText.text = "Clés : " + keys;
 	}
 
 	private void OnDisable(){
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
 		else if (other.tag == "key") {
 			keys = keys + 1;
 			other.gameObject.SetActive(false);
-			KeyText.text = "Keys : " + keys;
+			KeyText.text = "Clés : " + keys;
 		}
 	}
 	// Update is called once per frame

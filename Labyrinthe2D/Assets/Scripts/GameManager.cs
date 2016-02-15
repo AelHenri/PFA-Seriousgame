@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
 		levelImage.SetActive (true);
 		keys.Clear ();
 		maze.SetupScene (level);
+		GameObject.Find("Timer").GetComponent<Timer>().launch();
 		Invoke ("HideLevelImage", levelStartDelay);
 
 	}
