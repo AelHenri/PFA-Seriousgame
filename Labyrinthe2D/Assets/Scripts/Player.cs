@@ -16,14 +16,14 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		transform.position = new Vector3 (-1.0f, 5.0f, 0);
+		transform.position = new Vector3 (-1.0f, GameManager.instance.maze.height / 2, 0);
 		rb = GetComponent<Rigidbody2D> ();
-		keys = GameManager.instance.keys;
+		keys = GameManager.instance.nbKeys;
 		KeyText.text = "Keys : " + keys;
 	}
 
 	private void OnDisable(){
-		GameManager.instance.keys = keys;
+		GameManager.instance.nbKeys = keys;
 	
 	}
 
@@ -59,13 +59,13 @@ public class Player : MonoBehaviour {
 		}
 	void FixedUpdate(){
 		if (moveHorizontal >= 0 && moveVertical>=0)
-			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,2),Mathf.Min( moveVertical,2), 0);  
+			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,4),Mathf.Min( moveVertical,4), 0);  
 		if (moveHorizontal >= 0 && moveVertical<=0)
-			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,2),Mathf.Max( moveVertical,-2), 0);  
+			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,4),Mathf.Max( moveVertical,-4), 0);  
 		if (moveHorizontal <= 0 && moveVertical>=0)
-			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-2),Mathf.Min( moveVertical,2), 0);  
+			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-4),Mathf.Min( moveVertical,4), 0);  
 		if (moveHorizontal <= 0 && moveVertical<=0)
-			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-2),Mathf.Max( moveVertical,-2), 0);  
+			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-4),Mathf.Max( moveVertical,-4), 0);  
 
 	}
 

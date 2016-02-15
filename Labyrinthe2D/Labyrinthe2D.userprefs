@@ -1,8 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\PFA-Seriousgame\Labyrinthe2D\Assets\Scripts\GameManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Key.cs">
     <Files>
-      <File FileName="..\PFA-Seriousgame\Labyrinthe2D\Assets\Scripts\GameManager.cs" Line="21" Column="42" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="75" Column="4" />
+      <File FileName="Assets\Scripts\Key.cs" Line="13" Column="36" />
+      <File FileName="Assets\Scripts\Player.cs" Line="56" Column="20" />
+      <File FileName="Assets\Scripts\Loader.cs" Line="5" Column="2" />
+      <File FileName="Assets\Scripts\MazeGen.cs" Line="26" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
