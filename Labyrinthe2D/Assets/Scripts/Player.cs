@@ -40,17 +40,14 @@ public class Player : MonoBehaviour {
 
 		} 
 		else if (other.tag == "key") {
-			Debug.Log ("clé");
 			keys = keys + 1;
 			other.gameObject.SetActive(false);
 			KeyText.text = "Keys : " + keys;
-
 		}
 	}
 	// Update is called once per frame
 	void Update () {
 		moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
-		//Debug.Log (moveHorizontal);
 		moveVertical = Input.GetAxis ("Vertical")*speed;
 		//transform.Translate (moveHorizontal, moveVertical, 0);
 		//Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0);

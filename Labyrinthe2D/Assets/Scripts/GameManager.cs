@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+
 	void InitGame(){
 		doingSetup = true;
 		levelImage =GameObject.Find("LevelImage");
@@ -51,7 +52,6 @@ public class GameManager : MonoBehaviour {
 		keys.Clear ();
 		maze.SetupScene (level);
 		Invoke ("HideLevelImage", levelStartDelay);
-		//Debug.Log (keys.Count);
 
 	}
 
