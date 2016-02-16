@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 	public int speed = 10;
 	public Rigidbody2D rb;
-	public int keys;
+	public int globalKeys;
+	public int localKeys;
 	public Text KeyText;
+	public Text EndingText;
+
 
 	float moveHorizontal;
 	float moveVertical;
@@ -16,33 +19,54 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log("new key");
+		EndingText = GameObject.Find("EndingText").GetComponent<Text>();
+		EndingText.gameObject.SetActive (false);
+		//EndingText.gameObject.SetActive (true);
 		transform.position = new Vector3 (-1.0f, GameManager.instance.maze.height / 2, 0);
 		rb = GetComponent<Rigidbody2D> ();
-		keys = GameManager.instance.nbKeys;
-		KeyText.text = "Clés : " + keys;
+		globalKeys = GameManager.instance.nbKeys;
+		localKeys = 0;
+		//KeyText.text = "Clés : " + globalKeys;
+		KeyText.text = "Clés : " + localKeys;
+
 	}
 
 	private void OnDisable(){
-		GameManager.instance.nbKeys = keys;
+		GameManager.instance.nbKeys = globalKeys;
 	
 	}
 
 	private void Restart(){
-
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
+	private void Hide(){
+		EndingText.gameObject.SetActive (false);
+	
+	}
 	private void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "exit") {
-
-			enabled = false;
-			Invoke ("Restart", restartLevelDelay);
-
-		} 
+			if (localKeys < GameManager.instance.level) {
+				if (GameManager.instance.level - localKeys == 1){
+				EndingText.text = "Il manque " + (GameManager.instance.level - localKeys) + " clé";
+				}
+				else {
+					EndingText.text = "Il manque " + (GameManager.instance.level - localKeys) + " clés";
+				}
+				EndingText.gameObject.SetActive (true);
+				Invoke ("Hide", 3);
+			} else {
+				enabled = false;
+				Invoke ("Restart", restartLevelDelay);
+			}
+		}
+	
 		else if (other.tag == "key") {
-			keys = keys + 1;
+			globalKeys = globalKeys + 1;
+			localKeys = localKeys + 1;
 			other.gameObject.SetActive(false);
-			KeyText.text = "Clés : " + keys;
+			KeyText.text = "Clés : " + localKeys;
 		}
 	}
 	// Update is called once per frame

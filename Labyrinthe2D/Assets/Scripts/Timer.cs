@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour {
 			int seconds = time % 60;
 
 			timerText.text = "Temps " + System.String.Format("{0:00}:{1:00}" , minutes, seconds);
-			Debug.Log("Temps " + System.String.Format("{0:00}:{1:00}" , minutes, seconds));
+			//Debug.Log("Temps " + System.String.Format("{0:00}:{1:00}" , minutes, seconds));
 		}
 	}
 

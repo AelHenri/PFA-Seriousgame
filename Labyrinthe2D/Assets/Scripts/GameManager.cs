@@ -46,8 +46,7 @@ public class GameManager : MonoBehaviour {
 		doingSetup = true;
 		levelImage =GameObject.Find("LevelImage");
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();
-	
-		levelText.text = "Level " + level;
+		levelText.text = "Niveau " + level;
 		levelImage.SetActive (true);
 		keys.Clear ();
 		maze.SetupScene (level);
@@ -58,14 +57,12 @@ public class GameManager : MonoBehaviour {
 
 
 	private void HideLevelImage(){
-
 		levelImage.SetActive (false);
 		doingSetup = false;
 	}
 
 	public void AddKeyToList(Key script){
 		keys.Add (script);
-	
 	}
 
 	IEnumerator MoveKeys(){
