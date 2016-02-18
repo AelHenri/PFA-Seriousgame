@@ -23,6 +23,7 @@ public class Coordinator : MonoBehaviour {
     private BonusBehavior[] bonusesBehavior = new BonusBehavior[nbBonus];
     private bool beginOfTurn = true;
     private bool beforeDiceThrow = false;
+    private bool warping = false;
 
     // Use this for initialization
     void Start () {
@@ -97,11 +98,7 @@ public class Coordinator : MonoBehaviour {
         //Happen when player move is over
         if(!move.moving && rolled)
         {
-            SetSecondaryPlayer(Players[currentPlayer], currentPlayer);
-            currentPlayer = (currentPlayer + 1) % nbPlayer;
-            SetMainPlayer(Players[currentPlayer], currentPlayer);
-            rolled = false;
-            beginOfTurn = true;
+            TileBehavior();
         }    
     }
 
@@ -174,6 +171,47 @@ public class Coordinator : MonoBehaviour {
         }
     }
 
+    void TileBehavior()
+    {
+        Tile.TileType tileType = m.tiles[playerPos[currentPlayer]].GetComponent<Tile>().type;
+        if (tileType == Tile.TileType.Dice)
+        {
+            rolled = false;
+            beginOfTurn = true;
+        }
+        else if (tileType == Tile.TileType.Event)
+        {
+            SetSecondaryPlayer(Players[currentPlayer], currentPlayer);
+            currentPlayer = (currentPlayer + 1) % nbPlayer;
+            SetMainPlayer(Players[currentPlayer], currentPlayer);
+            rolled = false;
+            beginOfTurn = true;
+        }
+        else if (tileType == Tile.TileType.Warp && !warping)
+        {
+            int warp = -1;
+            for (int i = 0; i < m.nbTiles; ++i)
+            {
+                Tile.TileType type = m.tiles[i].GetComponent<Tile>().type;
+                if (type == Tile.TileType.Warp && i != playerPos[currentPlayer])
+                    warp = i;
+            }
+            // TO CHANGE 
+            Move(Players[currentPlayer].GetComponent<Move>(), warp - playerPos[currentPlayer], currentPlayer);
+            //
+            warping = true;
+        }
+        else
+        {
+            SetSecondaryPlayer(Players[currentPlayer], currentPlayer);
+            currentPlayer = (currentPlayer + 1) % nbPlayer;
+            SetMainPlayer(Players[currentPlayer], currentPlayer);
+            rolled = false;
+            beginOfTurn = true;
+            warping = false;
+        }
+    }
+
     // BONUS BEHAVIORS
 
 
@@ -200,4 +238,6 @@ public class Coordinator : MonoBehaviour {
                 Move(move, -1, i);
             }  
     }
+
+    
 }
