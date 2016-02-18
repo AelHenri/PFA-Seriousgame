@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
+
 	public static GameManager instance = null;
 	public float levelStartDelay = 2f;	
 	public MazeGen maze;
-	public int keys = 0;
-	public Camera camera;
+	public int nbKeys = 0;
+	//public Camera camera;
+	public List<Key> keys;
+
 	//public CamCentering cam;
 
 	private Text levelText;		
-	private int level =1;
+	public int level =1;
 	private GameObject levelImage;
 	private bool doingSetup;
 	// Use this for initialization
@@ -23,6 +27,7 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		DontDestroyOnLoad (gameObject);
+		keys = new List<Key> ();
 		maze = GetComponent<MazeGen> ();
 	
 		InitGame ();
@@ -36,20 +41,37 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+
 	void InitGame(){
 		doingSetup = true;
 		levelImage =GameObject.Find("LevelImage");
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();
-	
-		levelText.text = "Level " + level;
+		levelText.text = "Niveau " + level;
 		levelImage.SetActive (true);
+		keys.Clear ();
 		maze.SetupScene (level);
+		GameObject.Find("Timer").GetComponent<Timer>().launch();
 		Invoke ("HideLevelImage", levelStartDelay);
-	}
-	private void HideLevelImage(){
 
+	}
+
+
+	private void HideLevelImage(){
 		levelImage.SetActive (false);
 		doingSetup = false;
+	}
+
+	public void AddKeyToList(Key script){
+		keys.Add (script);
+	}
+
+	IEnumerator MoveKeys(){
+		int i;
+		for (i= 0; i< level; i++) {
+
+			keys[i].MoveKey(i);
+		}
+		yield return null;
 	}
 
 	// Update is called once per frame
@@ -57,5 +79,6 @@ public class GameManager : MonoBehaviour {
 		if (doingSetup) {
 			return;
 		}
+		StartCoroutine (MoveKeys());
 	}
 }

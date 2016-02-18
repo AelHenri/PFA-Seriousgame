@@ -1,8 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\PFA-Seriousgame\Labyrinthe2D\Assets\Scripts\GameManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player.cs">
     <Files>
-      <File FileName="..\PFA-Seriousgame\Labyrinthe2D\Assets\Scripts\GameManager.cs" Line="21" Column="42" />
+      <File FileName="Assets\Scripts\Player.cs" Line="67" Column="30" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="45" Column="8" />
+      <File FileName="Assets\Scripts\Loader.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Key.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Timer.cs" Line="22" Column="30" />
+      <File FileName="Assets\Scripts\CamCentering.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

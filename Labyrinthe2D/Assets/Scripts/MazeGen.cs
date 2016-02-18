@@ -27,7 +27,7 @@ public class MazeGen : MonoBehaviour {
 	public Transform[] wallPrefab;
 	public GameObject[] keys;
 	public Transform exit;
-	public Transform key;
+	//public Transform key;
 	public int width;
 	public int height;
 	public List<Point> deadEnd;
@@ -64,10 +64,8 @@ public class MazeGen : MonoBehaviour {
 				printCell(mazeData[i, j], i, j);
 			}
 		}
-		Transform newCell = Instantiate(exit, new Vector2(width, height/2), Quaternion.identity) as Transform;
+		Instantiate(exit, new Vector2(width, height/2), Quaternion.identity);
 		LayoutKeys (keys, level);
-		Debug.Log (level);
-
 	}
 	
 	/* Les numeros des patterns respectent une conversion binaire
@@ -76,9 +74,8 @@ public class MazeGen : MonoBehaviour {
 	 */
 	public void LayoutKeys(GameObject[] keys,int nbkeys){
 		for (int i = 0; i < nbkeys; i++) {
-			Instantiate(key, new Vector2(1,i), Quaternion.identity);
-		
-		}	
+			Instantiate(keys[0], new Vector2(1,i), Quaternion.identity);
+		}
 	
 	}
 
