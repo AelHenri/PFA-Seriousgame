@@ -9,17 +9,18 @@ public class Validation : MonoBehaviour {
 
     public FicheXml fiche;
 
-    public CanvasGroup canvasGValidation;
+    public menu menu;
     public CanvasGroup canvasGConfirmation;
     public AjoutImage ajt;
 
+    public InputField nomFiche;
+    public InputField inputExemple;
     public InputField inputReponse1;
     public InputField inputReponse2;
     public InputField inputReponse3;
-    public InputField inputExemple;
-    public InputField nomFiche;
 
 
+    public GameObject saveButton;
 
     public Toggle toggleRep1;
     public Toggle toggleRep2;
@@ -37,10 +38,16 @@ public class Validation : MonoBehaviour {
     public void validation()
     {
 
-        fiche.creerDossierFiche();
-        fiche.copierImages();
-        fiche.genererFiche();
-        showConfirmation = true;
+        if (isEverythingFilled())
+        {
+            fiche.creerDossierFiche();
+            fiche.copierImages();
+            fiche.genererFiche();
+            showConfirmation = true;
+        }
+        else
+            menu.showIncompleteSheetError();
+
     }
 
     public void confirmation()
@@ -63,17 +70,17 @@ public class Validation : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        
         if (ajt.imagePathIndic != null && ajt.imagePathQues!= null)
         {
-            canvasGValidation.alpha = 1;
-            canvasGValidation.interactable = true;
+            saveButton.SetActive(true);
+            
         }
         else
         {
-            canvasGValidation.alpha = 0;
-            canvasGValidation.interactable = false;
+            saveButton.SetActive(false);
         }
-
+        
     }
 
     void DoMyWindow(int windowID)
@@ -82,7 +89,17 @@ public class Validation : MonoBehaviour {
             this.confirmation();
 
     }
-
+    bool isEverythingFilled()
+    {
+        if (nomFiche.text != "" &&
+            inputExemple.text != "" &&
+            inputReponse1.text != "" &&
+            inputReponse2.text != "" &&
+            inputReponse3.text != ""
+            )
+            return true;
+        return false;
+    }
     
     void OnGUI()
     {

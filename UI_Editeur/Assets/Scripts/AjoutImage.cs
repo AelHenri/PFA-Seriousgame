@@ -53,6 +53,14 @@ public class AjoutImage : MonoBehaviour
     public GUIStyle backStyle, cancelStyle, selectStyle; 
     string[] layoutTypes = { "Type 0", "Type 1" };
 
+    Rect rectImgExemple;
+    float xImgExemple, yImgExemple;
+    public RawImage rawImageExemple;
+
+
+    Rect rectImgQuestion;
+    float xImgQuestion, yImgQuestion;
+    public RawImage rawImageQuestion;
 
 
 
@@ -68,6 +76,7 @@ public class AjoutImage : MonoBehaviour
         
         showAjoutImageIndic = true;
         imagePathIndic = null;
+        rawImageExemple.gameObject.SetActive(false);
     }
 
     public void ajouterImageQuestion()
@@ -82,6 +91,7 @@ public class AjoutImage : MonoBehaviour
     {
         showAjoutImageQues = true;
         imagePathQues = null;
+        rawImageQuestion.gameObject.SetActive(false);
     }
 
 
@@ -153,14 +163,25 @@ public class AjoutImage : MonoBehaviour
     void OnGUI(){
 
         GUI.depth = bottomLayerNumber;
+        
+        xImgQuestion = rawImageQuestion.gameObject.transform.position.x - (rawImageQuestion.rectTransform.rect.width/2);
+        yImgQuestion = rawImageQuestion.gameObject.transform.position.y - rawImageQuestion.rectTransform.rect.height + 15;
+        Rect rectImgQuestion = new Rect(xImgQuestion, yImgQuestion, rawImageQuestion.rectTransform.rect.width, rawImageQuestion.rectTransform.rect.height);
+        
 
-        Rect rectImgExemple = new Rect( (panelWidthExemple / 2) - imageWitdh / 2, (panelHeightExemple / 2) - imageHeight / 2, imageWitdh, imageHeight);
-        Rect rectImgQuestion = new Rect(canvasWidth - panelWidthExemple + imageWitdh / 6, canvasHeight - panelHeightExemple + imageHeight / 6, imageWitdh, imageHeight);
+
+
+        xImgExemple= rawImageExemple.gameObject.transform.position.x - (rawImageExemple.rectTransform.rect.width/2);
+        yImgExemple = rawImageExemple.gameObject.transform.position.y - (rawImageExemple.rectTransform.rect.height/2);
+        Rect rectImgExemple = new Rect(xImgExemple, yImgExemple, rawImageExemple.rectTransform.rect.width, rawImageExemple.rectTransform.rect.height);
+        
 
         /* Partie qui affiche l'image sélectionnée */
         if (img_indication != null && imagePathIndic != null)
         {
-            GUI.DrawTexture(rectImgExemple, img_indication);
+            rawImageExemple.texture = img_indication;
+            rawImageExemple.gameObject.SetActive(true);
+
 
             /* affiche un bouton pour changer l'image quand les souris survole l'image */
             Input.GetMouseButton(1);
@@ -170,17 +191,16 @@ public class AjoutImage : MonoBehaviour
                     {
                         showFileBrowser = true;
                         loadImageIndic = true;
-                    }
+                    }      
             }
-
             showAjoutImageIndic = false;
         }
 
         if (img_question != null && imagePathQues != null)
         {
-            
-            GUI.DrawTexture(rectImgQuestion, img_question);
 
+            rawImageQuestion.texture = img_question;
+            rawImageQuestion.gameObject.SetActive(true);
             /* affiche un bouton pour changer l'image quand les souris survole l'image */
             Input.GetMouseButton(1);
             {
@@ -191,10 +211,7 @@ public class AjoutImage : MonoBehaviour
                         loadImageQues = true;
                     }
             }
-
-
             showAjoutImageQues = false;
-
         }
 
 
