@@ -91,7 +91,7 @@ public class FicheXml : MonoBehaviour {
             System.IO.File.Copy(ajt.imagePathIndic, destImageExemple, true);
 
         if (ajt.imagePathQues != destImageQuestion)
-            System.IO.File.Copy(ajt.imagePathIndic, destImageQuestion, true);
+            System.IO.File.Copy(ajt.imagePathQues, destImageQuestion, true);
     }
 
     public void creerDossierFiche()

@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.IO;
+using System;
+
+
 
 
 public class Question : MonoBehaviour {
@@ -18,12 +21,14 @@ public class Question : MonoBehaviour {
 
     Rect rectImgQuestion;
 
-    public Questionnaire questionnaire;
+    int imageWidth, imageHeight;
 
+    public Questionnaire questionnaire;
+    public RawImage rawImageQuestion;
 
     // Use this for initialization
     void Start () {
-	    rectImgQuestion = new Rect(Screen.width / 7, Screen.height / 7, 500, 500);
+	    
         currentSheet = questionnaire.currentSheet;
     }
 
@@ -50,15 +55,14 @@ public class Question : MonoBehaviour {
         answer3.text = currentSheet.answers[2];
 
         if (img_question == null)
+        {
             img_question = LoadPNG(currentSheet.imgQuestionPath);
+            rawImageQuestion.texture = img_question;
 
+        }
+        
     }
 
-    void OnGUI()
-    {
-        if (img_question != null)
-            GUI.DrawTexture(rectImgQuestion, img_question);
-    }
 
 
     public void answer1Chosen()

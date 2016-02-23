@@ -74,11 +74,6 @@ public class Validation : MonoBehaviour {
             canvasGValidation.interactable = false;
         }
 
-        if (showConfirmation)
-            canvasGConfirmation.alpha = 1;
-        else
-            canvasGConfirmation.alpha = 0;
-        canvasGConfirmation.interactable = showConfirmation;
     }
 
     void DoMyWindow(int windowID)

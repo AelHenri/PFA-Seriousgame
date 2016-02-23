@@ -9,9 +9,10 @@ public class Exemple : MonoBehaviour {
     Texture2D img_exemple = null;
     WWW www;
 
-    Rect rectImgExemple;
+
 
     public Questionnaire questionnaire;
+    public RawImage rawImageExemple;
 
 
     public void initExemple(Sheet sheet)
@@ -23,7 +24,6 @@ public class Exemple : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        rectImgExemple = new Rect(Screen.width/4, Screen.height/4, 450, 350);
     }
 
     // Update is called once per frame
@@ -33,6 +33,7 @@ public class Exemple : MonoBehaviour {
 
         if (img_exemple == null) {
             img_exemple = LoadPNG(questionnaire.currentSheet.imgExemplePath);
+            rawImageExemple.texture = img_exemple;
         }
      
     }
@@ -53,11 +54,6 @@ public class Exemple : MonoBehaviour {
         return tex;
     }
 
-    void OnGUI()
-    {
-        if (img_exemple != null)
-         GUI.DrawTexture(rectImgExemple, img_exemple);
-    }
 
 
 
