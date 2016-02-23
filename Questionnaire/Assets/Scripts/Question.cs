@@ -26,6 +26,9 @@ public class Question : MonoBehaviour {
     public Questionnaire questionnaire;
     public RawImage rawImageQuestion;
 
+    public GameObject rightAnswerPanel;
+    public GameObject wrongAnswerPanel;
+
     // Use this for initialization
     void Start () {
 	    
@@ -67,16 +70,29 @@ public class Question : MonoBehaviour {
 
     public void answer1Chosen()
     {
+        if (currentSheet.isRightAnswer(1))
+            rightAnswerPanel.SetActive(true);
+        else
+            wrongAnswerPanel.SetActive(true);
         questionnaire.setResult(currentSheet.isRightAnswer(1));
+        
     }
 
     public void answer2Chosen()
     {
+        if (currentSheet.isRightAnswer(2))
+            rightAnswerPanel.SetActive(true);
+        else
+            wrongAnswerPanel.SetActive(true);
         questionnaire.setResult(currentSheet.isRightAnswer(2));
     }
 
     public void answer3Chosen()
     {
+        if (currentSheet.isRightAnswer(3))
+            rightAnswerPanel.SetActive(true);
+        else
+            wrongAnswerPanel.SetActive(true);
         questionnaire.setResult(currentSheet.isRightAnswer(3));
     }
 }

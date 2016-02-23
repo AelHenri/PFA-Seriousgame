@@ -19,6 +19,7 @@ public class Questionnaire : MonoBehaviour {
     [HideInInspector]
     public Sheet currentSheet;
 
+ 
 
 
     public bool startQuestionnaire()
@@ -53,6 +54,8 @@ public class Questionnaire : MonoBehaviour {
     public void setResult(bool result)
     {
         isAnswerRight = result;
+        
+
     }
 
 
