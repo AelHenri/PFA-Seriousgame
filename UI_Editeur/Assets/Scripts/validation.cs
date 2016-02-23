@@ -10,7 +10,6 @@ public class Validation : MonoBehaviour {
     public FicheXml fiche;
 
     public menu menu;
-    public CanvasGroup canvasGConfirmation;
     public AjoutImage ajt;
 
     public InputField nomFiche;
@@ -26,12 +25,6 @@ public class Validation : MonoBehaviour {
     public Toggle toggleRep2;
     public Toggle toggleRep3;
 
-    /* Pour le placement de la fenêtre de confirmation */
-    Rect windowRect = new Rect((Screen.width / 2) - 100, (Screen.height / 2) - 50, 200, 100);
-
-    bool showConfirmation = false;
-    private int topLayerNumber = 0;
-
     string targetPath;
     string destFile;
 
@@ -43,19 +36,13 @@ public class Validation : MonoBehaviour {
             fiche.creerDossierFiche();
             fiche.copierImages();
             fiche.genererFiche();
-            showConfirmation = true;
+            menu.showSucceedDialogue();
         }
         else
             menu.showIncompleteSheetError();
-
     }
 
-    public void confirmation()
-    {
-        showConfirmation = false;
-    }
-
-
+ 
 
 	// Use this for initialization
 	void Start ()
@@ -63,8 +50,7 @@ public class Validation : MonoBehaviour {
         targetPath = Application.dataPath + "/../Fiches";
 
         if (!System.IO.Directory.Exists(targetPath))
-            System.IO.Directory.CreateDirectory(targetPath);
-        
+            System.IO.Directory.CreateDirectory(targetPath);      
     }
 	
 	// Update is called once per frame
@@ -83,12 +69,7 @@ public class Validation : MonoBehaviour {
         
     }
 
-    void DoMyWindow(int windowID)
-    {
-        if (GUI.Button(new Rect(50, 50, 100, 20), "Ok"))
-            this.confirmation();
 
-    }
     bool isEverythingFilled()
     {
         if (nomFiche.text != "" &&
@@ -101,10 +82,5 @@ public class Validation : MonoBehaviour {
         return false;
     }
     
-    void OnGUI()
-    {
-        GUI.depth = topLayerNumber;
-        if(showConfirmation)
-            windowRect = GUI.Window(0, windowRect, DoMyWindow, "Fiche générée !");
-    }
+
 }

@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+
 public class OuvrirFicheXml : MonoBehaviour {
 
     private int topLayerNumber = 0;
@@ -14,6 +15,7 @@ public class OuvrirFicheXml : MonoBehaviour {
 
     public AjoutImage ajt;
     public Validation vali;
+    public menu menu;
     public CanvasGroup canvasOuvrirFiche;
     string cheminFiche;
 
@@ -107,8 +109,16 @@ public class OuvrirFicheXml : MonoBehaviour {
     {
         if (xmlFilePath != null && updateFile == true)
         {
-            ffs = XDocument.Load(xmlFilePath);
-            this.readXmlFile();
+            try {
+                ffs = XDocument.Load(xmlFilePath);
+                this.readXmlFile();
+            }
+            catch(System.Xml.XmlException e )
+            {
+                menu.showOpenSheetError();
+                xmlFilePath = null;
+                updateFile = false;
+            }
         }
 
         if (showFileBrowser)
