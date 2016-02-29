@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 	public int maxSpeed = 3;
 	public Rigidbody2D rb;
 	public int globalKeys;
-	public int localKeys;
+	public static int localKeys;
 	public Text KeyText;
 	public Text EndingText;
 
@@ -44,7 +44,6 @@ public class Player : MonoBehaviour {
 
 	private void Hide(){
 		EndingText.gameObject.SetActive (false);
-	
 	}
 	private void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "exit") {
