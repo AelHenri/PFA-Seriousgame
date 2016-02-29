@@ -24,8 +24,23 @@ public class Key : MonoBehaviour {
 		if (MazeAccess.mazeSet[i] == 0) {
 			MazeAccess.maze = (MazeGen)FindObjectOfType (typeof(MazeGen));
 			MazeAccess.mazeSet[i] = 1;
-			int rnd = Random.Range (0, MazeAccess.maze.deadEnd.Count);
-			transform.position = new Vector3 (MazeAccess.maze.deadEnd [rnd].x, MazeAccess.maze.deadEnd [rnd].y, 0);
+			int rnd;
+			int nbKeysThere;
+			nbKeysThere = 0;	
+			int it = 0;
+			while (nbKeysThere != 1 & it<10){
+				nbKeysThere = 0;
+				it = it+1;
+				rnd = Random.Range (0, MazeAccess.maze.deadEnd.Count);
+				transform.position = new Vector3 (MazeAccess.maze.deadEnd [rnd].x, MazeAccess.maze.deadEnd [rnd].y, 0);
+				foreach(Key k in GameManager.instance.keys){
+					if ( Vector3.Distance(k.GetComponent<Key>().transform.position, this.transform.position)< 0.1f){
+						nbKeysThere = nbKeysThere + 1;
+					}
+				Debug.Log(nbKeysThere);
+				}
+			}
+
 		}
 	}
 

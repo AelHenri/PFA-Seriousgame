@@ -9,10 +9,7 @@ public class GameManager : MonoBehaviour {
 	public float levelStartDelay = 2f;	
 	public MazeGen maze;
 	public int nbKeys = 0;
-	//public Camera camera;
 	public List<Key> keys;
-
-	//public CamCentering cam;
 
 	private Text levelText;		
 	public int level =1;

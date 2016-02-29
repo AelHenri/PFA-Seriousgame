@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 148966, guid: 2a2447e62fca21a4fae3c3665b561994, type: 2}
   exit: {fileID: 409130, guid: 60da232e292e1e64ea4d146190ef0ec8, type: 2}
   width: 5
-  height: 10
+  height: 5
 --- !u!114 &11498466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,7 +117,7 @@ Prefab:
       objectReference: {fileID: 148966, guid: 2a2447e62fca21a4fae3c3665b561994, type: 2}
     - target: {fileID: 0}
       propertyPath: height
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: keys.Array.data[1]
