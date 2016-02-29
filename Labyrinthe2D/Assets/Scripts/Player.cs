@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 	public int speed = 10;
+	public int maxSpeed = 3;
 	public Rigidbody2D rb;
 	public int globalKeys;
 	public int localKeys;
@@ -80,13 +81,13 @@ public class Player : MonoBehaviour {
 		}
 	void FixedUpdate(){
 		if (moveHorizontal >= 0 && moveVertical>=0)
-			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,4),Mathf.Min( moveVertical,4), 0);  
+			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
 		if (moveHorizontal >= 0 && moveVertical<=0)
-			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,4),Mathf.Max( moveVertical,-4), 0);  
+			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Max( moveVertical,-maxSpeed), 0);  
 		if (moveHorizontal <= 0 && moveVertical>=0)
-			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-4),Mathf.Min( moveVertical,4), 0);  
+			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
 		if (moveHorizontal <= 0 && moveVertical<=0)
-			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-4),Mathf.Max( moveVertical,-4), 0);  
+			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Max( moveVertical,-maxSpeed), 0);  
 
 	}
 

@@ -36,6 +36,8 @@ public class MazeGen : MonoBehaviour {
 	
 	public void SetupScene (int level) {
 		// Inititalisation des données du labyrinthe
+		width = level + 2;
+		height = level + 2;
 		mazeData = new Cell[width, height];
 		deadEnd = new List<Point>();
 		
