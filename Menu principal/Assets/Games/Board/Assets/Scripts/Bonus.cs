@@ -5,9 +5,10 @@ public class Bonus : MonoBehaviour {
 
     public Sprite actif;
     public Sprite inactif;
+    public bool active = false;
+    public bool wasUsed = false;
 
     private SpriteRenderer sr;
-    private bool active = false;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +22,15 @@ public class Bonus : MonoBehaviour {
 	}
 
     void OnMouseDown()
+    {
+        if (active)
+        {
+            Switch();
+            wasUsed = true;
+        }       
+    }
+
+    public void Switch()
     {
         active = !active;
         sr.sprite = (active) ? actif : inactif;

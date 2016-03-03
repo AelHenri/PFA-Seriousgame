@@ -58,6 +58,7 @@ public class Map : MonoBehaviour {
             Line li = l.GetComponent<Line>();
             li.begin = tiles[k];
             li.end = tiles[k + 1];
+            li.transform.parent = transform;
         }
         isReady = true;
     }

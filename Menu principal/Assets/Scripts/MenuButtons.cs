@@ -9,6 +9,7 @@ public class MenuButtons : MonoBehaviour {
     void Awake()
     {
         scene = transform.parent.gameObject;//Canvas parent du "Menu Canvas"
+        Time.timeScale = 0;
     }
 
     void Update()
@@ -26,10 +27,15 @@ public class MenuButtons : MonoBehaviour {
             case 0: //Reprendre la partie
                 Debug.Log("Selection de reprendre la partie dans le menu");
                 GameState.pauseMenuLoaded = false;
+                Time.timeScale = 1;
                 Destroy(scene);
                 break;
             case 1: //Options
                 Debug.Log("Selection de options dans le menu");
+                GameState.pauseMenuLoaded = false;
+                SceneManager.LoadSceneAsync("Exemple");
+                GameState.titleScreenOnlyLoaded = false;
+                Time.timeScale = 1;
                 break;
             case 2: //Recommencer
                 Debug.Log("Selection de recommencer dans le menu");
@@ -41,6 +47,7 @@ public class MenuButtons : MonoBehaviour {
                     GameState.pauseMenuLoaded = false;
                     SceneManager.LoadSceneAsync((int)navigatorScreen);
                     GameState.titleScreenOnlyLoaded = true;
+                    Time.timeScale = 1;
                 }
                 else
                 {
