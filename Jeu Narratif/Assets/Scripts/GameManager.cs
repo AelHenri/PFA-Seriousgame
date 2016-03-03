@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour {
 	
 	}
 
+    private void OnLevelWasLoaded(int index)
+    {
+        scene.level++;
+        InitGame();
+
+    }
+
     void InitGame()
     {
         scene.SetupScene();

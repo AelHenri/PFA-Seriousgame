@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     public int speed = 1;
 
@@ -9,16 +10,18 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rb;
     private bool collided;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         target = transform.position;
         rb = GetComponent<Rigidbody2D>();
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        
-	    if (Input.GetMouseButton(0))
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+
+        if (Input.GetMouseButton(0))
         {
             collided = false;
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -26,11 +29,11 @@ public class Player : MonoBehaviour {
         }
 
         if (!collided)
-        {   
+        {
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         }
-        
-	}
+
+    }
 
     /*void OnCollisionEnter2D()
     {
@@ -38,7 +41,7 @@ public class Player : MonoBehaviour {
         collided = true;
     }*/
 
-    void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
         collided = true;
         Debug.Log("Hello");
@@ -52,4 +55,11 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D trig)
+    {
+        if (trig.tag == "Arrow")
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
+    }
 }
