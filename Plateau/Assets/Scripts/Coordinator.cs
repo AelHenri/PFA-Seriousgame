@@ -11,6 +11,7 @@ public class Coordinator : MonoBehaviour {
     public GameObject[] Players = new GameObject[nbPlayer];
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
+    public Sprite[] playerSprites = new Sprite[4];
 
     delegate void BonusBehavior(int playerWhoActivate);
 
@@ -24,6 +25,11 @@ public class Coordinator : MonoBehaviour {
     private bool beginOfTurn = true;
     private bool beforeDiceThrow = false;
     private bool warping = false;
+    private bool bonusEnd = true;
+    private GameObject RPS;
+    private GameObject RPSTemp;
+    private bool bm2Init = true;
+    private int bm2playerToMove;
 
     // Use this for initialization
     void Start () {
@@ -31,9 +37,12 @@ public class Coordinator : MonoBehaviour {
         m.PrepareMap();
         Vector3 pos = m.tiles[0].transform.position;
         GameObject player = (GameObject)Resources.Load("Player", typeof(GameObject));
+        RPS = (GameObject)Resources.Load("RandomPlayerSelector", typeof(GameObject));
+
         for (int i = 0; i < nbPlayer; ++i)
         {
             Players[i] = (GameObject)Instantiate(player, pos, Quaternion.identity);
+            Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
             Players[i].SetActive(true);
         }  
         d = Dice.GetComponent<Dice>();
@@ -80,8 +89,12 @@ public class Coordinator : MonoBehaviour {
             for (int i = 0; i < nbBonus; ++i)
                 if (bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed)
                 {
+                    bonusEnd = false;
                     bonusesBehavior[i](currentPlayer);
-                    bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed = false;
+                    if (bonusEnd)
+                    {
+                        bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed = false;
+                    }
                 }    
         }
 
@@ -219,14 +232,41 @@ public class Coordinator : MonoBehaviour {
     {
         Move move = Players[player].GetComponent<Move>();
         Move(move, 3, player);
+        bonusEnd = true;
     }
 
     void BonusMoins2(int player)
     {
-        int k;
-        while ((k = UnityEngine.Random.Range(0, nbPlayer)) == player);
-        Move move = Players[k].GetComponent<Move>();
-        Move(move, -2, k);
+        if (bm2Init)
+        {
+            int k = 0;
+            RPSTemp = Instantiate(RPS);
+            RPS rps = RPSTemp.GetComponent<RPS>();
+            rps.Players = new GameObject[nbPlayer - 1];
+            int count = 0;
+            for (int i = 0; i < nbPlayer; ++i)
+                if (i != currentPlayer)
+                    rps.Players[count++] = Players[i];
+            rps.nbPlayer = nbPlayer - 1;
+            RPSTemp.gameObject.SetActive(true);
+            bm2playerToMove = -1;
+            bm2Init = false;
+        }
+
+        if(RPSTemp.GetComponent<RPS>().end && bm2playerToMove == -1)
+        {
+            bm2playerToMove = RPSTemp.GetComponent<RPS>().currentArrowPos;
+            if (bm2playerToMove >= currentPlayer)
+                bm2playerToMove++;
+            Debug.Log(bm2playerToMove);
+        }
+
+        if(GameObject.Equals(RPSTemp,null))
+        {
+            Move move = Players[bm2playerToMove].GetComponent<Move>();
+            Move(move, -2, bm2playerToMove);
+            bonusEnd = true;
+        }
     }
 
     void BonusMoins1(int player)
@@ -236,7 +276,8 @@ public class Coordinator : MonoBehaviour {
             { 
                 Move move = Players[i].GetComponent<Move>();
                 Move(move, -1, i);
-            }  
+            }
+        bonusEnd = true;
     }
 
     
