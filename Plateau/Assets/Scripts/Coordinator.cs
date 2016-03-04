@@ -35,13 +35,14 @@ public class Coordinator : MonoBehaviour {
     void Start () {
         m = Map.GetComponent<Map>();
         m.PrepareMap();
-        Vector3 pos = m.tiles[0].transform.position;
+        Vector3 pos = m.tiles[0].transform.position + new Vector3(0, 2, 0);
         GameObject player = (GameObject)Resources.Load("Player", typeof(GameObject));
         RPS = (GameObject)Resources.Load("RandomPlayerSelector", typeof(GameObject));
 
         for (int i = 0; i < nbPlayer; ++i)
         {
-            Players[i] = (GameObject)Instantiate(player, pos, Quaternion.identity);
+            Players[i] = (GameObject)Instantiate(player);
+            Players[i].transform.position = pos;
             Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
             Players[i].SetActive(true);
         }  
@@ -134,7 +135,7 @@ public class Coordinator : MonoBehaviour {
         foreach(int i in playerPos)
             if (i == playerPos[place])
                 nbPlayerOnSameTile++;
-        player.transform.position = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y - 0.3f, pos.z);
+        player.transform.position = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y, pos.z - 0.3f);
         player.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         for (int i = 0; i < nbBonus; ++i)
             bonus[place][i].SetActive(false);

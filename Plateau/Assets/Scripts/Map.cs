@@ -31,24 +31,25 @@ public class Map : MonoBehaviour {
         for (int k = 0; k < nbTiles; k++)
         {
             float x = -1 * width + k * ((float)2 * width / (nbTiles - 1));
-            Vector3 pos = new Vector3(x, 2 * (k % 3) - height, 0);
+            Vector3 pos = new Vector3(x, 10, 2 * (k % 3) - height);
             //tiles[k] = (GameObject)Instantiate(r, new Vector3(Random.Range(-1 * width, width), Random.Range(0, -1 * height), 0), Quaternion.identity);
             if (k == 0)
-                tiles[k] = (GameObject)Instantiate(start, pos, Quaternion.identity);
+                tiles[k] = (GameObject)Instantiate(start);
             else if(k == nbTiles - 1)
-                tiles[k] = (GameObject)Instantiate(cross, pos, Quaternion.identity);
+                tiles[k] = (GameObject)Instantiate(cross);
             else if ((k % 3 == 2 && k / 3 == 3) || (k % 3 == 2 && k / 3 == 5))
-                tiles[k] = (GameObject)Instantiate(warp, pos, Quaternion.identity);
+                tiles[k] = (GameObject)Instantiate(warp);
             else if (k % 3 == 2)
             {
                 int r = Random.Range(1, 3);
                 if (r == 1)
-                    tiles[k] = (GameObject)Instantiate(eventt, pos, Quaternion.identity);
+                    tiles[k] = (GameObject)Instantiate(eventt);
                 else
-                    tiles[k] = (GameObject)Instantiate(dice, pos, Quaternion.identity);
+                    tiles[k] = (GameObject)Instantiate(dice);
             }
             else
-                tiles[k] = (GameObject)Instantiate(neutral, pos, Quaternion.identity);
+                tiles[k] = (GameObject)Instantiate(neutral);
+            tiles[k].transform.position = pos;
             tiles[k].transform.parent = transform;
         }
         for(int k = 0; k < nbTiles - 1; ++k)
