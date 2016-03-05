@@ -75,6 +75,12 @@ public class Questionnaire : MonoBehaviour{
     }
  
 
+   public IEnumerator endQuestionnaire() 
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.UnloadScene("Exemple");
+        SceneManager.UnloadScene("Question");
+    } 
  
 
 }
