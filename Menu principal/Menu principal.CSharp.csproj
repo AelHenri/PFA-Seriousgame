@@ -79,6 +79,7 @@
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
+    <Compile Include="Assets\Games\Sheets\Assets\Scripts\GlobalQuestionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />

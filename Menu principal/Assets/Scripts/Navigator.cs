@@ -13,6 +13,7 @@ public class Navigator : MonoBehaviour {
     {
         DontDestroyOnLoad(transform.gameObject);
         games = new Games[gamesNb];
+        GlobalQuestionnaire.Start();
         
     }
 

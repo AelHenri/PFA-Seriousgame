@@ -11,7 +11,6 @@ public class Exemple : MonoBehaviour {
 
 
 
-    public Questionnaire questionnaire;
     public RawImage rawImageExemple;
 
 
@@ -29,10 +28,11 @@ public class Exemple : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        exempleText.text = questionnaire.currentSheet.textExemple;
+        Debug.Log("GlobalQ:"+ GlobalQuestionnaire.currentSheet);
+        exempleText.text = GlobalQuestionnaire.currentSheet.textExemple;
 
         if (img_exemple == null) {
-            img_exemple = LoadPNG(questionnaire.currentSheet.imgExemplePath);
+            img_exemple = LoadPNG(GlobalQuestionnaire.currentSheet.imgExemplePath);
             rawImageExemple.texture = img_exemple;
         }
      

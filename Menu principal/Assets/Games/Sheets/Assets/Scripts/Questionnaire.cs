@@ -8,62 +8,39 @@ using UnityEngine.UI;
  * Scrpit gérant le système de question réponse dans sa globalité
  */
 
-public class Questionnaire : MonoBehaviour {
+public class Questionnaire : MonoBehaviour{
 
-    
-
-    string sheetsDirectoryPath;
-    string[] sheetsPath;
-
-    bool isAnswerRight;
-    [HideInInspector]
-    public Sheet currentSheet;
-
- 
-
-
-    public bool startQuestionnaire()
-    {
-        showQuestion();
-        return isAnswerRight;
-    }
 
     public void showQuestion()
     {
-        SceneManager.LoadScene("Question", LoadSceneMode.Single);
+        SceneManager.LoadScene("Question", LoadSceneMode.Additive);
     }
 
     public void showExemple()
     {
-        SceneManager.LoadScene("Exemple", LoadSceneMode.Single);
+        SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
     }
 
+    public bool startQuestionnaire() { 
 
-	// Use this for initialization
-	void Start () {
-        sheetsDirectoryPath = Application.dataPath + "/../Fiches";
-        System.IO.Path.GetFullPath(sheetsDirectoryPath);
-        sheetsPath = System.IO.Directory.GetFiles(sheetsDirectoryPath, "*.xml", System.IO.SearchOption.AllDirectories);
-
-
-        currentSheet= new Sheet(sheetsPath[0]);
-
+        Time.timeScale = 0;
+        GlobalQuestionnaire.hasAnswered = false;
+        Debug.Log("Hello");
+        StartCoroutine(startDisplay());
+        Time.timeScale = 1;
+        Debug.Log("isAnswerRight:" + GlobalQuestionnaire.isAnswerRight);
+        return GlobalQuestionnaire.isAnswerRight;
     }
-
-
-    public void setResult(bool result)
+    public IEnumerator startDisplay()
     {
-        isAnswerRight = result;
-        
-
+        showExemple();
+        Debug.Log("hasAnswered" + GlobalQuestionnaire.hasAnswered);
+        while (!GlobalQuestionnaire.hasAnswered)
+            yield return new WaitUntil(() => true);
+        Debug.Log("AfterAnswer");
     }
+ 
 
+ 
 
-
-
-    // Update is called once per frame
-    void Update () {
-        
-	
-	}
 }

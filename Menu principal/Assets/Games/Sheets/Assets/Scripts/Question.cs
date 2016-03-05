@@ -23,7 +23,6 @@ public class Question : MonoBehaviour {
 
     int imageWidth, imageHeight;
 
-    public Questionnaire questionnaire;
     public RawImage rawImageQuestion;
 
     public GameObject rightAnswerPanel;
@@ -32,7 +31,7 @@ public class Question : MonoBehaviour {
     // Use this for initialization
     void Start () {
 	    
-        currentSheet = questionnaire.currentSheet;
+        currentSheet = GlobalQuestionnaire.currentSheet;
     }
 
     public static Texture2D LoadPNG(string filePath)
@@ -74,8 +73,8 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        questionnaire.setResult(currentSheet.isRightAnswer(1));
-        
+        GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(1));
+        GlobalQuestionnaire.hasAnswered = true;
     }
 
     public void answer2Chosen()
@@ -84,7 +83,9 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        questionnaire.setResult(currentSheet.isRightAnswer(2));
+        Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(2));
+        GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(2));
+        GlobalQuestionnaire.hasAnswered = true;
     }
 
     public void answer3Chosen()
@@ -93,6 +94,7 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        questionnaire.setResult(currentSheet.isRightAnswer(3));
+        GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(3));
+        GlobalQuestionnaire.hasAnswered = true;
     }
 }

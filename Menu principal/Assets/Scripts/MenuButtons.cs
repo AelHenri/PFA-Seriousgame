@@ -33,7 +33,7 @@ public class MenuButtons : MonoBehaviour {
             case 1: //Options
                 Debug.Log("Selection de options dans le menu");
                 GameState.pauseMenuLoaded = false;
-                SceneManager.LoadSceneAsync("Exemple");
+                GlobalQuestionnaire.startQuestionnaire();
                 GameState.titleScreenOnlyLoaded = false;
                 Time.timeScale = 1;
                 break;

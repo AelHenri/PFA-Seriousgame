@@ -74,8 +74,8 @@ public class Coordinator : MonoBehaviour {
             beginOfTurn = false;
             beforeDiceThrow = true;
         }
-
-        if(beforeDiceThrow)
+        
+        if(beforeDiceThrow && GlobalQuestionnaire.startQuestionnaire())
         {
             for (int i = 0; i < nbBonus; ++i)
                 if (bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed)
@@ -99,7 +99,7 @@ public class Coordinator : MonoBehaviour {
         if(!move.moving && rolled)
         {
             TileBehavior();
-        }    
+        } 
     }
 
     void SetMainPlayer(GameObject player, int place)
