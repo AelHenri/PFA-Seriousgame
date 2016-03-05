@@ -18,7 +18,12 @@ public class Questionnaire : MonoBehaviour{
         GlobalQuestionnaire.q = this;
         questionScene = SceneManager.GetSceneByName("Question");
         exempleScene = SceneManager.GetSceneByName("Exemple");
-        Debug.Log("exemplescene : " + exempleScene);
+    }
+
+    void Update()
+    {
+        if (GlobalQuestionnaire.q == null)
+            GlobalQuestionnaire.q = this;
     }
 
     public void showQuestion()
@@ -30,17 +35,13 @@ public class Questionnaire : MonoBehaviour{
             SceneManager.UnloadScene("Question");
             SceneManager.LoadScene("Question", LoadSceneMode.Additive);
         } 
-        //SceneManager.SetActiveScene(questionScene);
-
-        
-        //    SceneManager.UnloadScene("Exemple");
     }
 
     public void showExemple()
     {
         if (!exempleScene.isLoaded)
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-        //SceneManager.SetActiveScene(exempleScene);
+
         else
         {
             SceneManager.UnloadScene("Exemple");
@@ -51,7 +52,6 @@ public class Questionnaire : MonoBehaviour{
     public bool startQuestionnaire() {
         Time.timeScale = 0;
         GlobalQuestionnaire.hasAnswered = false;
-        Debug.Log("Hello");
         //StartCoroutine(WaitAndPrint(2.0F));
         StartCoroutine(startDisplay());
         Time.timeScale = 1;
@@ -67,7 +67,6 @@ public class Questionnaire : MonoBehaviour{
     public IEnumerator startDisplay()
     {
         showExemple();
-        Debug.Log("hasAnswered" + GlobalQuestionnaire.hasAnswered);
         while (!GlobalQuestionnaire.hasAnswered)
             yield return new WaitUntil(() => GlobalQuestionnaire.hasAnswered);
         Debug.Log("AfterAnswer");

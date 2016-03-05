@@ -10,7 +10,7 @@ public static class GlobalQuestionnaire {
     [HideInInspector]
     static public Sheet currentSheet;
     static public Questionnaire q;
-    static bool isAnswerRight;
+    public static bool isAnswerRight;
     public static bool hasAnswered = false;
 
     // Use this for initialization
@@ -19,8 +19,6 @@ public static class GlobalQuestionnaire {
         sheetsDirectoryPath = Application.dataPath + "/../Fiches";
         System.IO.Path.GetFullPath(sheetsDirectoryPath);
         sheetsPath = System.IO.Directory.GetFiles(sheetsDirectoryPath, "*.xml", System.IO.SearchOption.AllDirectories);
-
-        Debug.Log("Coucou, je suis dans globalq");
         currentSheet = new Sheet(sheetsPath[0]);
     }
 

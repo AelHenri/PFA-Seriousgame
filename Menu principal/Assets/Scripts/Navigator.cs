@@ -22,7 +22,6 @@ public class Navigator : MonoBehaviour {
     //Game loading?
     {
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Additive);
-        Debug.Log("Loading complete");
     }
 
 
@@ -41,7 +40,6 @@ public class Navigator : MonoBehaviour {
         //Verifier les input du joueur
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Detects keycode escape");
             Debug.Log("menu loaded: " + GameState.pauseMenuLoaded);
             if (!GameState.pauseMenuLoaded)
             {

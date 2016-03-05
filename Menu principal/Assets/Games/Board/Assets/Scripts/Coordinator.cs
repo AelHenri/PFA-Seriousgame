@@ -90,14 +90,19 @@ public class Coordinator : MonoBehaviour {
         {
             if (needQuestion)
             {
+                Debug.Log("questionnaire: " + GlobalQuestionnaire.q);
+                
                 GlobalQuestionnaire.startQuestionnaire();
                 needQuestion = false;
 
             }
-
+            
+            /*
             if (GlobalQuestionnaire.hasAnswered)
                 if (!GlobalQuestionnaire.isAnswerRight)
-                    return;
+                    return;*/
+
+            
 
             for (int i = 0; i < nbBonus; ++i)
                 if (bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed)
