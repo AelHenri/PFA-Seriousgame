@@ -60,6 +60,7 @@ MonoBehaviour:
   keys:
   - {fileID: 148966, guid: 2a2447e62fca21a4fae3c3665b561994, type: 2}
   exit: {fileID: 409130, guid: 60da232e292e1e64ea4d146190ef0ec8, type: 2}
+  gradiant: {fileID: 441330, guid: be1a6119702005e4493c8381d84615f1, type: 2}
   width: 5
   height: 5
 --- !u!114 &11498466
@@ -155,6 +156,10 @@ Prefab:
       propertyPath: keys.Array.data[9]
       value: 
       objectReference: {fileID: 148966, guid: 2a2447e62fca21a4fae3c3665b561994, type: 2}
+    - target: {fileID: 0}
+      propertyPath: gradiant
+      value: 
+      objectReference: {fileID: 441330, guid: be1a6119702005e4493c8381d84615f1, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 103614}

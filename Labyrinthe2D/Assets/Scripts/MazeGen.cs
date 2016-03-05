@@ -27,6 +27,7 @@ public class MazeGen : MonoBehaviour {
 	public Transform[] wallPrefab;
 	public GameObject[] keys;
 	public Transform exit;
+	public Transform gradiant;
 	//public Transform key;
 	public int width;
 	public int height;
@@ -55,11 +56,15 @@ public class MazeGen : MonoBehaviour {
 		// Placement de début
 		mazeData [0, height / 2].left = true;
 		printCell (tempCell, -1, height/2);
+		Transform gradStart = Instantiate(gradiant, new Vector3(-1, height/2, -5), Quaternion.identity) as Transform;
+		gradStart.parent = GameObject.Find("Maze").transform;
 		
 		// Placement de la fin
 		mazeData [0, height / 2].left = true;
 		printCell (tempCell, width, height/2);
-		
+		Transform gradEnd = Instantiate(gradiant, new Vector3(width, height/2, -5), new Quaternion(0, 0, 90, 0)) as Transform;
+		gradEnd.parent = GameObject.Find("Maze").transform;
+
 		// Affichage du labyrinthe
 		for (int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++){
