@@ -76,6 +76,8 @@ public class Question : MonoBehaviour {
         Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(1));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(1));
         GlobalQuestionnaire.hasAnswered = true;
+        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
+
     }
 
     public void answer2Chosen()

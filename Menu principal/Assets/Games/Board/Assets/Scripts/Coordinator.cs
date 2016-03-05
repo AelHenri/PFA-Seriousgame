@@ -25,6 +25,10 @@ public class Coordinator : MonoBehaviour {
     private bool beforeDiceThrow = false;
     private bool warping = false;
 
+
+
+    bool needQuestion = false;
+
     // Use this for initialization
     void Start () {
         m = Map.GetComponent<Map>();
@@ -61,9 +65,15 @@ public class Coordinator : MonoBehaviour {
         bonusesBehavior[0] = BonusMoins1;
         bonusesBehavior[1] = BonusMoins2;
         bonusesBehavior[2] = BonusPlus3;
-         
+        
+
     }
 	
+
+    void askQuestion()
+    {
+        GlobalQuestionnaire.startQuestionnaire();
+    }
 	// Update is called once per frame
 	void Update () {
 
@@ -73,10 +83,22 @@ public class Coordinator : MonoBehaviour {
             AddBonus();
             beginOfTurn = false;
             beforeDiceThrow = true;
+            needQuestion = true;
         }
         
-        if(beforeDiceThrow && GlobalQuestionnaire.startQuestionnaire())
+        if(beforeDiceThrow)
         {
+            if (needQuestion)
+            {
+                GlobalQuestionnaire.startQuestionnaire();
+                needQuestion = false;
+
+            }
+
+            if (GlobalQuestionnaire.hasAnswered)
+                if (!GlobalQuestionnaire.isAnswerRight)
+                    return;
+
             for (int i = 0; i < nbBonus; ++i)
                 if (bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed)
                 {
