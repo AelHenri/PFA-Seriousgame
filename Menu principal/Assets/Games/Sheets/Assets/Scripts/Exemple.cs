@@ -28,7 +28,7 @@ public class Exemple : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("GlobalQ:"+ GlobalQuestionnaire.currentSheet);
+        //Debug.Log("GlobalQ:"+ GlobalQuestionnaire.currentSheet);
         exempleText.text = GlobalQuestionnaire.currentSheet.textExemple;
 
         if (img_exemple == null) {

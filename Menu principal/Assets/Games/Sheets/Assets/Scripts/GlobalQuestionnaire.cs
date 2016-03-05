@@ -10,7 +10,7 @@ public static class GlobalQuestionnaire {
     [HideInInspector]
     static public Sheet currentSheet;
     static public Questionnaire q;
-    static public bool isAnswerRight;
+    static bool isAnswerRight;
     public static bool hasAnswered = false;
 
     // Use this for initialization
@@ -28,15 +28,21 @@ public static class GlobalQuestionnaire {
     {
         isAnswerRight = result;
 
-
     }
 
-    public static bool startQuestionnaire()
+    public static void startQuestionnaire()
     {
-        return q.startQuestionnaire();
+        q.startQuestionnaire();
     } 
 
-  
+    public static void setAnswer(bool answer)
+    {
+        isAnswerRight = answer;
+    }
 
+    public static bool getAnswer()
+    {
+        return isAnswerRight;
+    }
 
 }

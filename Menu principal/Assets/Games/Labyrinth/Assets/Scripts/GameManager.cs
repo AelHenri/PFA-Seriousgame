@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void OnLevelWasLoaded(int index){
-		level++; 
+		level++;
+        Debug.Log("coucou");
 		InitGame ();
 
 	}
