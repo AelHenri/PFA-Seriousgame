@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
 		maze.SetupScene (level);
 		GameObject.Find("Timer").GetComponent<Timer>().launch();
 		Invoke ("HideLevelImage", levelStartDelay);
+		GameObject.Find("Main Camera").GetComponent<CamCentering>().centerCamera();
 
 	}
 

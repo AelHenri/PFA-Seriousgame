@@ -1,14 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Box.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CamCentering.cs">
     <Files>
       <File FileName="Labyrinthe2D.sln" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MazeGen.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player.cs" Line="42" Column="49" />
+      <File FileName="Assets\Scripts\MazeGen.cs" Line="69" Column="20" />
+      <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Key.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="35" Column="41" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="46" Column="34" />
       <File FileName="Assets\Scripts\Loader.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CamCentering.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CamCentering.cs" Line="12" Column="40" />
       <File FileName="Assets\Scripts\Box.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
