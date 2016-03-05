@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour {
 	void InitGame(){
 		doingSetup = true;
 		levelImage =GameObject.Find("LevelImage");
-		levelText = GameObject.Find("LevelText").GetComponent<Text>();
+		levelText = GameObject.Find("LevelText").GetComponent<Text>();//error?
 		levelText.text = "Niveau " + level;
 		levelImage.SetActive (true);
 		keys.Clear ();

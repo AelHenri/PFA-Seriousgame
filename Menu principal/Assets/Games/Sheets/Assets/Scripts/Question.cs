@@ -73,6 +73,7 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
+        Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(1));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(1));
         GlobalQuestionnaire.hasAnswered = true;
     }
@@ -94,6 +95,7 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
+        Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(3));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(3));
         GlobalQuestionnaire.hasAnswered = true;
     }

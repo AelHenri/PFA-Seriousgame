@@ -22,7 +22,6 @@ public static class GlobalQuestionnaire {
 
         Debug.Log("Coucou, je suis dans globalq");
         currentSheet = new Sheet(sheetsPath[0]);
-        q = new Questionnaire();
     }
 
     public static void setResult(bool result)

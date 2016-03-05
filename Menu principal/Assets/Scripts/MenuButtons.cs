@@ -3,12 +3,10 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour {
-    public GameObject scene;
     public uint navigatorScreen;
 
     void Awake()
     {
-        scene = transform.parent.gameObject;//Canvas parent du "Menu Canvas"
         Time.timeScale = 0;
     }
 
@@ -28,13 +26,14 @@ public class MenuButtons : MonoBehaviour {
                 Debug.Log("Selection de reprendre la partie dans le menu");
                 GameState.pauseMenuLoaded = false;
                 Time.timeScale = 1;
-                Destroy(scene);
+                SceneManager.UnloadScene("PauseMenu");
                 break;
             case 1: //Options
                 Debug.Log("Selection de options dans le menu");
                 GameState.pauseMenuLoaded = false;
                 GlobalQuestionnaire.startQuestionnaire();
                 GameState.titleScreenOnlyLoaded = false;
+                SceneManager.UnloadScene("PauseMenu");
                 Time.timeScale = 1;
                 break;
             case 2: //Recommencer
