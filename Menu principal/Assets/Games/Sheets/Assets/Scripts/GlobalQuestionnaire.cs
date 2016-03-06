@@ -19,7 +19,7 @@ public static class GlobalQuestionnaire {
         sheetsDirectoryPath = Application.dataPath + "/../Fiches";
         System.IO.Path.GetFullPath(sheetsDirectoryPath);
         sheetsPath = System.IO.Directory.GetFiles(sheetsDirectoryPath, "*.xml", System.IO.SearchOption.AllDirectories);
-        currentSheet = new Sheet(sheetsPath[0]);
+        currentSheet = new Sheet(sheetsPath[1]);
     }
 
     public static void setResult(bool result)

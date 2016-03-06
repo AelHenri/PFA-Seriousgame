@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FicheQCM>
+  <title>mouton_sur_lit</title>
+  <partieExemple>
+    <text>Il y a un mouton sur le lit</text>
+  </partieExemple>
+  <partieQuestion>
+    <question />
+    <answer1 value="false">Il y a une vache dans le piano</answer1>
+    <answer2 value="true">Il y a un mouton sur le lit</answer2>
+    <answer3 value="false">Il y a un éléphant au plafond</answer3>
+  </partieQuestion>
+</FicheQCM>

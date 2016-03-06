@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FicheQCM>
+  <title>un_chameau</title>
+  <partieExemple>
+    <text>Un chameau</text>
+  </partieExemple>
+  <partieQuestion>
+    <question />
+    <answer1 value="true">Le cheval fait du vélo</answer1>
+    <answer2 value="false">Le chien fait du vélo</answer2>
+    <answer3 value="false">Le chameau du vélo</answer3>
+  </partieQuestion>
+</FicheQCM>

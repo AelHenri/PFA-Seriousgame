@@ -113,7 +113,7 @@ public class OuvrirFicheXml : MonoBehaviour {
                 ffs = XDocument.Load(xmlFilePath);
                 this.readXmlFile();
             }
-            catch(System.Xml.XmlException e )
+            catch(System.Xml.XmlException)
             {
                 menu.showOpenSheetError();
                 xmlFilePath = null;

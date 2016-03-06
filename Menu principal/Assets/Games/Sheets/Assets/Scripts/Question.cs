@@ -89,6 +89,7 @@ public class Question : MonoBehaviour {
         Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(2));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(2));
         GlobalQuestionnaire.hasAnswered = true;
+        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
     }
 
     public void answer3Chosen()
@@ -100,5 +101,6 @@ public class Question : MonoBehaviour {
         Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(3));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(3));
         GlobalQuestionnaire.hasAnswered = true;
+        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
     }
 }
