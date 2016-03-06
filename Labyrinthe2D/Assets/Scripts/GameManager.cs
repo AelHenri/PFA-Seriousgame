@@ -33,8 +33,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void OnLevelWasLoaded(int index){
-		level++; 
-		InitGame ();
+		if (!doingSetup) {
+			level++; 
+			InitGame ();
+		}
 
 	}
 
