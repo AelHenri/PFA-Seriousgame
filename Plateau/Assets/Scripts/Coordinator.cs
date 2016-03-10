@@ -35,7 +35,7 @@ public class Coordinator : MonoBehaviour {
     void Start () {
         m = Map.GetComponent<Map>();
         m.PrepareMap();
-        Vector3 pos = m.tiles[0].transform.position + new Vector3(0, 2, 0);
+        Vector3 pos = m.tiles[0].transform.position + new Vector3(0, 0, 0);
         GameObject player = (GameObject)Resources.Load("Player", typeof(GameObject));
         RPS = (GameObject)Resources.Load("RandomPlayerSelector", typeof(GameObject));
 
@@ -161,7 +161,7 @@ public class Coordinator : MonoBehaviour {
             foreach (int i in playerPos)
                 if (i == playerPos[player])
                     nbPlayerOnSameTile++;
-            move.endPosition[move.endPosition.Count- 1] = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y - 0.3f, pos.z);
+            move.endPosition[move.endPosition.Count- 1] = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y, pos.z - 0.3f);
         }
         move.moving = true;
     }
@@ -254,19 +254,21 @@ public class Coordinator : MonoBehaviour {
             bm2Init = false;
         }
 
-        if(RPSTemp.GetComponent<RPS>().end && bm2playerToMove == -1)
+        if (RPSTemp == null)
+        {
+            Move move = Players[bm2playerToMove].GetComponent<Move>();
+            Move(move, -2, bm2playerToMove);
+            bonusEnd = true;
+            bm2Init = true;
+            return;
+        }
+
+        if (RPSTemp.GetComponent<RPS>().end && bm2playerToMove == -1)
         {
             bm2playerToMove = RPSTemp.GetComponent<RPS>().currentArrowPos;
             if (bm2playerToMove >= currentPlayer)
                 bm2playerToMove++;
             Debug.Log(bm2playerToMove);
-        }
-
-        if(GameObject.Equals(RPSTemp,null))
-        {
-            Move move = Players[bm2playerToMove].GetComponent<Move>();
-            Move(move, -2, bm2playerToMove);
-            bonusEnd = true;
         }
     }
 

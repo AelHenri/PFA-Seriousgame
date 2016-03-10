@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RPS : MonoBehaviour {
 
-    public static int nbLine = 1200;
+    public static int nbLine = 300;
     public float radius = 4.0f;
     public float radiusext = 4.2f;
     public float speed = 100f;
@@ -39,11 +39,11 @@ public class RPS : MonoBehaviour {
         {
             lines[2 * i].SetPosition(0, transform.position);
             lines[2 * i].SetPosition(1, transform.position + new Vector3(radius * Mathf.Cos(2 * Mathf.PI * i / nbLine + Mathf.PI / nbPlayer), 
-                                                                         radius * Mathf.Sin(2 * Mathf.PI * i / nbLine + Mathf.PI / nbPlayer),
-                                                                         0));
+                                                                         0,
+                                                                         radius * Mathf.Sin(2 * Mathf.PI * i / nbLine + Mathf.PI / nbPlayer)));
             lines[2 * i].material.color = colors[i / (nbLine / nbPlayer)];
             lines[2 * i + 1].SetPosition(0, transform.position);
-            lines[2 * i + 1].SetPosition(1, transform.position + new Vector3(radiusext * Mathf.Cos(2 * Mathf.PI * i / nbLine), radiusext * Mathf.Sin(2 * Mathf.PI * i / nbLine), 0.1f));
+            lines[2 * i + 1].SetPosition(1, transform.position + new Vector3(radiusext * Mathf.Cos(2 * Mathf.PI * i / nbLine), -0.1f, radiusext * Mathf.Sin(2 * Mathf.PI * i / nbLine)));
             lines[2 * i + 1].material.color = Color.black;
         }
 
@@ -54,16 +54,17 @@ public class RPS : MonoBehaviour {
             SpriteRenderer sr = spriteHolder[i].AddComponent<SpriteRenderer>();
             sr.sprite = Players[i].GetComponent<SpriteRenderer>().sprite;
             Vector3 pos1 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * i / nbPlayer + Mathf.PI / nbPlayer),
-                                      radius * Mathf.Sin(2 * Mathf.PI * i / nbPlayer + Mathf.PI / nbPlayer),
-                                      0);
+                                      0,
+                                      radius * Mathf.Sin(2 * Mathf.PI * i / nbPlayer + Mathf.PI / nbPlayer));
             Vector3 pos2 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * (i + 1) / nbPlayer + Mathf.PI / nbPlayer),
-                                      radius * Mathf.Sin(2 * Mathf.PI * (i + 1) / nbPlayer + Mathf.PI / nbPlayer),
-                                      0);
+                                      0,
+                                      radius * Mathf.Sin(2 * Mathf.PI * (i + 1) / nbPlayer + Mathf.PI / nbPlayer));
             Vector3 pos3 = Vector3.zero;
             Vector3 pos4 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * (2 * i + 1) / (2 * nbPlayer) + Mathf.PI / nbPlayer),
-                                      radius * Mathf.Sin(2 * Mathf.PI * (2 * i + 1) / (2 * nbPlayer) + Mathf.PI / nbPlayer),
-                                      0);
+                                      0,
+                                      radius * Mathf.Sin(2 * Mathf.PI * (2 * i + 1) / (2 * nbPlayer) + Mathf.PI / nbPlayer));
             spriteHolder[i].transform.position = transform.position + ((pos1 + pos2 + pos3 + pos4) / 4);
+            spriteHolder[i].transform.eulerAngles = new Vector3(90, 0, 0);
         }
         endTime = Random.Range(7.5f, 10f);
         rotation += Random.Range(0f, 360f);
@@ -74,7 +75,8 @@ public class RPS : MonoBehaviour {
         if(!end)
         {
             rotation += speed * 1 / Mathf.Pow(currentTime + 1, 2);
-            Arrow.transform.eulerAngles = new Vector3(0, 0, - 1 * rotation);
+            Vector3 ang = Arrow.transform.eulerAngles;
+            Arrow.transform.eulerAngles = new Vector3(ang.x, -1 * rotation, ang.z);
         }
         currentTime += Time.deltaTime;
         if (currentTime >= endTime)

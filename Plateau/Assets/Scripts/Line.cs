@@ -16,8 +16,8 @@ public class Line : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(begin != null)
-            lr.SetPosition(0, begin.transform.position);
+            lr.SetPosition(0, begin.transform.position - new Vector3(0, 1, 0));
         if(end != null)
-            lr.SetPosition(1, end.transform.position);
+            lr.SetPosition(1, end.transform.position - new Vector3(0, 1, 0));
     }
 }
