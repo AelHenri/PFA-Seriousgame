@@ -9,6 +9,37 @@ public class Map : MonoBehaviour {
     public GameObject[] tiles;
     public bool isReady = false;
 
+    private Vector3[] positions = {new Vector3(-7.73,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0),
+                                   new Vector3(0,10,0)
+                                  };
 	// Use this for initialization
 	void Start () {
         
@@ -31,7 +62,7 @@ public class Map : MonoBehaviour {
         for (int k = 0; k < nbTiles; k++)
         {
             float x = -1 * width + k * ((float)2 * width / (nbTiles - 1));
-            Vector3 pos = new Vector3(x, 10, 2 * (k % 3) - height);
+            Vector3 pos = positions[k];
             //tiles[k] = (GameObject)Instantiate(r, new Vector3(Random.Range(-1 * width, width), Random.Range(0, -1 * height), 0), Quaternion.identity);
             if (k == 0)
                 tiles[k] = (GameObject)Instantiate(start);
