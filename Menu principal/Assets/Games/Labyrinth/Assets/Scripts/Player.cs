@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour {
+	public int rightAnswer = 0;
 	public int speed = 10;
 	public int maxSpeed = 3;
 	public Rigidbody2D rb;
@@ -11,12 +12,12 @@ public class Player : MonoBehaviour {
 	public static int localKeys;
 	public Text KeyText;
 	public Text EndingText;
-
-
+	
+	bool isAnswering = false;
+	GameObject collidedKey;
 	float moveHorizontal;
 	float moveVertical;
 	float restartLevelDelay = 1f;
-
 
 	// Use this for initialization
 	void Start () {
@@ -30,12 +31,10 @@ public class Player : MonoBehaviour {
 		localKeys = 0;
 		//KeyText.text = "Clés : " + globalKeys;
 		KeyText.text = "Clés : " + localKeys;
-
 	}
 
 	private void OnDisable(){
 		GameManager.instance.nbKeys = globalKeys;
-	
 	}
 
 	private void Restart(){
@@ -63,23 +62,32 @@ public class Player : MonoBehaviour {
 		}
 	
 		else if (other.tag == "key") {
-            GlobalQuestionnaire.startQuestionnaire();
-            Debug.Log("Player answer is :" + GlobalQuestionnaire.isAnswerRight);
-			globalKeys = globalKeys + 1;
-			localKeys = localKeys + 1;
-			other.gameObject.SetActive(false);
-			KeyText.text = "Clés : " + localKeys;
+			GlobalQuestionnaire.startQuestionnaire ();	
+			isAnswering = true;
+			collidedKey = other.gameObject;
 		}
 	}
 	// Update is called once per frame
 	void Update () {
 		moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
 		moveVertical = Input.GetAxis ("Vertical")*speed;
-		//transform.Translate (moveHorizontal, moveVertical, 0);
-		//Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0);
-
-
+		if (isAnswering) {
+				if (GlobalQuestionnaire.hasAnswered) {
+					if (GlobalQuestionnaire.isAnswerRight) {
+						globalKeys = globalKeys + 1;
+						localKeys = localKeys + 1;
+						collidedKey.SetActive(false);
+						KeyText.text = "Clés : " + localKeys;
+					}
+				else{
+						collidedKey.GetComponent<Key>().MoveKey();
+						KeyText.text = "Clés : " + localKeys;
+					}	
+					isAnswering = false;
+				}
+			}
 		}
+
 	void FixedUpdate(){
 		if (moveHorizontal >= 0 && moveVertical>=0)
 			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
@@ -89,8 +97,5 @@ public class Player : MonoBehaviour {
 			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
 		if (moveHorizontal <= 0 && moveVertical<=0)
 			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Max( moveVertical,-maxSpeed), 0);  
-
 	}
-
-	
 }
