@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour {
 
 	private Text levelText;		
 	public int level =1;
+    public AudioSource audioSource;
+    public AudioClip[] music = new AudioClip[4];
 	private GameObject levelImage;
 	private bool doingSetup;
 	// Use this for initialization
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 		keys = new List<Key> ();
 		maze = GetComponent<MazeGen> ();
-	
+        audioSource = GetComponent<AudioSource>();
 		InitGame ();
 
 
@@ -52,6 +54,9 @@ public class GameManager : MonoBehaviour {
 		GameObject.Find("Timer").GetComponent<Timer>().launch();
 		Invoke ("HideLevelImage", levelStartDelay);
 		GameObject.Find("Main Camera").GetComponent<CamCentering>().centerCamera();
+        
+        audioSource.clip = music[(level-1)%3];
+        audioSource.Play();
 
 	}
 

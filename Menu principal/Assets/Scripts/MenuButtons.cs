@@ -46,7 +46,9 @@ public class MenuButtons : MonoBehaviour {
                     SceneManager.LoadSceneAsync((int)navigatorScreen);
                     GameState.titleScreenOnlyLoaded = true;
                     Time.timeScale = 1;
-                }
+                    if (GameState.labyrinth != null)
+                        Destroy(GameState.labyrinth);
+                }   
                 else
                 {
                     //quit game

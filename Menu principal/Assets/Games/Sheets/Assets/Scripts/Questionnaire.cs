@@ -85,3 +85,11 @@ public class Questionnaire : MonoBehaviour{
         Debug.Log("isAnswerRight:" + GlobalQuestionnaire.isAnswerRight);
     }
 }
+
+/*WaitingforAnswer()
+{
+    if(encoursdetraitement && GlobalQuestionnaire.hasAnswered)
+    {
+        GlobalQuestionnaire.getAnswer();
+    }
+}*/
