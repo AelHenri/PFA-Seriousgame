@@ -34,7 +34,6 @@ public class MenuButtons : MonoBehaviour {
                 GlobalQuestionnaire.startQuestionnaire();
                 GameState.titleScreenOnlyLoaded = false;
                 SceneManager.UnloadScene("PauseMenu");
-                Time.timeScale = 1;
                 break;
             case 2: //Recommencer
                 Debug.Log("Selection de recommencer dans le menu");

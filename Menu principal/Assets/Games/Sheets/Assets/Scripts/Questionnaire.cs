@@ -49,14 +49,11 @@ public class Questionnaire : MonoBehaviour{
         }
     }
 
-    public bool startQuestionnaire() {
+    public void startQuestionnaire() {
         Time.timeScale = 0;
         GlobalQuestionnaire.hasAnswered = false;
         //StartCoroutine(WaitAndPrint(2.0F));
         StartCoroutine(startDisplay());
-        Time.timeScale = 1;
-        Debug.Log("isAnswerRight:" + GlobalQuestionnaire.isAnswerRight);
-        return GlobalQuestionnaire.isAnswerRight;
     }
 
     IEnumerator WaitAndPrint(float waitTime)
@@ -70,6 +67,7 @@ public class Questionnaire : MonoBehaviour{
         while (!GlobalQuestionnaire.hasAnswered)
             yield return new WaitUntil(() => GlobalQuestionnaire.hasAnswered);
         Debug.Log("AfterAnswer");
+        answerGiven();
         yield return null;
     }
  
@@ -81,5 +79,9 @@ public class Questionnaire : MonoBehaviour{
         SceneManager.UnloadScene("Question");
     } 
  
-
+    private void answerGiven()
+    {
+        Time.timeScale = 1;
+        Debug.Log("isAnswerRight:" + GlobalQuestionnaire.isAnswerRight);
+    }
 }

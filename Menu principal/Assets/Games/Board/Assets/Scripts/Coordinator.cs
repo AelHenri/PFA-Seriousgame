@@ -11,6 +11,7 @@ public class Coordinator : MonoBehaviour {
     public GameObject[] Players = new GameObject[nbPlayer];
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
+    public Sprite[] playerSprites = new Sprite[4];
 
     delegate void BonusBehavior(int playerWhoActivate);
 
@@ -24,20 +25,25 @@ public class Coordinator : MonoBehaviour {
     private bool beginOfTurn = true;
     private bool beforeDiceThrow = false;
     private bool warping = false;
-
-
-
-    bool needQuestion = false;
+    private bool bonusEnd = true;
+    private GameObject RPS;
+    private GameObject RPSTemp;
+    private bool bm2Init = true;
+    private int bm2playerToMove;
 
     // Use this for initialization
     void Start () {
         m = Map.GetComponent<Map>();
         m.PrepareMap();
-        Vector3 pos = m.tiles[0].transform.position;
+        Vector3 pos = m.tiles[0].transform.position + new Vector3(0, 0, 0);
         GameObject player = (GameObject)Resources.Load("Player", typeof(GameObject));
+        RPS = (GameObject)Resources.Load("RandomPlayerSelector", typeof(GameObject));
+
         for (int i = 0; i < nbPlayer; ++i)
         {
-            Players[i] = (GameObject)Instantiate(player, pos, Quaternion.identity);
+            Players[i] = (GameObject)Instantiate(player);
+            Players[i].transform.position = pos;
+            Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
             Players[i].SetActive(true);
         }  
         d = Dice.GetComponent<Dice>();
@@ -65,15 +71,9 @@ public class Coordinator : MonoBehaviour {
         bonusesBehavior[0] = BonusMoins1;
         bonusesBehavior[1] = BonusMoins2;
         bonusesBehavior[2] = BonusPlus3;
-        
-
+         
     }
 	
-
-    void askQuestion()
-    {
-        GlobalQuestionnaire.startQuestionnaire();
-    }
 	// Update is called once per frame
 	void Update () {
 
@@ -83,32 +83,19 @@ public class Coordinator : MonoBehaviour {
             AddBonus();
             beginOfTurn = false;
             beforeDiceThrow = true;
-            needQuestion = true;
         }
-        
+
         if(beforeDiceThrow)
         {
-            if (needQuestion)
-            {
-                Debug.Log("questionnaire: " + GlobalQuestionnaire.q);
-                
-                GlobalQuestionnaire.startQuestionnaire();
-                needQuestion = false;
-
-            }
-            
-            /*
-            if (GlobalQuestionnaire.hasAnswered)
-                if (!GlobalQuestionnaire.isAnswerRight)
-                    return;*/
-
-            
-
             for (int i = 0; i < nbBonus; ++i)
                 if (bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed)
                 {
+                    bonusEnd = false;
                     bonusesBehavior[i](currentPlayer);
-                    bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed = false;
+                    if (bonusEnd)
+                    {
+                        bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed = false;
+                    }
                 }    
         }
 
@@ -126,7 +113,7 @@ public class Coordinator : MonoBehaviour {
         if(!move.moving && rolled)
         {
             TileBehavior();
-        } 
+        }    
     }
 
     void SetMainPlayer(GameObject player, int place)
@@ -148,7 +135,7 @@ public class Coordinator : MonoBehaviour {
         foreach(int i in playerPos)
             if (i == playerPos[place])
                 nbPlayerOnSameTile++;
-        player.transform.position = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y - 0.3f, pos.z);
+        player.transform.position = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y, pos.z - 0.3f);
         player.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         for (int i = 0; i < nbBonus; ++i)
             bonus[place][i].SetActive(false);
@@ -174,7 +161,7 @@ public class Coordinator : MonoBehaviour {
             foreach (int i in playerPos)
                 if (i == playerPos[player])
                     nbPlayerOnSameTile++;
-            move.endPosition[move.endPosition.Count- 1] = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y - 0.3f, pos.z);
+            move.endPosition[move.endPosition.Count- 1] = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y, pos.z - 0.3f);
         }
         move.moving = true;
     }
@@ -246,14 +233,43 @@ public class Coordinator : MonoBehaviour {
     {
         Move move = Players[player].GetComponent<Move>();
         Move(move, 3, player);
+        bonusEnd = true;
     }
 
     void BonusMoins2(int player)
     {
-        int k;
-        while ((k = UnityEngine.Random.Range(0, nbPlayer)) == player);
-        Move move = Players[k].GetComponent<Move>();
-        Move(move, -2, k);
+        if (bm2Init)
+        {
+            int k = 0;
+            RPSTemp = Instantiate(RPS);
+            RPS rps = RPSTemp.GetComponent<RPS>();
+            rps.Players = new GameObject[nbPlayer - 1];
+            int count = 0;
+            for (int i = 0; i < nbPlayer; ++i)
+                if (i != currentPlayer)
+                    rps.Players[count++] = Players[i];
+            rps.nbPlayer = nbPlayer - 1;
+            RPSTemp.gameObject.SetActive(true);
+            bm2playerToMove = -1;
+            bm2Init = false;
+        }
+
+        if (RPSTemp == null)
+        {
+            Move move = Players[bm2playerToMove].GetComponent<Move>();
+            Move(move, -2, bm2playerToMove);
+            bonusEnd = true;
+            bm2Init = true;
+            return;
+        }
+
+        if (RPSTemp.GetComponent<RPS>().end && bm2playerToMove == -1)
+        {
+            bm2playerToMove = RPSTemp.GetComponent<RPS>().currentArrowPos;
+            if (bm2playerToMove >= currentPlayer)
+                bm2playerToMove++;
+            Debug.Log(bm2playerToMove);
+        }
     }
 
     void BonusMoins1(int player)
@@ -263,7 +279,8 @@ public class Coordinator : MonoBehaviour {
             { 
                 Move move = Players[i].GetComponent<Move>();
                 Move(move, -1, i);
-            }  
+            }
+        bonusEnd = true;
     }
 
     

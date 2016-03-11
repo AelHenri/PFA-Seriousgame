@@ -63,6 +63,8 @@ public class Player : MonoBehaviour {
 		}
 	
 		else if (other.tag == "key") {
+            GlobalQuestionnaire.startQuestionnaire();
+            Debug.Log("Player answer is :" + GlobalQuestionnaire.isAnswerRight);
 			globalKeys = globalKeys + 1;
 			localKeys = localKeys + 1;
 			other.gameObject.SetActive(false);

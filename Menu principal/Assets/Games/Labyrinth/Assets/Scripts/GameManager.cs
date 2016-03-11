@@ -33,9 +33,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void OnLevelWasLoaded(int index){
-		level++;
-        Debug.Log("coucou");
-		InitGame ();
+		if (!doingSetup) {
+			level++; 
+			InitGame ();
+		}
 
 	}
 
@@ -43,13 +44,14 @@ public class GameManager : MonoBehaviour {
 	void InitGame(){
 		doingSetup = true;
 		levelImage =GameObject.Find("LevelImage");
-		levelText = GameObject.Find("LevelText").GetComponent<Text>();//error?
+		levelText = GameObject.Find("LevelText").GetComponent<Text>();
 		levelText.text = "Niveau " + level;
 		levelImage.SetActive (true);
 		keys.Clear ();
 		maze.SetupScene (level);
 		GameObject.Find("Timer").GetComponent<Timer>().launch();
 		Invoke ("HideLevelImage", levelStartDelay);
+		GameObject.Find("Main Camera").GetComponent<CamCentering>().centerCamera();
 
 	}
 
