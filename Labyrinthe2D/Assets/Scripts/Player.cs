@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour {
+	public int rightAnswer = 0;
 	public int speed = 10;
 	public int maxSpeed = 3;
 	public Rigidbody2D rb;
@@ -63,10 +64,20 @@ public class Player : MonoBehaviour {
 		}
 	
 		else if (other.tag == "key") {
+			if (rightAnswer == 1){
 			globalKeys = globalKeys + 1;
 			localKeys = localKeys + 1;
 			other.gameObject.SetActive(false);
 			KeyText.text = "Clés : " + localKeys;
+			}
+			else{
+				globalKeys = globalKeys + 1;
+				localKeys = localKeys + 1;
+				other.gameObject.GetComponent<Key>().MoveKey();
+				KeyText.text = "Clés : " + localKeys;
+
+
+			}
 		}
 	}
 	// Update is called once per frame
