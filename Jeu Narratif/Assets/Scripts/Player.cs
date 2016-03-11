@@ -9,10 +9,18 @@ public class Player : MonoBehaviour
     private Vector3 target;
     private Rigidbody2D rb;
     private bool collided;
+    private SceneManager sceneManager;
+    private int currentScene;
+    private bool paralyzed = false;
 
     // Use this for initialization
     void Start()
     {
+        sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
+        currentScene = sceneManager.level;
+        float x = sceneManager.scene[currentScene].playerX;
+        float y = sceneManager.scene[currentScene].playerY;
+        transform.position = new Vector3(x, y);
         target = transform.position;
         rb = GetComponent<Rigidbody2D>();
     }
@@ -20,38 +28,46 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        if (Input.GetMouseButton(0))
+        if (!paralyzed)
         {
-            collided = false;
-            target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            target.z = transform.position.z;
-        }
+            if (Input.GetMouseButton(0))
+            {
+                collided = false;
+                target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                target.z = transform.position.z;
+            }
 
-        if (!collided)
+            if (!collided)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            }
+        }
+        else
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            Paralyze();
         }
-
     }
 
-    /*void OnCollisionEnter2D()
+    public void Paralyze()
     {
-        Debug.Log("Hello");
-        collided = true;
-    }*/
-
+        if (!paralyzed)
+        {
+            paralyzed = true;
+        }
+        else
+        {
+            paralyzed = false;
+        }
+    }
+    
     private void OnCollisionEnter2D(Collision2D col)
     {
         collided = true;
-        Debug.Log("Hello");
         if (col.gameObject.tag == "PNJ")
         {
             //SceneManager sceneManager = GameObject.Find("GameManager").GetComponent(SceneManager);
-            SceneManager sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
-            sceneManager.PlaceArrows();
-
-            Debug.Log("Coucou");
+            
+            //sceneManager.PlaceArrows();
         }
     }
 

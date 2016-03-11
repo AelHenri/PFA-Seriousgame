@@ -7,6 +7,8 @@ public class Scene
     public GameObject background;
     public GameObject[] PNJs;
     public GameObject[] Arrows;
+    public float playerX;
+    public float playerY;
 }
 
 public class SceneManager : MonoBehaviour {
