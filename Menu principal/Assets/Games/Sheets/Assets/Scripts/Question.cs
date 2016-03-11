@@ -28,10 +28,18 @@ public class Question : MonoBehaviour {
     public GameObject rightAnswerPanel;
     public GameObject wrongAnswerPanel;
 
+
+    public AudioClip mistakeSound;
+    public AudioClip successSound;
+    AudioSource audioSource;
+
     // Use this for initialization
     void Start () {
 	    
         currentSheet = GlobalQuestionnaire.currentSheet;
+
+        audioSource = GetComponent<AudioSource>();
+        //audioSource.clip = mistake;
     }
 
     public static Texture2D LoadPNG(string filePath)
@@ -65,7 +73,20 @@ public class Question : MonoBehaviour {
         
     }
 
+    void playAnswerSound(bool isAnswerRight)
+    {
+        if (isAnswerRight)
+        {
+            audioSource.clip = successSound;
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.clip = mistakeSound;
+            audioSource.Play();
+        }
 
+    }
 
     public void answer1Chosen()
     {
@@ -76,8 +97,9 @@ public class Question : MonoBehaviour {
         Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(1));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(1));
         GlobalQuestionnaire.hasAnswered = true;
-        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
 
+        playAnswerSound(currentSheet.isRightAnswer(1));
+        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
     }
 
     public void answer2Chosen()
@@ -86,6 +108,7 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
+        playAnswerSound(currentSheet.isRightAnswer(2));
         Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(2));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(2));
         GlobalQuestionnaire.hasAnswered = true;
@@ -98,6 +121,7 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
+        playAnswerSound(currentSheet.isRightAnswer(3));
         Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(3));
         GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(3));
         GlobalQuestionnaire.hasAnswered = true;
