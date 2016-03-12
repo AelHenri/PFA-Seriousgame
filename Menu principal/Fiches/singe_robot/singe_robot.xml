@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>singe_robot</title>
+  <ExamplePart>
+    <text>Le singe dessine un bonhomme</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="false">Un bonhomme</answer1>
+    <answer2 value="false">Un singe</answer2>
+    <answer3 value="true">Un robot</answer3>
+  </QuestionPart>
+</MCQSheet>

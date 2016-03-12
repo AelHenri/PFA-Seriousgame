@@ -84,8 +84,14 @@ public class OuvrirFicheXml : MonoBehaviour {
 
         getImagesPath();
 
-        StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathQues), ajt.img_question));
-        StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathIndic), ajt.img_indication));
+        //StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathIndic), ajt.img_indication));
+        //StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathQues), ajt.img_question));
+
+        ajt.img_indication = ajt.LoadPNG(ajt.imagePathIndic);
+        ajt.rawImageExemple.texture = ajt.img_indication;
+
+        ajt.img_question = ajt.LoadPNG(ajt.imagePathQues);
+        ajt.rawImageQuestion.texture = ajt.img_question;
 
         updateFile = false;
     }

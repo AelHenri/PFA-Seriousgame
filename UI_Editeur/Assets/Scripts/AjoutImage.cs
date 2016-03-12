@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.IO;
 
 
 
@@ -111,13 +112,31 @@ public class AjoutImage : MonoBehaviour
     
     /*
      * Fonction qui charge l'image dans la texture "img_indication" pour pouvoir être affichée
+     * Must be used as a corroutine
      */
    public IEnumerator LoadATexture(string st, Texture2D img)
     {
         www = new WWW(st);
         yield return www;
 
+        Debug.Log(img + st);
         www.LoadImageIntoTexture(img);
+    }
+
+
+    public Texture2D LoadPNG(string filePath)
+    {
+
+        Texture2D tex = null;
+        byte[] fileData;
+
+        if (File.Exists(filePath))
+        {
+            fileData = File.ReadAllBytes(filePath);
+            tex = new Texture2D(2, 2);
+            tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+        }
+        return tex;
     }
 
     public void desactiverBouttonAjout()

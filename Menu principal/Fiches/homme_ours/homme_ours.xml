@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>homme_ours</title>
+  <ExamplePart>
+    <text>Le bonhomme promène un ours</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="true">L'ours promène le bonhomme</answer1>
+    <answer2 value="false">On vit une époque formidable</answer2>
+    <answer3 value="false">Il va faire des courses</answer3>
+  </QuestionPart>
+</MCQSheet>
