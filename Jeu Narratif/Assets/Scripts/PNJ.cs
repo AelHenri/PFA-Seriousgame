@@ -12,14 +12,14 @@ public class PNJ : MonoBehaviour {
     private Vector3 minSize;
     private Vector2 minColliderSize;
     private float shrinkSpeed = 0.07f;
-    private SceneManager sceneManager;
+    private StorySceneManager sceneManager;
     private BoxCollider2D boxCollider;
 
 	// Use this for initialization
 	protected virtual void Start () {
         transform.position = new Vector3(x, y);
         minSize = transform.localScale;
-        sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
+        sceneManager = (StorySceneManager)FindObjectOfType(typeof(StorySceneManager));
         
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         minColliderSize = boxCollider.size;
@@ -79,7 +79,6 @@ public class PNJ : MonoBehaviour {
 
     protected void callPlaceArrows()
     {
-        Debug.Log("coucou");
         sceneManager.PlaceArrows();
     }
 

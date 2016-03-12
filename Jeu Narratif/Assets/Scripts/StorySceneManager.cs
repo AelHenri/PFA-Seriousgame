@@ -11,7 +11,7 @@ public class Scene
     public float playerY;
 }
 
-public class SceneManager : MonoBehaviour {
+public class StorySceneManager : MonoBehaviour {
 
     public Scene[] scene;
     public int level = 0;

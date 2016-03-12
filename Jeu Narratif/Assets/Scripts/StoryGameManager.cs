@@ -4,7 +4,7 @@ using System.Collections;
 public class StoryGameManager : MonoBehaviour {
 
     public static StoryGameManager instance = null;
-    public SceneManager scene;
+    public StorySceneManager scene;
 
 	// Use this for initialization
 	void Awake () {
@@ -16,7 +16,7 @@ public class StoryGameManager : MonoBehaviour {
         
 
         DontDestroyOnLoad(gameObject);
-        scene = GetComponent<SceneManager>();
+        scene = GetComponent<StorySceneManager>();
 
         InitGame();
 	

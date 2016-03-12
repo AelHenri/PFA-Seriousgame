@@ -9,14 +9,14 @@ public class StoryPlayer : MonoBehaviour
     private Vector3 target;
     private Rigidbody2D rb;
     private bool collided;
-    private SceneManager sceneManager;
+    private StorySceneManager sceneManager;
     private int currentScene;
     private bool paralyzed = false;
 
     // Use this for initialization
     void Start()
     {
-        sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
+        sceneManager = (StorySceneManager)FindObjectOfType(typeof(StorySceneManager));
         currentScene = sceneManager.level;
         float x = sceneManager.scene[currentScene].playerX;
         float y = sceneManager.scene[currentScene].playerY;
