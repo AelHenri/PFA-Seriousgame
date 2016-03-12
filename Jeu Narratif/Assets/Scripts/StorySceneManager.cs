@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
-public class Scene
+public class StoryScene
 {
     public GameObject background;
     public GameObject[] PNJs;
@@ -13,7 +13,7 @@ public class Scene
 
 public class StorySceneManager : MonoBehaviour {
 
-    public Scene[] scene;
+    public StoryScene[] scene;
     public int level = 0;
 
     private Transform sceneHolder;
