@@ -62,14 +62,14 @@ public class FicheXml : MonoBehaviour {
 
     public void genererFiche()
     {
-        fiche = new XDocument(new XElement("FicheQCM",
+        fiche = new XDocument(new XElement("MCQSheet",
                                    new XElement("title", nomFiche ),
 
-                                   new XElement("partieExemple",
+                                   new XElement("ExamplePart",
                                         new XElement("text", textExemple)
                                         //new XElement("image", destImageExemple) // Path a modifier vu que les images seront copiées dans le même dossier que la fiche
                                                 ),//</partieExemple>
-                                   new XElement("partieQuestion",
+                                   new XElement("QuestionPart",
                                         new XElement("question"),             //utile ?
                                         //new XElement("image", destImageQuestion),
                                         new XElement("answer1", textReponse1, new XAttribute("value", valueRep1)),

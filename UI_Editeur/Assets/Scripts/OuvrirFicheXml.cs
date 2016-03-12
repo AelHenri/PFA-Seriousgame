@@ -69,14 +69,14 @@ public class OuvrirFicheXml : MonoBehaviour {
 
 
         vali.nomFiche.text = ffs.Root.Element("title").Value;
-        vali.inputExemple.text = ffs.Root.Element("partieExemple").Element("text").Value;
-        vali.inputReponse1.text = ffs.Root.Element("partieQuestion").Element("answer1").Value;
-        vali.inputReponse2.text = ffs.Root.Element("partieQuestion").Element("answer2").Value;
-        vali.inputReponse3.text = ffs.Root.Element("partieQuestion").Element("answer3").Value;
+        vali.inputExemple.text = ffs.Root.Element("ExamplePart").Element("text").Value;
+        vali.inputReponse1.text = ffs.Root.Element("QuestionPart").Element("answer1").Value;
+        vali.inputReponse2.text = ffs.Root.Element("QuestionPart").Element("answer2").Value;
+        vali.inputReponse3.text = ffs.Root.Element("QuestionPart").Element("answer3").Value;
 
-        if (ffs.Root.Element("partieQuestion").Element("answer1").Attribute("value").ToString().Equals("value=\"true\""))
+        if (ffs.Root.Element("QuestionPart").Element("answer1").Attribute("value").ToString().Equals("value=\"true\""))
             vali.toggleRep1.isOn = true;
-        else if (ffs.Root.Element("partieQuestion").Element("answer2").Attribute("value").ToString() == "value=\"true\"")
+        else if (ffs.Root.Element("QuestionPart").Element("answer2").Attribute("value").ToString() == "value=\"true\"")
             vali.toggleRep2.isOn = true;
         else
             vali.toggleRep3.isOn = true;
