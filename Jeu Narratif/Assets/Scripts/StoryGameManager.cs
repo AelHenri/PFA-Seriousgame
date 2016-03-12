@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
+public class StoryGameManager : MonoBehaviour {
 
-    public static GameManager instance = null;
+    public static StoryGameManager instance = null;
     public SceneManager scene;
 
 	// Use this for initialization

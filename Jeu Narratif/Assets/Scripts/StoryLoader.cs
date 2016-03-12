@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Loader : MonoBehaviour
+public class StoryLoader : MonoBehaviour
 {
 
     public GameObject gameManager;
     // Use this for initialization
     void Awake()
     {
-        if (GameManager.instance == null)
+        if (StoryGameManager.instance == null)
             Instantiate(gameManager);
     }
 
