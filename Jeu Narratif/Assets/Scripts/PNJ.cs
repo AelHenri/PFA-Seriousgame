@@ -64,7 +64,6 @@ public class PNJ : MonoBehaviour {
     {
         if (clickable && !eventDone)
         {
-            Debug.Log("coucou");
             transform.GetComponent<SpriteRenderer>().color = new Color(0.9f,0.9f,0.9f);
         }
     }
@@ -80,6 +79,7 @@ public class PNJ : MonoBehaviour {
 
     protected void callPlaceArrows()
     {
+        Debug.Log("coucou");
         sceneManager.PlaceArrows();
     }
 
