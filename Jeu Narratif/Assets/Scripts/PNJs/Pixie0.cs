@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Pixie0 : PNJ {
 
+<<<<<<< HEAD
     protected override void PNJClickEvent()
     {
         //callPlaceArrows();
@@ -13,5 +14,11 @@ public class Pixie0 : PNJ {
     {
         callPlaceArrows();
         base.PNJLoadEvent();
+=======
+    protected override void LaunchPNJEvent()
+    {
+        base.LaunchPNJEvent();
+        callPlaceArrows();        
+>>>>>>> origin/master
     }
 }
