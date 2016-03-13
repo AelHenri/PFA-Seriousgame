@@ -48,6 +48,8 @@ public class MenuButtons : MonoBehaviour {
                     Time.timeScale = 1;
                     if (GameState.labyrinth != null)
                         Destroy(GameState.labyrinth);
+                    if (GameState.narrative != null)
+                        Destroy(GameState.narrative);
                 }   
                 else
                 {
