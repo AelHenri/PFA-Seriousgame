@@ -11,7 +11,7 @@ public class StoryPlayer : MonoBehaviour
     private bool collided;
     private StorySceneManager sceneManager;
     private int currentScene;
-    private bool paralyzed = false;
+    //private bool paralyzed = false;
 
     // Use this for initialization
     void Start()
@@ -28,8 +28,8 @@ public class StoryPlayer : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!paralyzed)
-        {
+        //if (!paralyzed)
+        //{
             if (Input.GetMouseButton(0))
             {
                 collided = false;
@@ -41,14 +41,14 @@ public class StoryPlayer : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
             }
-        }
+        /*}
         else
         {
             Paralyze();
-        }
+        }*/
     }
 
-    public void Paralyze()
+    /*public void Paralyze()
     {
         if (!paralyzed)
         {
@@ -58,7 +58,7 @@ public class StoryPlayer : MonoBehaviour
         {
             paralyzed = false;
         }
-    }
+    }*/
     
     private void OnCollisionEnter2D(Collision2D col)
     {
