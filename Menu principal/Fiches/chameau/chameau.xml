@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>chameau</title>
+  <ExamplePart>
+    <text>Un chameau</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="false">Le cheval fait du vélo</answer1>
+    <answer2 value="false">Le chien fait du vélo</answer2>
+    <answer3 value="true">Le chameau fait du vélo</answer3>
+  </QuestionPart>
+</MCQSheet>

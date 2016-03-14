@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>tortue</title>
+  <ExamplePart>
+    <text>La tortue regarde la télé</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="false">Une hirondelle</answer1>
+    <answer2 value="true">Une Tortue</answer2>
+    <answer3 value="false">Une trompette</answer3>
+  </QuestionPart>
+</MCQSheet>

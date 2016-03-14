@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>zebre</title>
+  <ExamplePart>
+    <text>Un cheval et un âne</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="false">un âne</answer1>
+    <answer2 value="true">un zèbre</answer2>
+    <answer3 value="false">un cheval</answer3>
+  </QuestionPart>
+</MCQSheet>

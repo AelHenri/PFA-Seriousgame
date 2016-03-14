@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>elephant</title>
+  <ExamplePart>
+    <text>L'éléphant a un parapluie</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="false">Un cheval</answer1>
+    <answer2 value="true">Un éléphant</answer2>
+    <answer3 value="false">Un serpent</answer3>
+  </QuestionPart>
+</MCQSheet>

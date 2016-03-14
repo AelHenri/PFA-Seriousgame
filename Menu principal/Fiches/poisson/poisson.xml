@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>poisson</title>
+  <ExamplePart>
+    <text>Un poisson</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="true">Un poisson</answer1>
+    <answer2 value="false">Un poussin</answer2>
+    <answer3 value="false">Un poireau</answer3>
+  </QuestionPart>
+</MCQSheet>

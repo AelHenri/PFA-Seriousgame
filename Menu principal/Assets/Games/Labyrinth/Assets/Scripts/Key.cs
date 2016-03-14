@@ -37,7 +37,7 @@ public class Key : MonoBehaviour {
 					if ( Vector3.Distance(k.GetComponent<Key>().transform.position, this.transform.position)< 0.1f){
 						nbKeysThere = nbKeysThere + 1;
 					}
-				Debug.Log(nbKeysThere);
+				//Debug.Log(nbKeysThere);
 				}
 			}
 
