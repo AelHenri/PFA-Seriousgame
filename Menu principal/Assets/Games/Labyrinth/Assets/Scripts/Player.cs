@@ -12,9 +12,11 @@ public class Player : MonoBehaviour {
 	public static int localKeys;
 	public Text KeyText;
 	public Text EndingText;
-	
+
+	bool bonus = false;
 	bool isAnswering = false;
 	GameObject collidedKey;
+	GameObject collidedBonus;
 	float moveHorizontal;
 	float moveVertical;
 	float restartLevelDelay = 1f;
@@ -47,10 +49,9 @@ public class Player : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "exit") {
 			if (localKeys < GameManager.instance.level) {
-				if (GameManager.instance.level - localKeys == 1){
-				EndingText.text = "Il manque " + (GameManager.instance.level - localKeys) + " clé";
-				}
-				else {
+				if (GameManager.instance.level - localKeys == 1) {
+					EndingText.text = "Il manque " + (GameManager.instance.level - localKeys) + " clé";
+				} else {
 					EndingText.text = "Il manque " + (GameManager.instance.level - localKeys) + " clés";
 				}
 				EndingText.gameObject.SetActive (true);
@@ -59,12 +60,15 @@ public class Player : MonoBehaviour {
 				enabled = false;
 				Invoke ("Restart", restartLevelDelay);
 			}
-		}
-	
-		else if (other.tag == "key") {
+		} else if (other.tag == "key") {
 			GlobalQuestionnaire.startQuestionnaire ();	
 			isAnswering = true;
 			collidedKey = other.gameObject;
+		} else if (other.tag == "gamebonus") {
+			Debug.Log ("collided a bonus");
+			collidedBonus = other.gameObject;
+			GlobalQuestionnaire.startQuestionnaire ();	
+			bonus = true;
 		}
 	}
 	// Update is called once per frame
@@ -86,7 +90,26 @@ public class Player : MonoBehaviour {
 					isAnswering = false;
 				}
 			}
+
+		if (bonus) {
+			if (GlobalQuestionnaire.hasAnswered) {
+				if (GlobalQuestionnaire.isAnswerRight) {
+					Debug.Log ("bonus gagne");
+					GameManager.instance.bonusImage.SetActive(true);
+					Invoke ("HideBonusImage", 3.0f);
+				}
+				else{
+					Debug.Log ("desolé");
+				}	
+				collidedBonus.SetActive (false);
+				bonus = false;
+			}
 		}
+	}
+
+	public void HideBonusImage(){
+		GameManager.instance.bonusImage.SetActive (false);
+	}
 
 	void FixedUpdate(){
 		if (moveHorizontal >= 0 && moveVertical>=0)

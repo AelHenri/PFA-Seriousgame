@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{A8E76454-6118-21F9-15A7-8DF7C8543D6B}</ProjectGuid>
+    <ProjectGuid>{C402E6DF-F6AD-AF98-FF65-F176EF430763}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-UnityScript</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -45,43 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Bonus.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Cam.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Coordinator.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Dice.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Line.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Map.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Move.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\RPS.cs" />
-     <Compile Include="Assets\Games\Board\Assets\Scripts\Tile.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Box.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\CamCentering.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\GameBonus.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Key.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Loader.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\MazeGen.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Player.cs" />
-     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Timer.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\CameraManager.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJ.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJBehaviour.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie0.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryGameManager.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryLoader.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryPlayer.cs" />
-     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StorySceneManager.cs" />
-     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
-     <Compile Include="Assets\Games\Sheets\Assets\Scripts\GlobalQuestionnaire.cs" />
-     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
-     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
-     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />
-     <Compile Include="Assets\Scripts\GameState.cs" />
-     <Compile Include="Assets\Scripts\Games.cs" />
-     <Compile Include="Assets\Scripts\LoadOnClick.cs" />
-     <Compile Include="Assets\Scripts\MenuButtons.cs" />
-     <Compile Include="Assets\Scripts\Navigator.cs" />
-     <Compile Include="Assets\Scripts\TitleScreen.cs" />
+     <Compile Include="Assets\Games\Board\Assets\Island\Scripts\CharacterMovement.js" />
+     <Compile Include="Assets\Games\Board\Assets\Island\Scripts\FixedTiling.js" />
+     <Compile Include="Assets\Games\Board\Assets\Island\Scripts\WaterScroller.js" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
