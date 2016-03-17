@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 	public int rightAnswer = 0;
-	public int speed = 10;
-	public int maxSpeed = 3;
+	public int speed = 15;
+	public int maxSpeed = 5;
 	public Rigidbody2D rb;
 	public int globalKeys;
 	public static int localKeys;
 	public Text KeyText;
 	public Text EndingText;
 
-
 	float moveHorizontal;
 	float moveVertical;
 	float restartLevelDelay = 1f;
+
+	private Vector2 touchOrigin = -Vector2.one;
 
 
 	// Use this for initialization
@@ -75,20 +76,54 @@ public class Player : MonoBehaviour {
 				localKeys = localKeys + 1;
 				other.gameObject.GetComponent<Key>().MoveKey();
 				KeyText.text = "Clés : " + localKeys;
-
-
 			}
 		}
 	}
 	// Update is called once per frame
 	void Update () {
-		moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
-		moveVertical = Input.GetAxis ("Vertical")*speed;
-		//transform.Translate (moveHorizontal, moveVertical, 0);
-		//Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0);
+		
+		#if (UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER)	
+
+			moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
+			moveVertical = Input.GetAxis ("Vertical")*speed;
+
+		#else 
+
+		float xDir = 0.0f;
+		float yDir= 0.0f;
+		float speedM = 50.0f;
+		float speed1 = 0.75F;
 
 
+		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
+			// Get movement of the finger since last frame
+			Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+
+			// Move object across XY plane
+
+			if ( touchDeltaPosition.x>0 ){
+				xDir = 	Mathf.Min(touchDeltaPosition.x ,speedM);
+			}
+			if ( touchDeltaPosition.x<=0 ){
+				xDir = Mathf.Max(touchDeltaPosition.x ,-speedM);
+			}
+			if ( touchDeltaPosition.y>0 ){
+				yDir = Mathf.Min(touchDeltaPosition.y  ,speedM);
+			}
+			if ( touchDeltaPosition.y<=0 ){
+				yDir =Mathf.Max(touchDeltaPosition.y  ,-speedM);
+			}
+			
+		rb.velocity = new Vector3 ( xDir * speed1,  yDir * speed1 , 0);  
 		}
+		else
+			rb.velocity = new Vector3 ( 0,  0, 0);  
+	
+		#endif
+
+	}
+
+	/*
 	void FixedUpdate(){
 		if (moveHorizontal >= 0 && moveVertical>=0)
 			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
@@ -100,6 +135,5 @@ public class Player : MonoBehaviour {
 			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Max( moveVertical,-maxSpeed), 0);  
 
 	}
-
-	
+*/
 }

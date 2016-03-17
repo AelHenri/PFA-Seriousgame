@@ -74,6 +74,7 @@ public class Questionnaire : MonoBehaviour{
 
    public IEnumerator endQuestionnaire() 
     {
+        GlobalQuestionnaire.updateSheetState();
         yield return new WaitForSeconds(1);
         SceneManager.UnloadScene("Exemple");
         SceneManager.UnloadScene("Question");
@@ -86,10 +87,3 @@ public class Questionnaire : MonoBehaviour{
     }
 }
 
-/*WaitingforAnswer()
-{
-    if(encoursdetraitement && GlobalQuestionnaire.hasAnswered)
-    {
-        GlobalQuestionnaire.getAnswer();
-    }
-}*/

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StoryPlayer : MonoBehaviour
 {
@@ -11,11 +12,10 @@ public class StoryPlayer : MonoBehaviour
     private bool collided;
     private StorySceneManager sceneManager;
     private int currentScene;
-    private bool paralyzed = false;
 
-    // Use this for initialization
     void Start()
     {
+
         sceneManager = (StorySceneManager)FindObjectOfType(typeof(StorySceneManager));
         currentScene = sceneManager.level;
         float x = sceneManager.scene[currentScene].playerX;
@@ -23,13 +23,12 @@ public class StoryPlayer : MonoBehaviour
         transform.position = new Vector3(x, y);
         target = transform.position;
         rb = GetComponent<Rigidbody2D>();
-    }
 
-    // Update is called once per frame
+        
+    }
+    
     void FixedUpdate()
     {
-        if (!paralyzed)
-        {
             if (Input.GetMouseButton(0))
             {
                 collided = false;
@@ -41,23 +40,6 @@ public class StoryPlayer : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
             }
-        }
-        else
-        {
-            Paralyze();
-        }
-    }
-
-    public void Paralyze()
-    {
-        if (!paralyzed)
-        {
-            paralyzed = true;
-        }
-        else
-        {
-            paralyzed = false;
-        }
     }
     
     private void OnCollisionEnter2D(Collision2D col)
@@ -77,5 +59,10 @@ public class StoryPlayer : MonoBehaviour
         {
             Application.LoadLevel(Application.loadedLevel);
         }
+        else if (trig.tag == "TP")
+        {
+            collided = true;
+        }
     }
+   
 }

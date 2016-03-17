@@ -26,6 +26,7 @@ public struct Point{
 public class MazeGen : MonoBehaviour {
 	public Transform[] wallPrefab;
 	public GameObject[] keys;
+	public GameObject bonus;
 	public Transform exit;
 	public Transform arrow;
 	public Transform gradiant;
@@ -78,6 +79,8 @@ public class MazeGen : MonoBehaviour {
 		}
 		Instantiate(exit, new Vector2(width, height/2), Quaternion.identity);
 		LayoutKeys (keys, level);
+		if (this.deadEnd.Count - GameManager.instance.level > 1)
+			LayoutBonus (bonus);
 	}
 	
 	/* Les numeros des patterns respectent une conversion binaire
@@ -89,6 +92,12 @@ public class MazeGen : MonoBehaviour {
 			Instantiate(keys[0], new Vector2(1,i), Quaternion.identity);
 		}
 	
+	}
+
+	public void LayoutBonus(GameObject bonus){
+		 
+			Instantiate(bonus, new Vector2(1,30), Quaternion.identity);
+
 	}
 
 	private int getPatternFromCell(Cell c){

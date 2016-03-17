@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour {
 	public MazeGen maze;
 	public int nbKeys = 0;
 	public List<Key> keys;
+	public GameBonus bonus;
+	public GameObject bonusImage;
+	public Text bonusText;
 
 	private Text levelText;		
 	public int level =1;
@@ -27,6 +30,7 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		keys = new List<Key> ();
+		bonus = new GameBonus ();
 		maze = GetComponent<MazeGen> ();
         audioSource = GetComponent<AudioSource>();
 		InitGame ();
@@ -45,6 +49,11 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame(){
 		doingSetup = true;
+		bonusImage = GameObject.Find ("BonusImage");
+		bonusText = GameObject.Find ("BonusText").GetComponent<Text>();
+		bonusText.text = "Bravo! Tu as gagné un cornichon!";
+		bonusImage.SetActive(false);
+
 		levelImage =GameObject.Find("LevelImage");
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();
 		levelText.text = "Niveau " + level;
@@ -66,9 +75,16 @@ public class GameManager : MonoBehaviour {
 		doingSetup = false;
 	}
 
+
+
 	public void AddKeyToList(Key script){
 		keys.Add (script);
 	}
+
+	public void SetBonus(GameBonus script){
+		bonus = script;
+	}
+
 
 	IEnumerator MoveKeys(){
 		int i;
@@ -79,11 +95,17 @@ public class GameManager : MonoBehaviour {
 		yield return null;
 	}
 
+
+	IEnumerator MoveBonus(){
+		bonus.MoveBonus(1);
+		yield return null;
+	}
 	// Update is called once per frame
 	void Update () {
 		if (doingSetup) {
 			return;
 		}
 		StartCoroutine (MoveKeys());
+		StartCoroutine (MoveBonus ());
 	}
 }
