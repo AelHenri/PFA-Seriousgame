@@ -79,8 +79,10 @@ public class MazeGen : MonoBehaviour {
 		}
 		Instantiate(exit, new Vector2(width, height/2), Quaternion.identity);
 		LayoutKeys (keys, level);
-		if (this.deadEnd.Count - GameManager.instance.level > 1)
+		if (this.deadEnd.Count - GameManager.instance.level > 1) {
+			GameManager.instance.bonusPresent = true;
 			LayoutBonus (bonus);
+		}
 	}
 	
 	/* Les numeros des patterns respectent une conversion binaire

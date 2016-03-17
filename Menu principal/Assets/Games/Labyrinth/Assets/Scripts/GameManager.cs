@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	public GameBonus bonus;
 	public GameObject bonusImage;
 	public Text bonusText;
+	public bool bonusPresent = false;
 
 	private Text levelText;		
 	public int level =1;
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		StartCoroutine (MoveKeys());
-		StartCoroutine (MoveBonus ());
+		if (bonusPresent == true) {
+			StartCoroutine (MoveBonus ());
+		}
 	}
 }

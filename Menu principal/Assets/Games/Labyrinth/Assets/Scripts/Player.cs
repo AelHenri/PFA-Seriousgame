@@ -112,6 +112,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
+		
 		if (moveHorizontal >= 0 && moveVertical>=0)
 			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
 		if (moveHorizontal >= 0 && moveVertical<=0)

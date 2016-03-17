@@ -64,13 +64,17 @@
      <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\CameraManager.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\ChoicesManager.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\DialogManager.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJ.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJBehaviour.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie0.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby1.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryGameManager.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryLoader.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryPlayer.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\StorySceneManager.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\Teleporter.cs" />
      <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
      <Compile Include="Assets\Games\Sheets\Assets\Scripts\GlobalQuestionnaire.cs" />
      <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
