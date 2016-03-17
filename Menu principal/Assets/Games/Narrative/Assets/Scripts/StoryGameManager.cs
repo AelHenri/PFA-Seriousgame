@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class StoryGameManager : MonoBehaviour {
 
     public static StoryGameManager instance = null;
+    public float characterDelay = 0.02f;
+
     private StorySceneManager scene;
     private List<string> PNJTable;
     private List<string> ObjectsTable;
     private bool firstScene = false;
     private int cpt = 0;
+
+    private bool messageBoxEnabled = false;
+    private GameObject messageBox;
+    private Text messageBoxText;
+    private string message;
 
     // Use this for initialization
     void Awake () {
@@ -46,6 +54,9 @@ public class StoryGameManager : MonoBehaviour {
     {
         firstScene = true;
         scene.SetupScene();
+        messageBox = GameObject.Find("MessageBox");
+        messageBoxText = GameObject.Find("MessageText").GetComponent<Text>();
+        messageBox.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -59,7 +70,18 @@ public class StoryGameManager : MonoBehaviour {
                 cpt = 0;
             }
         }
-	}
+
+        if (messageBoxEnabled)
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                StopAllCoroutines();
+                messageBox.SetActive(false);
+                //Interact.EnableControl();
+                messageBoxEnabled = false;
+            }
+        }
+    }
 
     public void AddPNJ(string PNJName)
     {
@@ -83,5 +105,36 @@ public class StoryGameManager : MonoBehaviour {
     public bool HasObject(string ObjectName)
     {
         return ObjectsTable.Contains(ObjectName);
+    }
+
+
+
+    public void InteractEvent()
+    {
+        messageBox.SetActive(true);
+        StopAllCoroutines();
+        StartCoroutine(TypeMessage());
+        //Interact.DisableControl();
+        messageBoxEnabled = true;
+    }
+
+    IEnumerator TypeMessage()
+    {
+        messageBoxText.text = "";
+
+        foreach (char c in message)
+        {
+            yield return new WaitForSeconds(characterDelay);
+            messageBoxText.text += c;
+            if (messageBox.GetComponent<AudioSource>() != null)
+            {
+                messageBox.GetComponent<AudioSource>().Play();
+            }
+        }
+    }
+
+    public void GetMessage(string newMessage)
+    {
+        message = newMessage;
     }
 }

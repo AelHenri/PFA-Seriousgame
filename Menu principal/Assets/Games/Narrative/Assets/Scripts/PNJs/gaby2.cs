@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class gaby1 : PNJ {
+public class gaby2 : PNJ {
 
     protected override void PNJClickEvent()
     {
         callPlaceArrows();
-        //base.PNJClickEvent();
+        base.PNJClickEvent();
     }
 
     protected override void PNJLoadEvent()

@@ -4,17 +4,17 @@ using System.Collections;
 
 public class DialogManager : MonoBehaviour
 {
-    public GameObject messageBox;
-    public Text messageBoxText;
+    
     public float characterDelay = 0.1f;
 
-    public bool messageBoxEnabled = false;
-
-    public string message;
+    private bool messageBoxEnabled = false;
+    private GameObject messageBox;
+    private Text messageBoxText;
+    private string message;
 
     public void InteractEvent()
     {
-        messageBox.SetActive(true);
+        
 
         StopAllCoroutines();
         StartCoroutine(TypeMessage());
@@ -49,5 +49,10 @@ public class DialogManager : MonoBehaviour
                 messageBoxEnabled = false;
             }
         }
+    }
+
+    public void GetMessage(string newMessage)
+    {
+        message = newMessage;
     }
 }

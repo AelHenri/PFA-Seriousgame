@@ -57,7 +57,7 @@ public class StorySceneManager : MonoBehaviour {
     {
         BackgroundSetup();
         PNJPlacement();
-        PlaceTPs();
+        //PlaceTPs();
     }
 
     public void PlaceArrows()

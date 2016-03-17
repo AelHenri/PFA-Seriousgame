@@ -24,6 +24,7 @@ public class PNJ : MonoBehaviour {
     private BoxCollider2D boxCollider;
     private Animator animator;
     private StoryGameManager gameManager;
+    private DialogManager dialogManager;
 
     private bool isAnswering = false;
 
@@ -31,6 +32,11 @@ public class PNJ : MonoBehaviour {
 	protected virtual void Start () {
         transform.position = new Vector3(x, y);
         minSize = transform.localScale;
+
+        /*if (hasDialog)
+        {
+            dialogManager = GetComponent<DialogManager>();
+        }*/
         sceneManager = (StorySceneManager)FindObjectOfType(typeof(StorySceneManager));
         gameManager = (StoryGameManager)FindObjectOfType(typeof(StoryGameManager));
         animator = gameObject.GetComponent<Animator>();
@@ -46,13 +52,12 @@ public class PNJ : MonoBehaviour {
         bool hasHit = false;
         if (!eventDone && hasDialog)
         {
+            
             foreach (Collider2D collider in hitZone)
             {
                 if (collider.gameObject.tag == "Player")
                 {
                     clickable = true;
-                    //transform.localScale = minSize + new Vector3(0.5f, 0.5f);
-                    //boxCollider.size = minColliderSize + new Vector2(0.5f, 0.5f);
                     animator.SetBool("isNearby", true);
                     hasHit = true;
                 }
@@ -61,8 +66,8 @@ public class PNJ : MonoBehaviour {
             {
                 clickable = false;
                 animator.SetBool("isNearby", false);
-                //transform.localScale = minSize;
             }
+            
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -70,13 +75,46 @@ public class PNJ : MonoBehaviour {
             //messageBox.SetActive(false);
         }
 
+        QuestionEvent();
+
+    }
+
+    protected void OnMouseDown()
+    {
+        if (clickable)
+        {
+            PNJClickEvent();
+            animator.SetBool("isNearby", false);
+            transform.localScale = minSize;
+            eventDone = true;
+            clickable = false;
+        }
+    }
+
+    protected virtual void PNJClickEvent()
+    {
+        Question();
+    }
+
+    protected virtual void Question()
+    {
+        GlobalQuestionnaire.startQuestionnaire();
+        isAnswering = true;
+    }
+
+    protected virtual void QuestionEvent()
+    {
         if (isAnswering)
         {
             if (GlobalQuestionnaire.hasAnswered)
             {
                 if (GlobalQuestionnaire.isAnswerRight)
                 {
-                    PNJClickEvent();
+                    
+                    if (!gameManager.IsPNJPresent(PNJName))
+                    {
+                        gameManager.AddPNJ(PNJName);
+                    }
                 }
                 else
                 {
@@ -85,33 +123,9 @@ public class PNJ : MonoBehaviour {
                 isAnswering = false;
             }
         }
-
     }
 
-    protected void OnMouseDown()
-    {
-        if (clickable)
-        {
-            Question();
-            animator.SetBool("isNearby", false);
-            transform.localScale = minSize;
-            eventDone = true;
-        }
-    }
 
-    protected virtual void PNJClickEvent()
-    {
-        if (!gameManager.IsPNJPresent(PNJName))
-        {
-            gameManager.AddPNJ(PNJName);
-        }
-    }
-
-    protected virtual void Question()
-    {
-        GlobalQuestionnaire.startQuestionnaire();
-        isAnswering = true;
-    }
     protected virtual void PNJLoadEvent()
     {
 
@@ -122,13 +136,17 @@ public class PNJ : MonoBehaviour {
         sceneManager.PlaceArrows();
     }
 
-    /*protected void displayDialog()
+    protected void callPlaceTPs()
     {
-        messageBox.SetActive(true);
-        StopAllCoroutines();
-        messageBoxEnabled = true;
-        messageBoxText.text = dialog[0];
-    }*/
+        sceneManager.PlaceTPs();
+    }
+
+
+    protected void displayDialog(int i)
+    {
+        gameManager.GetMessage(dialog[i]);
+        gameManager.InteractEvent();          
+    }
 
     
 }
