@@ -8,6 +8,8 @@ public class StoryGameManager : MonoBehaviour {
     private StorySceneManager scene;
     private List<string> PNJTable;
     private List<string> ObjectsTable;
+    private bool firstScene = false;
+    private int cpt = 0;
 
     // Use this for initialization
     void Awake () {
@@ -24,7 +26,8 @@ public class StoryGameManager : MonoBehaviour {
         PNJTable = new List<string>();
         ObjectsTable = new List<string>();
         PNJTable.Add("Pixie");
-        //PNJTable.Add("Gaby");
+        PNJTable.Add("Gaby");
+        PNJTable.Add("Philibert");
 
         InitGame();
 	
@@ -32,20 +35,30 @@ public class StoryGameManager : MonoBehaviour {
 
     private void OnLevelWasLoaded(int index)
     {
-        scene.level++;
-        InitGame();
-
-
+        if (!firstScene)
+        {
+            scene.level++;
+            InitGame();
+        }
     }
 
     void InitGame()
     {
+        firstScene = true;
         scene.SetupScene();
     }
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    if (firstScene)
+        {
+            cpt++;
+            if(cpt>60)
+            {
+                firstScene = false;
+                cpt = 0;
+            }
+        }
 	}
 
     public void AddPNJ(string PNJName)
@@ -62,7 +75,6 @@ public class StoryGameManager : MonoBehaviour {
     {
         if (PNJTable == null)
         {
-            Debug.Log("Coucou");
             return false;
         }
         return PNJTable.Contains(PNJName);

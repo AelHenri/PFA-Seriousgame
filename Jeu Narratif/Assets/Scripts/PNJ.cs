@@ -10,6 +10,7 @@ public class PNJ : MonoBehaviour {
     public bool hasDialog = false;
     public string[] dialog;
     public string PNJName;
+    public bool firstTime = true;
     /*public GameObject messageBox;
     public Text messageBoxText;
     public bool messageBoxEnabled = false;*/
@@ -22,12 +23,14 @@ public class PNJ : MonoBehaviour {
     private StorySceneManager sceneManager;
     private BoxCollider2D boxCollider;
     private Animator animator;
+    private StoryGameManager gameManager;
 
 	// Use this for initialization
 	protected virtual void Start () {
         transform.position = new Vector3(x, y);
         minSize = transform.localScale;
         sceneManager = (StorySceneManager)FindObjectOfType(typeof(StorySceneManager));
+        gameManager = (StoryGameManager)FindObjectOfType(typeof(StoryGameManager));
         animator = gameObject.GetComponent<Animator>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         minColliderSize = boxCollider.size;
@@ -78,21 +81,12 @@ public class PNJ : MonoBehaviour {
         }
     }
 
-    /*protected void OnMouseEnter()
-    {
-        if (clickable && !eventDone)
-        {
-            transform.GetComponent<SpriteRenderer>().color = new Color(0.9f,0.9f,0.9f);
-        }
-    }
-    protected void OnMouseExit()
-    {
-        transform.GetComponent<SpriteRenderer>().color = Color.white;
-    }*/
-
     protected virtual void PNJClickEvent()
     {
-
+        if (!gameManager.IsPNJPresent(PNJName))
+        {
+            gameManager.AddPNJ(PNJName);
+        }
     }
 
     protected virtual void PNJLoadEvent()

@@ -47,9 +47,6 @@ public class StoryPlayer : MonoBehaviour
         collided = true;
         if (col.gameObject.tag == "PNJ")
         {
-            //SceneManager sceneManager = GameObject.Find("GameManager").GetComponent(SceneManager);
-            
-            //sceneManager.PlaceArrows();
         }
     }
 
