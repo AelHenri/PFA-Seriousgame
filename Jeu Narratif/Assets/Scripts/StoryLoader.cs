@@ -9,8 +9,6 @@ public class StoryLoader : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        /*if (ChoicesManager.instance == null)
-            Instantiate(storyManager);*/
         if (StoryGameManager.instance == null)
             Instantiate(gameManager);
         

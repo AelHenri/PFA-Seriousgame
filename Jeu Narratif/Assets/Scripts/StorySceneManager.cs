@@ -44,7 +44,7 @@ public class StorySceneManager : MonoBehaviour {
         for (int i = 0; i < PNJcount; i++)
         {
             PNJ currentPNJ = scene[level].PNJs[i];
-            if (gameManager.IsPNJPresent(currentPNJ.PNJName))
+            if (gameManager.IsPNJPresent(currentPNJ.PNJName) || currentPNJ.firstTime)
             {
                 PNJ instance = Instantiate(scene[level].PNJs[i], scene[level].PNJs[i].transform.position, Quaternion.identity) as PNJ;
                 instance.transform.SetParent(sceneHolder);
