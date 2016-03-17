@@ -21,7 +21,9 @@ public class Navigator : MonoBehaviour {
     void Start()
     //Game loading?
     {
+        GameState.gameCurrentlyLoaded = 0;
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Additive);
+
     }
 
 

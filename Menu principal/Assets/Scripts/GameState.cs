@@ -8,4 +8,6 @@ public static class GameState  {
     public static GameObject labyrinth;
     public static GameObject narrative;
 
+    public static int gameCurrentlyLoaded;
+
 }

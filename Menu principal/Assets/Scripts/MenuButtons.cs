@@ -50,6 +50,7 @@ public class MenuButtons : MonoBehaviour {
                         Destroy(GameState.labyrinth);
                     if (GameState.narrative != null)
                         Destroy(GameState.narrative);
+                    GameState.gameCurrentlyLoaded = 0;
                 }   
                 else
                 {
