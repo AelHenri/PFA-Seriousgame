@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pixie0 : PNJ {
+public class Pixie0 : PNJ
+{
 
-    protected override void LaunchPNJEvent()
+    protected override void PNJClickEvent()
     {
-        base.LaunchPNJEvent();
-        callPlaceArrows();        
+        //callPlaceArrows();
+        base.PNJClickEvent();
+    }
+
+    protected override void PNJLoadEvent()
+    {
+        //displayDialog();
+        callPlaceArrows();
+        base.PNJLoadEvent();
     }
 }

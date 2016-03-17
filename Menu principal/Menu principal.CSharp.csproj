@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -80,6 +74,7 @@
     <Compile Include="Assets\Games\Board\Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Box.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\CamCentering.cs" />
+    <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\GameBonus.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Key.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Loader.cs" />
@@ -87,13 +82,17 @@
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\CameraManager.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\ChoicesManager.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\DialogManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJ.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJBehaviour.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie0.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby1.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryGameManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryLoader.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryPlayer.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StorySceneManager.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\Teleporter.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\GlobalQuestionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
