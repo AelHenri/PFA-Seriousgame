@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+
 
 public class PNJ : MonoBehaviour {
 
     public float x = 0f;
     public float y = 0f;
     public bool hasDialog = false;
+    public string[] dialog;
+    public string PNJName;
+    /*public GameObject messageBox;
+    public Text messageBoxText;
+    public bool messageBoxEnabled = false;*/
 
     private bool clickable;
     private bool eventDone = false;
@@ -53,6 +60,11 @@ public class PNJ : MonoBehaviour {
             }
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            //messageBox.SetActive(false);
+        }
+
     }
 
     protected void OnMouseDown()
@@ -92,6 +104,14 @@ public class PNJ : MonoBehaviour {
     {
         sceneManager.PlaceArrows();
     }
+
+    /*protected void displayDialog()
+    {
+        messageBox.SetActive(true);
+        StopAllCoroutines();
+        messageBoxEnabled = true;
+        messageBoxText.text = dialog[0];
+    }*/
 
     
 }

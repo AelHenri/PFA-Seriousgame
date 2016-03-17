@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StoryGameManager : MonoBehaviour {
 
     public static StoryGameManager instance = null;
-    public StorySceneManager scene;
+    private StorySceneManager scene;
+    private List<string> PNJTable;
+    private List<string> ObjectsTable;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
 
         if (instance == null)        
             instance = this;        
@@ -18,6 +21,11 @@ public class StoryGameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         scene = GetComponent<StorySceneManager>();
 
+        PNJTable = new List<string>();
+        ObjectsTable = new List<string>();
+        PNJTable.Add("Pixie");
+        //PNJTable.Add("Gaby");
+
         InitGame();
 	
 	}
@@ -26,6 +34,7 @@ public class StoryGameManager : MonoBehaviour {
     {
         scene.level++;
         InitGame();
+
 
     }
 
@@ -38,4 +47,29 @@ public class StoryGameManager : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void AddPNJ(string PNJName)
+    {
+        PNJTable.Add(PNJName);
+    }
+
+    public void AddObject(string ObjectName)
+    {
+        ObjectsTable.Add(ObjectName);
+    }
+
+    public bool IsPNJPresent(string PNJName)
+    {
+        if (PNJTable == null)
+        {
+            Debug.Log("Coucou");
+            return false;
+        }
+        return PNJTable.Contains(PNJName);
+    }
+
+    public bool HasObject(string ObjectName)
+    {
+        return ObjectsTable.Contains(ObjectName);
+    }
 }
