@@ -5,16 +5,11 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 	public int rightAnswer = 0;
-	public int speed = 15;
-	public int maxSpeed = 5;
 	public Rigidbody2D rb;
 	public int globalKeys;
 	public static int localKeys;
 	public Text KeyText;
 	public Text EndingText;
-
-	float moveHorizontal;
-	float moveVertical;
 	float restartLevelDelay = 1f;
 
 	private Vector2 touchOrigin = -Vector2.one;
@@ -85,9 +80,7 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {		
 		float xDir = 0.0f;
 		float yDir = 0.0f;
-		float speedM = 1000.0f;
-		float speed1 = 0.8F;
-
+	
 		if (Input.touchCount > 0) {
 			// The screen has been touched so store the touch
 			Touch touch = Input.GetTouch (0);
