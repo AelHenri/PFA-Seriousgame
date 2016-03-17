@@ -95,6 +95,7 @@ public class Player : MonoBehaviour {
 			if (GlobalQuestionnaire.hasAnswered) {
 				if (GlobalQuestionnaire.isAnswerRight) {
 					Debug.Log ("bonus gagne");
+					GameManager.instance.bonusPresent = false;
 					GameManager.instance.bonusImage.SetActive(true);
 					Invoke ("HideBonusImage", 3.0f);
 				}

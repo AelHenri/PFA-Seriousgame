@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
 
 
 	void InitGame(){
+		bonusPresent = false;
 		doingSetup = true;
 		bonusImage = GameObject.Find ("BonusImage");
 		bonusText = GameObject.Find ("BonusText").GetComponent<Text>();
