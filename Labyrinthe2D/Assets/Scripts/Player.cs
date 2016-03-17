@@ -79,61 +79,44 @@ public class Player : MonoBehaviour {
 			}
 		}
 	}
+
+
 	// Update is called once per frame
-	void Update () {
-		
-		#if (UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER)	
-
-			moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
-			moveVertical = Input.GetAxis ("Vertical")*speed;
-
-		#else 
-
+	void FixedUpdate () {		
 		float xDir = 0.0f;
-		float yDir= 0.0f;
-		float speedM = 50.0f;
-		float speed1 = 0.75F;
+		float yDir = 0.0f;
+		float speedM = 1000.0f;
+		float speed1 = 0.8F;
 
-
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
-			// Get movement of the finger since last frame
-			Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-
-			// Move object across XY plane
-
-			if ( touchDeltaPosition.x>0 ){
-				xDir = 	Mathf.Min(touchDeltaPosition.x ,speedM);
-			}
-			if ( touchDeltaPosition.x<=0 ){
-				xDir = Mathf.Max(touchDeltaPosition.x ,-speedM);
-			}
-			if ( touchDeltaPosition.y>0 ){
-				yDir = Mathf.Min(touchDeltaPosition.y  ,speedM);
-			}
-			if ( touchDeltaPosition.y<=0 ){
-				yDir =Mathf.Max(touchDeltaPosition.y  ,-speedM);
-			}
+		if (Input.touchCount > 0) {
+			// The screen has been touched so store the touch
+			Touch touch = Input.GetTouch (0);
+			if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved) {
+				
+				Vector3 touchPosition = Camera.main.ScreenToWorldPoint (new Vector3 (touch.position.x, touch.position.y, 10));                
 			
-		rb.velocity = new Vector3 ( xDir * speed1,  yDir * speed1 , 0);  
+				// if the finger is far from player move toward him with velocity so that he doesn't go through walls
+				if (Vector3.Distance (touchPosition, transform.position) > 0.2f) {
+					xDir = ((touchPosition.x - transform.position.x) / (Mathf.Abs (touchPosition.x - transform.position.x))) * 8.0f;
+					if ((Mathf.Abs (touchPosition.x - transform.position.x)) < 0.1f) {
+						xDir = 0.0f;
+
+					}
+					yDir = ((touchPosition.y - transform.position.y) / (Mathf.Abs (touchPosition.y - transform.position.y))) * 8.0f;
+					if ((Mathf.Abs (touchPosition.y - transform.position.y)) < 0.1f) {
+						yDir = 0.0f;
+					}
+					rb.velocity = new Vector3 (xDir, yDir, 0);  			
+				}
+				//if it's very close change position 
+				else{
+					rb.velocity = new Vector3 ( 0,  0, 0);  
+					transform.position = Vector3.MoveTowards (transform.position, touchPosition, Time.deltaTime * 20.0f);
+				}
+			}
 		}
+		// if the player doesn't touch the screen, don't move
 		else
 			rb.velocity = new Vector3 ( 0,  0, 0);  
-	
-		#endif
-
 	}
-
-	/*
-	void FixedUpdate(){
-		if (moveHorizontal >= 0 && moveVertical>=0)
-			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
-		if (moveHorizontal >= 0 && moveVertical<=0)
-			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Max( moveVertical,-maxSpeed), 0);  
-		if (moveHorizontal <= 0 && moveVertical>=0)
-			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
-		if (moveHorizontal <= 0 && moveVertical<=0)
-			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Max( moveVertical,-maxSpeed), 0);  
-
-	}
-*/
 }
