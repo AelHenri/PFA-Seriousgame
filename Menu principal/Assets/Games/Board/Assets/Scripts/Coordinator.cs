@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class Coordinator : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class Coordinator : MonoBehaviour {
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
     public Sprite[] playerSprites = new Sprite[4];
+    public GameObject Canvas;
+    public GameObject TextComp;
 
     delegate void BonusBehavior(int playerWhoActivate);
 
@@ -30,6 +33,11 @@ public class Coordinator : MonoBehaviour {
     private GameObject RPSTemp;
     private bool bm2Init = true;
     private int bm2playerToMove;
+    private float time = 0f;
+    private float turnBegin;
+    private bool questionnaireLaunched = false;
+    private bool timeSet = false;
+    private int[] goodAnswersinARow = new int[nbPlayer];
 
     // Use this for initialization
     void Start () {
@@ -66,9 +74,13 @@ public class Coordinator : MonoBehaviour {
         } 
         SetMainPlayer(Players[currentPlayer], currentPlayer);
 
+        for (int i = 0; i < nbPlayer; ++i)
+        {
+            goodAnswersinARow[i] = 0;
+        }
 
-        //Setting Bonus Behaviors
-        bonusesBehavior[0] = BonusMoins1;
+            //Setting Bonus Behaviors
+            bonusesBehavior[0] = BonusMoins1;
         bonusesBehavior[1] = BonusMoins2;
         bonusesBehavior[2] = BonusPlus3;
          
@@ -77,12 +89,48 @@ public class Coordinator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
+        time += Time.deltaTime;
+
         if(beginOfTurn)
         {
-            AddBonus();
-            beginOfTurn = false;
-            beforeDiceThrow = true;
+            Canvas.SetActive(true);
+            Text t = TextComp.GetComponent<Text>();
+            t.text = "Joueur " + (currentPlayer + 1) + " à toi de jouer !";  
+            if(!timeSet)
+            {
+                turnBegin = time;
+                timeSet = true;
+            }
+            //AddBonus();
+        }
+
+        if((time - turnBegin > 3) && beginOfTurn)
+        {
+            Canvas.SetActive(false);
+            if(!questionnaireLaunched)
+            {
+                GlobalQuestionnaire.startQuestionnaire();
+                questionnaireLaunched = true;
+            }
+            else
+            {
+                if (GlobalQuestionnaire.hasAnswered)
+                {
+                    questionnaireLaunched = false;
+                    if (GlobalQuestionnaire.isAnswerRight)
+                    {
+                        beginOfTurn = false;
+                        beforeDiceThrow = true;
+                        goodAnswersinARow[currentPlayer] += 1;
+                        if (goodAnswersinARow[currentPlayer] % 3 == 0)
+                            AddBonus();
+                    }
+                    else
+                    {
+                        TurnEnd();
+                    }
+                }     
+            }
         }
 
         if(beforeDiceThrow)
@@ -217,13 +265,19 @@ public class Coordinator : MonoBehaviour {
         }
         else
         {
-            SetSecondaryPlayer(Players[currentPlayer], currentPlayer);
-            currentPlayer = (currentPlayer + 1) % nbPlayer;
-            SetMainPlayer(Players[currentPlayer], currentPlayer);
-            rolled = false;
-            beginOfTurn = true;
-            warping = false;
+            TurnEnd();
         }
+    }
+
+    void TurnEnd()
+    {
+        SetSecondaryPlayer(Players[currentPlayer], currentPlayer);
+        currentPlayer = (currentPlayer + 1) % nbPlayer;
+        SetMainPlayer(Players[currentPlayer], currentPlayer);
+        rolled = false;
+        beginOfTurn = true;
+        warping = false;
+        timeSet = false;
     }
 
     // BONUS BEHAVIORS
@@ -240,7 +294,6 @@ public class Coordinator : MonoBehaviour {
     {
         if (bm2Init)
         {
-            int k = 0;
             RPSTemp = Instantiate(RPS);
             RPS rps = RPSTemp.GetComponent<RPS>();
             rps.Players = new GameObject[nbPlayer - 1];
@@ -256,6 +309,7 @@ public class Coordinator : MonoBehaviour {
 
         if (RPSTemp == null)
         {
+            Debug.Log(bm2playerToMove);
             Move move = Players[bm2playerToMove].GetComponent<Move>();
             Move(move, -2, bm2playerToMove);
             bonusEnd = true;

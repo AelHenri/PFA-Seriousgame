@@ -61,7 +61,7 @@ public class Map : MonoBehaviour {
         GameObject warp = (GameObject)Resources.Load("Warp", typeof(GameObject));
         for (int k = 0; k < nbTiles; k++)
         {
-            float x = -1 * width + k * ((float)2 * width / (nbTiles - 1));
+            //float x = -1 * width + k * ((float)2 * width / (nbTiles - 1));
             Vector3 pos = positions[k];
             //tiles[k] = (GameObject)Instantiate(r, new Vector3(Random.Range(-1 * width, width), Random.Range(0, -1 * height), 0), Quaternion.identity);
             if (k == 0)

@@ -38,9 +38,9 @@ public class RPS : MonoBehaviour {
         for (int i = 0; i < nbLine; ++i)
         {
             lines[2 * i].SetPosition(0, transform.position);
-            lines[2 * i].SetPosition(1, transform.position + new Vector3(radius * Mathf.Cos(2 * Mathf.PI * i / nbLine + Mathf.PI / nbPlayer), 
+            lines[2 * i].SetPosition(1, transform.position + new Vector3(radius * Mathf.Cos(2 * Mathf.PI * i / nbLine), 
                                                                          0,
-                                                                         radius * Mathf.Sin(2 * Mathf.PI * i / nbLine + Mathf.PI / nbPlayer)));
+                                                                         radius * Mathf.Sin(2 * Mathf.PI * i / nbLine)));
             lines[2 * i].material.color = colors[i / (nbLine / nbPlayer)];
             lines[2 * i + 1].SetPosition(0, transform.position);
             lines[2 * i + 1].SetPosition(1, transform.position + new Vector3(radiusext * Mathf.Cos(2 * Mathf.PI * i / nbLine), -0.1f, radiusext * Mathf.Sin(2 * Mathf.PI * i / nbLine)));
@@ -56,13 +56,13 @@ public class RPS : MonoBehaviour {
             Vector3 pos1 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * i / nbPlayer + Mathf.PI / nbPlayer),
                                       0,
                                       radius * Mathf.Sin(2 * Mathf.PI * i / nbPlayer + Mathf.PI / nbPlayer));
-            Vector3 pos2 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * (i + 1) / nbPlayer + Mathf.PI / nbPlayer),
+            Vector3 pos2 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * (i + 1) / nbPlayer),
                                       0,
-                                      radius * Mathf.Sin(2 * Mathf.PI * (i + 1) / nbPlayer + Mathf.PI / nbPlayer));
+                                      radius * Mathf.Sin(2 * Mathf.PI * (i + 1) / nbPlayer));
             Vector3 pos3 = Vector3.zero;
-            Vector3 pos4 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * (2 * i + 1) / (2 * nbPlayer) + Mathf.PI / nbPlayer),
+            Vector3 pos4 = new Vector3(radius * Mathf.Cos(2 * Mathf.PI * (2 * i + 1) / (2 * nbPlayer)),
                                       0,
-                                      radius * Mathf.Sin(2 * Mathf.PI * (2 * i + 1) / (2 * nbPlayer) + Mathf.PI / nbPlayer));
+                                      radius * Mathf.Sin(2 * Mathf.PI * (2 * i + 1) / (2 * nbPlayer)));
             spriteHolder[i].transform.position = transform.position + ((pos1 + pos2 + pos3 + pos4) / 4);
             spriteHolder[i].transform.eulerAngles = new Vector3(90, 0, 0);
         }
@@ -76,13 +76,14 @@ public class RPS : MonoBehaviour {
         {
             rotation += speed * 1 / Mathf.Pow(currentTime + 1, 2);
             Vector3 ang = Arrow.transform.eulerAngles;
-            Arrow.transform.eulerAngles = new Vector3(ang.x, -1 * rotation, ang.z);
+            Arrow.transform.eulerAngles = new Vector3(ang.x, rotation, ang.z);
+            Debug.Log((int)Mathf.Floor(((rotation + 90f) % 360f / (360f / nbPlayer))));
         }
         currentTime += Time.deltaTime;
         if (currentTime >= endTime)
             end = true;
-        if (end && currentTime > endTime + 5)
+        if (end && currentTime > endTime + 2)
             Destroy(gameObject);
-        currentArrowPos = ((int)Mathf.Floor(rotation - (180f / nbPlayer)) / (360 / nbPlayer)) % nbPlayer;
+        currentArrowPos = (int)Mathf.Floor(((rotation + 90f) % 360f / (360f / nbPlayer)));
     }
 }
