@@ -147,55 +147,59 @@ public class MazeGen : MonoBehaviour {
 		 * Les directions sont 0 haut, 1 gauche, 2 bas, 3 droite
 		 */
 		// on initialise le tableau
-		int [] order = new int[4];
-		for(int i = 0; i < 4; i++)
-			order[i] = i;
+		int[] order = new int[4];
+		for (int i = 0; i < 4; i++)
+			order [i] = i;
 		
 		// Puis on mélange l'ordre de visite 3 fois
-		for(int j = 0; j < 3; j++){
-			for(int i = 0; i < 4; i++){
-				int tmp, n = Random.Range(0, 4);
-				tmp = order[n];
-				order[n] = order[i];
-				order[i] = tmp;
+		for (int j = 0; j < 3; j++) {
+			for (int i = 0; i < 4; i++) {
+				int tmp, n = Random.Range (0, 4);
+				tmp = order [n];
+				order [n] = order [i];
+				order [i] = tmp;
 			}
 		}
 		
 		// On initialise un booleen qui permettra de savoir si on doit ajouter la case au cul de sac
 		bool isDeadEnd = true;
 		// Et enfin, on effectue les visites selon l'ordre defini precedemment
-		for(int i = 0; i < 4; i++){
+		for (int i = 0; i < 4; i++) {
 			// haut
-			if(order[i] == 0 && y < (height - 1) && (!isVisited[x, y + 1])){
-				mazeData[x, y].up = true;
-				mazeData[x, y + 1].down = true;
+			if (order [i] == 0 && y < (height - 1) && (!isVisited [x, y + 1])) {
+				mazeData [x, y].up = true;
+				mazeData [x, y + 1].down = true;
 				isDeadEnd = false;
-				recursiveGeneration(x, y + 1);
+				recursiveGeneration (x, y + 1);
 			}
 			// gauche
-			else if(order[i] == 1 && x > 0 && (!isVisited[x - 1, y])){
-				mazeData[x, y].left = true;
-				mazeData[x - 1, y].right = true;
+			else if (order [i] == 1 && x > 0 && (!isVisited [x - 1, y])) {
+				mazeData [x, y].left = true;
+				mazeData [x - 1, y].right = true;
 				isDeadEnd = false;
-				recursiveGeneration(x - 1, y);
+				recursiveGeneration (x - 1, y);
 			}
 			// bas
-			else if(order[i] == 2 && y > 0 && (!isVisited[x, y - 1])){
-				mazeData[x, y].down = true;
-				mazeData[x, y - 1].up = true;
+			else if (order [i] == 2 && y > 0 && (!isVisited [x, y - 1])) {
+				mazeData [x, y].down = true;
+				mazeData [x, y - 1].up = true;
 				isDeadEnd = false;
-				recursiveGeneration(x, y - 1);
+				recursiveGeneration (x, y - 1);
 			}
 			// droite
-			else if(order[i] == 3 && x < (width - 1) && (!isVisited[x + 1, y])){
-				mazeData[x, y].right = true;
-				mazeData[x + 1, y].left = true;
+			else if (order [i] == 3 && x < (width - 1) && (!isVisited [x + 1, y])) {
+				mazeData [x, y].right = true;
+				mazeData [x + 1, y].left = true;
 				isDeadEnd = false;
-				recursiveGeneration(x + 1, y);
+				recursiveGeneration (x + 1, y);
 			}
 		}
 		
-		if(isDeadEnd)
-			deadEnd.Add(new Point(x, y));
+		if (isDeadEnd && (x!= 0 || y != GameManager.instance.maze.height / 2) ) {
+			deadEnd.Add (new Point (x, y));
+			Debug.Log ("cul de sac");
+			Debug.Log (x);
+			Debug.Log (y);
+		}
 	}
 }
