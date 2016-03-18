@@ -78,9 +78,9 @@ public class Questionnaire : MonoBehaviour{
         GlobalQuestionnaire.updateSheetState();
         time = Time.realtimeSinceStartup;
         yield return new WaitUntil(hasSecondPassed);
-        answerGiven();
         SceneManager.UnloadScene("Exemple");
         SceneManager.UnloadScene("Question");
+        answerGiven();
     } 
  
     private void answerGiven()
