@@ -12,7 +12,7 @@ public class Pixie1 : PNJ
 
     protected override void PNJLoadEvent()
     {
-        //displayDialog();
+        displayDialog(0, dialog.Length);
         //callPlaceArrows();
         base.PNJLoadEvent();
     }

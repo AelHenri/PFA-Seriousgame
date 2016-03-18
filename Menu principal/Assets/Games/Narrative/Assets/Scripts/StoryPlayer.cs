@@ -30,6 +30,7 @@ public class StoryPlayer : MonoBehaviour
     
     void FixedUpdate()
     {
+        //Debug.Log(paralyzed);
         if (!paralyzed)
         {
 
@@ -69,12 +70,17 @@ public class StoryPlayer : MonoBehaviour
 
     public void FreezePlayer()
     {
+        Debug.Log("Freeze Player !");
         paralyzed = true;
+        Debug.Log(paralyzed);
     }
 
     public void DefreezePlayer()
     {
+        Debug.Log("Defreeze Player !");
+        Debug.Log(paralyzed);
         paralyzed = false;
+        Debug.Log(paralyzed);
     }
    
 }
