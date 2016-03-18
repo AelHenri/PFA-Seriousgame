@@ -13,7 +13,7 @@ public class CharacterElements
 public class StoryGameManager : MonoBehaviour {
 
     public static StoryGameManager instance = null;
-    public float characterDelay = 0.02f;
+    public float characterDelay = 0.5f;
 
     public CharacterElements[] characters;
     private Dictionary<string, Texture> characterDic;
@@ -157,21 +157,22 @@ public class StoryGameManager : MonoBehaviour {
         foreach (DialogElements d in dialog)
         {
             string s = d.dialogLine;
-
+            AudioClip clip = d.audioLine;
             Texture portrait = characterDic[d.characterName];
             //GUILayout.BeginArea(new Rect(-6f, 6f, 2f, 2f));
             //GUI.DrawTexture(new Rect(-6f, 6f, 2f, 2f), portrait);
             displayPortrait = true;
             currentPortrait = portrait;
             messageBoxText.text = "";
+            if (clip != null)
+            {
+                SoundManager.instance.PlaySingle(clip);
+            }
             foreach (char c in s)
             {
                 yield return new WaitForSeconds(characterDelay);
                 messageBoxText.text += c;
-                if (messageBox.GetComponent<AudioSource>() != null)
-                {
-                    messageBox.GetComponent<AudioSource>().Play();
-                }
+                
             }
             yield return StartCoroutine(WaitForKeyDown());
         }

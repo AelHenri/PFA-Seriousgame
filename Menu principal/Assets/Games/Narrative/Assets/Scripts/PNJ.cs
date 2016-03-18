@@ -7,6 +7,7 @@ public class DialogElements
 {
     public string dialogLine;
     public string characterName;
+    public AudioClip audioLine;
 }
 
 public class PNJ : MonoBehaviour {
