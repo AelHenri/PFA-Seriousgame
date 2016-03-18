@@ -124,7 +124,6 @@ public class PNJ : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.Log("Réponse fausse **************************");
                     FalseAnswerEvent();
                 }
                 isAnswering = false;

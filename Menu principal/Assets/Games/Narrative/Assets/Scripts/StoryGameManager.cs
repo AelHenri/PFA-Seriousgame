@@ -184,7 +184,7 @@ public class StoryGameManager : MonoBehaviour {
     {
         if (displayPortrait)
         {
-            GUI.DrawTexture(new Rect(100f, 100f, 100f, 100f), currentPortrait, ScaleMode.ScaleToFit);
+            GUI.DrawTexture(new Rect(300f, 520f, 75f, 75f), currentPortrait, ScaleMode.ScaleToFit);
         }
     }
 

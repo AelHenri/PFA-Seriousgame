@@ -8,6 +8,7 @@ public class gaby1 : PNJ {
     private bool clickEventDone = false;
     private bool arrowsPlaced = false;
     private bool inClickEvent = false;
+    private bool hasAnsweredFalse = false;
 
     protected override void Update()
     {
@@ -20,6 +21,12 @@ public class gaby1 : PNJ {
         if (firstDialogDone && !questionAsked)
         {
             questionAsked = true;
+            Question();
+        }
+
+        if (hasAnsweredFalse)
+        {
+            hasAnsweredFalse = false;
             Question();
         }
 
@@ -51,7 +58,7 @@ public class gaby1 : PNJ {
 
     protected override void FalseAnswerEvent()
     {
-        Question();
+        hasAnsweredFalse = true;
         base.FalseAnswerEvent();
     }
 

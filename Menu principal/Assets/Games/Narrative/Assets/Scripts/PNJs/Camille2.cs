@@ -6,6 +6,7 @@ public class Camille2 : PNJ
 
     protected override void PNJClickEvent()
     {
+        Question();
         callPlaceTPs();
         base.PNJClickEvent();
     }
