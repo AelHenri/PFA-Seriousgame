@@ -2,13 +2,19 @@
 using UnityEngine.UI;
 using System.Collections;
 
+[System.Serializable]
+public class DialogElements
+{
+    public string dialogLine;
+    public string characterName;
+}
 
 public class PNJ : MonoBehaviour {
 
     public float x = 0f;
     public float y = 0f;
     public bool hasDialog = false;
-    public string[] dialog;
+    public DialogElements[] dialog;
     public string PNJName;
     public bool firstTime = true;
     /*public GameObject messageBox;
@@ -93,7 +99,7 @@ public class PNJ : MonoBehaviour {
 
     protected virtual void PNJClickEvent()
     {
-        Question();
+        //Question();
     }
 
     protected virtual void Question()
@@ -110,7 +116,7 @@ public class PNJ : MonoBehaviour {
             {
                 if (GlobalQuestionnaire.isAnswerRight)
                 {
-                    
+                    RightAnswerEvent();
                     if (!gameManager.IsPNJPresent(PNJName))
                     {
                         gameManager.AddPNJ(PNJName);
@@ -118,13 +124,23 @@ public class PNJ : MonoBehaviour {
                 }
                 else
                 {
-                    //TRUC-A-FAIRE-SI-C-EST-PAS-BON
+                    Debug.Log("Réponse fausse **************************");
+                    FalseAnswerEvent();
                 }
                 isAnswering = false;
             }
         }
     }
 
+    protected virtual void RightAnswerEvent()
+    {
+
+    }
+
+    protected virtual void FalseAnswerEvent()
+    {
+
+    }
 
     protected virtual void PNJLoadEvent()
     {
@@ -142,10 +158,21 @@ public class PNJ : MonoBehaviour {
     }
 
 
-    protected void displayDialog(int i)
+    protected void displayDialog(int i, int j)
     {
-        gameManager.GetMessage(dialog[i]);
+        Debug.Log(dialog.Length);
+        DialogElements[] messages = new DialogElements[j-i];
+        for (int k = 0; k< j-i; k++)
+        {
+            messages[k] = dialog[i+k];
+        }
+        gameManager.GetMessage(messages);
         gameManager.InteractEvent();          
+    }
+
+    protected bool IsEndDialog()
+    {
+        return gameManager.isMessagesFinished();
     }
 
     

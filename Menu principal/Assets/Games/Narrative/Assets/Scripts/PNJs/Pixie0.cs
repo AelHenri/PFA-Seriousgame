@@ -3,6 +3,18 @@ using System.Collections;
 
 public class Pixie0 : PNJ
 {
+    private bool loadEventDone = false;
+    private bool arrowsPlaced = false;
+
+    protected override void Update()
+    {
+        base.Update();
+        if (loadEventDone && IsEndDialog() && !arrowsPlaced)
+        {
+            callPlaceArrows();
+            arrowsPlaced = true;
+        }
+    }
 
     protected override void PNJClickEvent()
     {
@@ -12,11 +24,8 @@ public class Pixie0 : PNJ
 
     protected override void PNJLoadEvent()
     {
-        for (int i=0; i < dialog.Length; i++)
-        {
-            displayDialog(i);
-        }        
-        callPlaceArrows();
+        displayDialog(0, dialog.Length);
         base.PNJLoadEvent();
+        loadEventDone = true;
     }
 }
