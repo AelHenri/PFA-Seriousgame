@@ -34,11 +34,13 @@ public class MazeGen : MonoBehaviour {
 	public int width;
 	public int height;
 	public List<Point> deadEnd;
+	public int level;
 	
 	Cell[,] mazeData;
 	
 	public void SetupScene (int level) {
 		// Inititalisation des données du labyrinthe
+		this.level = level;
 		width =(int) Mathf.Floor(level*2.7f) + 1;
 		height = level*2 + 1;
 		mazeData = new Cell[width, height];
@@ -121,8 +123,15 @@ public class MazeGen : MonoBehaviour {
 	
 	// créer et affiche une cellule du labyrinthe
 	private void printCell(Cell c, int x, int y){
+		int folderNum = level;
+		if (level >= 3)
+			folderNum = 1;
+
 		int pattern = getPatternFromCell(c);
+
 		Transform newCell = Instantiate(wallPrefab[pattern], new Vector2(x, y), Quaternion.identity) as Transform;
+		Sprite tempTexture = Resources.Load("Tileset" + folderNum + "/WallImage" + pattern, typeof(Sprite))as Sprite;
+		newCell.GetComponent<SpriteRenderer>().sprite = tempTexture;
 		newCell.parent = GameObject.Find("Maze").transform;
 	}
 	
