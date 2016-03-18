@@ -77,8 +77,10 @@ public class Key : MonoBehaviour {
 			it = it+1;
 			rnd = Random.Range (0, MazeAccess.maze.deadEnd.Count);
 			transform.position = new Vector3 (MazeAccess.maze.deadEnd [rnd].x, MazeAccess.maze.deadEnd [rnd].y, 0);
-			if (Vector3.Distance( GameManager.instance.bonus.GetComponent<GameBonus>().transform.position, this.transform.position)< 0.1f)
-				nbKeysThere = nbKeysThere + 1;
+			if (GameManager.instance.bonusPresent) {
+				if (Vector3.Distance (GameManager.instance.bonus.GetComponent<GameBonus> ().transform.position, this.transform.position) < 0.1f)
+					nbKeysThere = nbKeysThere + 1;
+			}
 			foreach(Key k in GameManager.instance.keys){
 				if ( Vector3.Distance(k.GetComponent<Key>().transform.position, this.transform.position)< 0.1f){
 					nbKeysThere = nbKeysThere + 1;

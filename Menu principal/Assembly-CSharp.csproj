@@ -68,8 +68,13 @@
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\DialogManager.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJ.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJBehaviour.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Camille2.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Philibert2.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie0.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie1.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie2.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby1.cs" />
+     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby2.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryGameManager.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryLoader.cs" />
      <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryPlayer.cs" />
@@ -85,6 +90,7 @@
      <Compile Include="Assets\Scripts\LoadOnClick.cs" />
      <Compile Include="Assets\Scripts\MenuButtons.cs" />
      <Compile Include="Assets\Scripts\Navigator.cs" />
+     <Compile Include="Assets\Scripts\ProfileManager.cs" />
      <Compile Include="Assets\Scripts\TitleScreen.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

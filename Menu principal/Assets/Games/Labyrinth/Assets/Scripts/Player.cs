@@ -80,12 +80,14 @@ public class Player : MonoBehaviour {
 					if (GlobalQuestionnaire.isAnswerRight) {
 						globalKeys = globalKeys + 1;
 						localKeys = localKeys + 1;
-						collidedKey.SetActive(false);
+						Debug.Log (collidedKey.tag);
+					collidedKey.SetActive(false);
 						KeyText.text = "Clés : " + localKeys;
 					}
-				else{
-						collidedKey.GetComponent<Key>().MoveKey();
-						KeyText.text = "Clés : " + localKeys;
+					else{
+						collidedKey.GetComponent<Key> ().MoveKey ();
+							//collidedKey.GetComponent<Key>().MoveKey();
+						//KeyText.text = "Clés : " + localKeys;
 					}	
 					isAnswering = false;
 				}
