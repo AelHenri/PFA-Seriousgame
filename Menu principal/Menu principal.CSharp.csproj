@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -99,6 +93,7 @@
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie2.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby1.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby2.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryGameManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryLoader.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryPlayer.cs" />

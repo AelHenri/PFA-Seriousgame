@@ -24,11 +24,11 @@ public class gaby1 : PNJ {
             Question();
         }
 
-        if (hasAnsweredFalse)
+        /*if (hasAnsweredFalse)
         {
             hasAnsweredFalse = false;
             Question();
-        }
+        }*/
 
         if (clickEventDone && IsEndDialog() && !arrowsPlaced)
         {
@@ -51,15 +51,14 @@ public class gaby1 : PNJ {
 
     protected override void RightAnswerEvent()
     {
-        displayDialog(2, dialog.Length);
         clickEventDone = true;
+        displayDialog(2, dialog.Length);
         base.RightAnswerEvent();
     }
 
     protected override void FalseAnswerEvent()
     {
-        hasAnsweredFalse = true;
-        base.FalseAnswerEvent();
+        RightAnswerEvent();
     }
 
 }
