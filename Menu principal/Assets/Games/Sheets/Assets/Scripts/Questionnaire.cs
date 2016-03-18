@@ -13,6 +13,8 @@ public class Questionnaire : MonoBehaviour{
     Scene questionScene;
     Scene exempleScene;
 
+    private float time;
+
     public void Start()
     {
         GlobalQuestionnaire.q = this;
@@ -67,7 +69,6 @@ public class Questionnaire : MonoBehaviour{
         while (!GlobalQuestionnaire.hasAnswered)
             yield return new WaitUntil(() => GlobalQuestionnaire.hasAnswered);
         Debug.Log("AfterAnswer");
-        answerGiven();
         yield return null;
     }
  
@@ -75,7 +76,9 @@ public class Questionnaire : MonoBehaviour{
    public IEnumerator endQuestionnaire() 
     {
         GlobalQuestionnaire.updateSheetState();
-        yield return new WaitForSeconds(1);
+        time = Time.realtimeSinceStartup;
+        yield return new WaitUntil(hasSecondPassed);
+        answerGiven();
         SceneManager.UnloadScene("Exemple");
         SceneManager.UnloadScene("Question");
     } 
@@ -84,6 +87,11 @@ public class Questionnaire : MonoBehaviour{
     {
         Time.timeScale = 1;
         Debug.Log("isAnswerRight:" + GlobalQuestionnaire.isAnswerRight);
+    }
+
+    private bool hasSecondPassed()
+    {
+        return (Time.realtimeSinceStartup - time) >= 1;
     }
 }
 
