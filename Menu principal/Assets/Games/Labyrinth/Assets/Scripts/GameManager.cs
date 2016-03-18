@@ -11,10 +11,8 @@ public class GameManager : MonoBehaviour {
 	public int nbKeys = 0;
 	public List<Key> keys;
 	public GameBonus bonus;
-	public GameObject bonusImage;
-	public Text bonusText;
+	public GameObject gameText;
 	public bool bonusPresent = false;
-
 	private Text levelText;		
 	public int level =1;
     public AudioSource audioSource;
@@ -51,10 +49,9 @@ public class GameManager : MonoBehaviour {
 	void InitGame(){
 		bonusPresent = false;
 		doingSetup = true;
-		bonusImage = GameObject.Find ("BonusImage");
-		bonusText = GameObject.Find ("BonusText").GetComponent<Text>();
-		bonusText.text = "Bravo! Tu as gagné un cornichon!";
-		bonusImage.SetActive(false);
+		gameText = GameObject.Find ("gameText");
+		gameText.GetComponent<Text>().text = "Bravo! Tu as gagné un cornichon!";
+		gameText.SetActive (false);
 
 		levelImage =GameObject.Find("LevelImage");
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();

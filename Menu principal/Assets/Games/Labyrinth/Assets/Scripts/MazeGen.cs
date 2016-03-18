@@ -42,7 +42,9 @@ public class MazeGen : MonoBehaviour {
 		// Inititalisation des données du labyrinthe
 		this.level = level;
 		width =(int) Mathf.Floor(level*2.7f) + 1;
-		height = level*2 + 1;
+		height = (int)Mathf.Floor (level * 1.5f) + 2;//2 + 1;
+		if (level == 4)
+			height = height - 1;
 		mazeData = new Cell[width, height];
 		deadEnd = new List<Point>();
 		

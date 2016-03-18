@@ -26,7 +26,6 @@ public class Player : MonoBehaviour {
 		Debug.Log("new key");
 		EndingText = GameObject.Find("EndingText").GetComponent<Text>();
 		EndingText.gameObject.SetActive (false);
-		//EndingText.gameObject.SetActive (true);
 		transform.position = new Vector3 (-1.0f, GameManager.instance.maze.height / 2, 0);
 		rb = GetComponent<Rigidbody2D> ();
 		globalKeys = GameManager.instance.nbKeys;
@@ -55,7 +54,7 @@ public class Player : MonoBehaviour {
 					EndingText.text = "Il manque " + (GameManager.instance.level - localKeys) + " clés";
 				}
 				EndingText.gameObject.SetActive (true);
-				Invoke ("Hide", 3);
+				Invoke ("Hide", 4.5f);
 			} else {
 				enabled = false;
 				Invoke ("Restart", restartLevelDelay);
@@ -80,13 +79,18 @@ public class Player : MonoBehaviour {
 					if (GlobalQuestionnaire.isAnswerRight) {
 						globalKeys = globalKeys + 1;
 						localKeys = localKeys + 1;
-						Debug.Log (collidedKey.tag);
-					collidedKey.SetActive(false);
+						collidedKey.SetActive(false);
 						KeyText.text = "Clés : " + localKeys;
-					}
+					GameManager.instance.gameText.GetComponent<Text>().text = "Bravo! \n Tu as récupéré une clé!";	
+					GameManager.instance.gameText.SetActive(true);
+					Invoke ("HideGameText", 3.0f);
+				}
 					else{
+					GameManager.instance.gameText.GetComponent<Text>().text ="Dommage... La clé s'est déplacée.";	
+					GameManager.instance.gameText.SetActive(true);
+						Invoke ("HideGameText", 3.0f);
+
 						collidedKey.GetComponent<Key> ().MoveKey ();
-							//collidedKey.GetComponent<Key>().MoveKey();
 						//KeyText.text = "Clés : " + localKeys;
 					}	
 					isAnswering = false;
@@ -98,20 +102,23 @@ public class Player : MonoBehaviour {
 				if (GlobalQuestionnaire.isAnswerRight) {
 					Debug.Log ("bonus gagne");
 					GameManager.instance.bonusPresent = false;
-					GameManager.instance.bonusImage.SetActive(true);
-					Invoke ("HideBonusImage", 3.0f);
+					GameManager.instance.gameText.GetComponent<Text>().text = "Bravo! \n Tu as gagné un cornichon!";	
+					GameManager.instance.gameText.SetActive(true);
+					Invoke ("HideGameText", 3.0f);
 				}
 				else{
-					Debug.Log ("desolé");
-				}	
+					GameManager.instance.gameText.GetComponent<Text>().text = "Dommage... Pas de cornichon.";	
+					GameManager.instance.gameText.SetActive(true);
+					Invoke ("HideGameText", 3.0f);
+					}	
 				collidedBonus.SetActive (false);
 				bonus = false;
 			}
 		}
 	}
 
-	public void HideBonusImage(){
-		GameManager.instance.bonusImage.SetActive (false);
+	public void HideGameText(){
+		GameManager.instance.gameText.SetActive (false);
 	}
 
 	void FixedUpdate(){
