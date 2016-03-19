@@ -64,8 +64,11 @@ public class StorySceneManager : MonoBehaviour {
     {
         for (int i = 0; i < scene[level].Arrows.Length; i++)
         {
-            GameObject instance = Instantiate(scene[level].Arrows[i].arrow, scene[level].Arrows[i].arrow.transform.position, Quaternion.identity) as GameObject;
-            instance.transform.SetParent(sceneHolder);
+            if (!scene[level].Arrows[i].isTp)
+            {
+                GameObject instance = Instantiate(scene[level].Arrows[i].arrow, scene[level].Arrows[i].arrow.transform.position, Quaternion.identity) as GameObject;
+                instance.transform.SetParent(sceneHolder);
+            }
         }
     }
 

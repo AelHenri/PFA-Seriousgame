@@ -12,7 +12,7 @@ public class StoryPlayer : MonoBehaviour
     private bool collided;
     private StorySceneManager sceneManager;
     private int currentScene;
-    private bool paralyzed = false;
+    public static bool paralyzed = false;
 
     void Start()
     {
@@ -51,9 +51,6 @@ public class StoryPlayer : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
         collided = true;
-        if (col.gameObject.tag == "PNJ")
-        {
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D trig)

@@ -96,7 +96,7 @@ public class StoryGameManager : MonoBehaviour {
                 {
                     StopAllCoroutines();
                     displayPortrait = false;
-                    player.DefreezePlayer();
+                    StoryPlayer.paralyzed = false;
                     messageBox.SetActive(false);
                     //Interact.EnableControl();
                     messageBoxEnabled = false;
@@ -143,7 +143,7 @@ public class StoryGameManager : MonoBehaviour {
 
     public void InteractEvent()
     {
-        player.FreezePlayer();
+        StoryPlayer.paralyzed = true;
         messageBox.SetActive(true);
         StopAllCoroutines();
         StartCoroutine(TypeMessage());

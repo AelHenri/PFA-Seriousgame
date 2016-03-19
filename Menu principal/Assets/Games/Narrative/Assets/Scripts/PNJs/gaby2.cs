@@ -11,6 +11,7 @@ public class gaby2 : PNJ {
 
     protected override void PNJLoadEvent()
     {
+        displayDialog(0, dialog.Length);
         base.PNJLoadEvent();
     }
 }
