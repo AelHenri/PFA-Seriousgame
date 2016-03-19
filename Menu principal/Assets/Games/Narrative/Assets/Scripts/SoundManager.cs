@@ -25,11 +25,11 @@ public class SoundManager : MonoBehaviour {
 
         //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
-        
+        if(GameState.narrativeSound == null)//Destroy taking some time, ensures the pointer to the remaining instance is not overwritten
+            GameState.narrativeSound = transform.gameObject;//Pointer to destroy itself when quitting the game
 
         //beginningMusicSource.Play();
     }
-
 
     //Used to play single sound clips.
     public void PlaySingle(AudioClip clip)

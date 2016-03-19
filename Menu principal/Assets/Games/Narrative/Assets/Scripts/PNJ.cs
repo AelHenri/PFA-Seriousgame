@@ -113,7 +113,7 @@ public class PNJ : MonoBehaviour {
     {
         if (isAnswering)
         {
-            if (GlobalQuestionnaire.hasAnswered)
+            if (GlobalQuestionnaire.hasAnswered && GameState.isTimeFrozen)
             {
                 if (GlobalQuestionnaire.isAnswerRight)
                 {

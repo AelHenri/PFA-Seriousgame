@@ -52,7 +52,7 @@ public class Questionnaire : MonoBehaviour{
     }
 
     public void startQuestionnaire() {
-        Time.timeScale = 0;
+        GameState.freezeTime();
         GlobalQuestionnaire.hasAnswered = false;
         //StartCoroutine(WaitAndPrint(2.0F));
         StartCoroutine(startDisplay());
@@ -85,7 +85,7 @@ public class Questionnaire : MonoBehaviour{
  
     private void answerGiven()
     {
-        Time.timeScale = 1;
+        GameState.unfreezeTime();
         Debug.Log("isAnswerRight:" + GlobalQuestionnaire.isAnswerRight);
     }
 

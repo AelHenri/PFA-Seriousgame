@@ -11,7 +11,7 @@ public class Navigator : MonoBehaviour {
 
     void Awake ()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        DontDestroyOnLoad(transform.gameObject);//Has to remain between scenes
         games = new Games[gamesNb];
         GlobalQuestionnaire.Start();
         
@@ -31,14 +31,6 @@ public class Navigator : MonoBehaviour {
 
 	
 	void Update () {
-        //notdestroyed on other scenes
-        //Afficher ecran titre
-        //Attendre la sélection d'une option ou d'un jeu
-        //Coroutiner le jeu lancé
-        /*while (!myBoolTrue)
-        {
-            yield return null;
-        }*/
         //Verifier les input du joueur
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -54,26 +46,5 @@ public class Navigator : MonoBehaviour {
 
     }
 
-    void display_options()
-    {
 
-    }
-
-    void display_menu()
-    {
-
-    }
-
-    void display_game(uint selected)
-    {
-
-        games[selected].Information();
-    }
-
-    void load_sheets()
-    {
-        //foreach (string file in System.IO.Directory.GetFiles(path))
-        //{ }
-        //Sheet loading and decrypting
-    }
 }

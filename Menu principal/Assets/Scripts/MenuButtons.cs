@@ -7,7 +7,7 @@ public class MenuButtons : MonoBehaviour {
 
     void Awake()
     {
-        Time.timeScale = 0;
+        GameState.freezeTime();
     }
 
     void Update()
@@ -25,7 +25,7 @@ public class MenuButtons : MonoBehaviour {
             case 0: //Reprendre la partie
                 Debug.Log("Selection de reprendre la partie dans le menu");
                 GameState.pauseMenuLoaded = false;
-                Time.timeScale = 1;
+                GameState.unfreezeTime();
                 SceneManager.UnloadScene("PauseMenu");
                 break;
             case 1: //Options
@@ -45,11 +45,15 @@ public class MenuButtons : MonoBehaviour {
                     GameState.pauseMenuLoaded = false;
                     SceneManager.LoadSceneAsync((int)navigatorScreen);
                     GameState.titleScreenOnlyLoaded = true;
-                    Time.timeScale = 1;
+                    GameState.unfreezeTime();
                     if (GameState.labyrinth != null)
                         Destroy(GameState.labyrinth);
                     if (GameState.narrative != null)
+                    {
                         Destroy(GameState.narrative);
+                        Destroy(GameState.narrativeSound);
+                    }
+                        
                     GameState.gameCurrentlyLoaded = 0;
                 }   
                 else
