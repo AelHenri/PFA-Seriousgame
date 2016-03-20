@@ -31,25 +31,47 @@ public class Questionnaire : MonoBehaviour{
 
     public void showQuestion()
     {
+        StartCoroutine(loadQuestion());
+    }
+
+    public void showExemple()
+    {
+        StartCoroutine(loadExemple());
+    }
+
+    /*
+     * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
+     * in order to avoid having a few frames shown without scene
+     */
+    IEnumerator loadExemple()
+    {
+        if (questionScene.isLoaded)
+        {
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+            yield return exempleScene.isLoaded;
+            SceneManager.UnloadScene("Question");
+        }
+        else
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+    }
+
+    /*
+     * Loads the Question scene then wait for it to be fully loaded before destroying the Exemple scene 
+     * in order to avoid having a few frames shown without scene
+     */
+    IEnumerator loadQuestion()
+    {
         if (exempleScene.isLoaded)
         {
             SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            yield return questionScene.isLoaded;
             SceneManager.UnloadScene("Exemple");
         }
         else
             SceneManager.LoadScene("Question", LoadSceneMode.Additive);
     }
 
-    public void showExemple()
-    {
-        if (questionScene.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            SceneManager.UnloadScene("Question");
-        }
-        else
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-    }
+
 
     public void startQuestionnaire() {
         GameState.freezeTime();
