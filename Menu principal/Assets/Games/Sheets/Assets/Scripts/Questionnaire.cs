@@ -20,6 +20,7 @@ public class Questionnaire : MonoBehaviour{
         GlobalQuestionnaire.q = this;
         questionScene = SceneManager.GetSceneByName("Question");
         exempleScene = SceneManager.GetSceneByName("Exemple");
+        
     }
 
     void Update()
@@ -30,25 +31,24 @@ public class Questionnaire : MonoBehaviour{
 
     public void showQuestion()
     {
-        if (!questionScene.isLoaded)
-            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-        else
+        if (exempleScene.isLoaded)
         {
-            SceneManager.UnloadScene("Question");
             SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-        } 
+            SceneManager.UnloadScene("Exemple");
+        }
+        else
+            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
     }
 
     public void showExemple()
     {
-        if (!exempleScene.isLoaded)
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-
-        else
+        if (questionScene.isLoaded)
         {
-            SceneManager.UnloadScene("Exemple");
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+            SceneManager.UnloadScene("Question");
         }
+        else
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
     }
 
     public void startQuestionnaire() {
