@@ -72,8 +72,8 @@ public class MazeGen : MonoBehaviour {
 		printCell (tempCell, width, height/2);
 		Transform gradEnd = Instantiate(gradiant, new Vector3(width, height/2, -5), new Quaternion(0, 0, 90, 0)) as Transform;
 		gradEnd.parent = GameObject.Find("Maze").transform;
-		/*Transform arrow2 = Instantiate(arrow, new Vector3(width + 1, height/2, -5), Quaternion.identity) as Transform;
-		arrow2.parent = GameObject.Find("Maze").transform;*/
+		Transform arrow2 = Instantiate(arrow, new Vector3(width + 1, height/2, -5), Quaternion.identity) as Transform;
+		arrow2.parent = GameObject.Find("Maze").transform;
 
 		// Affichage du labyrinthe
 		for (int i = 0; i < width; i++) {
