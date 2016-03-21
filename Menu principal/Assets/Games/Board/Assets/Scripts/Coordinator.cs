@@ -13,6 +13,7 @@ public class Coordinator : MonoBehaviour {
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
     public Sprite[] playerSprites = new Sprite[4];
+    public static GameObject[] selectedPlayer = new GameObject[nbPlayer]; //I ADDED THIS
     public GameObject Canvas;
     public GameObject TextComp;
 
@@ -49,9 +50,10 @@ public class Coordinator : MonoBehaviour {
 
         for (int i = 0; i < nbPlayer; ++i)
         {
-            Players[i] = (GameObject)Instantiate(player);
+           //Players[i] = (GameObject)Instantiate(player);
+            //Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
+            Players[i] = selectedPlayer[i]; // I ADDED THIS
             Players[i].transform.position = pos;
-            Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
             Players[i].SetActive(true);
         }  
         d = Dice.GetComponent<Dice>();
@@ -176,6 +178,7 @@ public class Coordinator : MonoBehaviour {
 
     void SetSecondaryPlayer(GameObject player, int place)
     {
+        Debug.Log(player.transform.childCount);
         player.transform.GetChild(0).gameObject.SetActive(false);
         player.GetComponent<Animator>().enabled = false;
         Vector3 pos = player.transform.position;

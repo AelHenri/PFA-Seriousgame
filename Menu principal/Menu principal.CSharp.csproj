@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Games\Board\Assets\Scripts\Bonus.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Cam.cs" />
+    <Compile Include="Assets\Games\Board\Assets\Scripts\CharacterSelection.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Coordinator.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Dice.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Line.cs" />
