@@ -10,10 +10,10 @@ public class CamCentering : MonoBehaviour {
 			transform.position = new Vector3 ((w / 2f) - 0.5f, h / 2f - 0.215f, -10f);
 			float mazeRatio = w / h;
 			float screenRatio = Screen.width / Screen.height;
-			if (mazeRatio > screenRatio)
-				GetComponent<Camera>().orthographicSize = w * 1.2f ; // 1.2
+			if (h > w)
+				GetComponent<Camera>().orthographicSize = w * 1.1f ; // 1.2
 			else
-				GetComponent<Camera>().orthographicSize = h / 1.7f ;// 1.3
+				GetComponent<Camera>().orthographicSize = (h + 0.5f) / 1.6f ;// 1.7
 
 	}
 }
