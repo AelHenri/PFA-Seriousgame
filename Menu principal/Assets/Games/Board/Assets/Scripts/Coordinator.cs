@@ -12,7 +12,7 @@ public class Coordinator : MonoBehaviour {
     public GameObject[] Players = new GameObject[nbPlayer];
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
-    public Sprite[] playerSprites = new Sprite[4];
+    public static Sprite[] playerSprites = new Sprite[4]; // MODIFIED THIS
     public static GameObject[] selectedPlayer = new GameObject[nbPlayer]; //I ADDED THIS
     public GameObject Canvas;
     public GameObject TextComp;
@@ -50,9 +50,9 @@ public class Coordinator : MonoBehaviour {
 
         for (int i = 0; i < nbPlayer; ++i)
         {
-           //Players[i] = (GameObject)Instantiate(player);
-            //Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
-            Players[i] = selectedPlayer[i]; // I ADDED THIS
+            Players[i] = (GameObject)Instantiate(player);
+            Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
+          //  Players[i] = selectedPlayer[i]; // I ADDED THIS
             Players[i].transform.position = pos;
             Players[i].SetActive(true);
         }  

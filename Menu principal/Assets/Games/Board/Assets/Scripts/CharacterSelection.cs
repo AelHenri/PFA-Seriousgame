@@ -51,7 +51,11 @@ public class CharacterSelection : MonoBehaviour {
     public void ok()
     {
         for (int i = 0; i < Coordinator.nbPlayer; i++)
+        {
             Coordinator.selectedPlayer[i] = characters[selectionIndex];
+            Coordinator.playerSprites[i] = characters[selectionIndex].GetComponent<SpriteRenderer>().sprite;
+            Debug.Log(characters[selectionIndex].GetComponent<SpriteRenderer>().sprite);
+        }
         SceneManager.LoadScene("BoardMain");
         
     }
