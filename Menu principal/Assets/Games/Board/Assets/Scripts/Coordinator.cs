@@ -12,7 +12,8 @@ public class Coordinator : MonoBehaviour {
     public GameObject[] Players = new GameObject[nbPlayer];
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
-    public Sprite[] playerSprites = new Sprite[4];
+    public static Sprite[] playerSprites = new Sprite[4]; // MODIFIED THIS
+    public static GameObject[] selectedPlayer = new GameObject[nbPlayer]; //I ADDED THIS
     public GameObject Canvas;
     public GameObject TextComp;
 
@@ -50,8 +51,9 @@ public class Coordinator : MonoBehaviour {
         for (int i = 0; i < nbPlayer; ++i)
         {
             Players[i] = (GameObject)Instantiate(player);
-            Players[i].transform.position = pos;
             Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
+          //  Players[i] = selectedPlayer[i]; // I ADDED THIS
+            Players[i].transform.position = pos;
             Players[i].SetActive(true);
         }  
         d = Dice.GetComponent<Dice>();
@@ -81,14 +83,21 @@ public class Coordinator : MonoBehaviour {
 
             //Setting Bonus Behaviors
             bonusesBehavior[0] = BonusMoins1;
-        bonusesBehavior[1] = BonusMoins2;
-        bonusesBehavior[2] = BonusPlus3;
+            bonusesBehavior[1] = BonusMoins2;
+            bonusesBehavior[2] = BonusPlus3;
          
     }
 	
 	// Update is called once per frame
 	void Update () {
+        /* TESTING PURPOSE
+        if (currentPlayer == 1)
+        {
+            BoardMenu.Save();
+            Debug.Log("Saved");
 
+        }
+        */
         time += Time.deltaTime;
 
         if(beginOfTurn)
@@ -176,6 +185,7 @@ public class Coordinator : MonoBehaviour {
 
     void SetSecondaryPlayer(GameObject player, int place)
     {
+        Debug.Log(player.transform.childCount);
         player.transform.GetChild(0).gameObject.SetActive(false);
         player.GetComponent<Animator>().enabled = false;
         Vector3 pos = player.transform.position;
