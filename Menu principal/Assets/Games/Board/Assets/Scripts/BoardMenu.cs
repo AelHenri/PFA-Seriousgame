@@ -87,10 +87,21 @@ public class BoardMenu : MonoBehaviour {
         FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Create);
 
         CoordinatorSerializable data = new CoordinatorSerializable();
+        //a faire en plus propre, genre peut etre avec un construteur
 
         data.nbPlayer = Coordinator.nbPlayer;
         data.nbBonus =  Coordinator.nbBonus;
         data.playerSpritesNumber = playerSpritesNumber;
+        data.playerPos = new float[data.nbPlayer,4];
+        for (int i = 0; i < data.nbPlayer; i++)
+        {
+            data.playerPos[i,0] = Coordinator.Players[i].transform.position.x;
+            data.playerPos[i,1] = Coordinator.Players[i].transform.position.y;
+            data.playerPos[i,2] = Coordinator.Players[i].transform.position.z;
+
+
+        }
+        
 
         bf.Serialize(file, data);
         file.Close();
@@ -112,9 +123,13 @@ public class BoardMenu : MonoBehaviour {
             for (int i = 0; i < data.nbPlayer; ++i)
             {
                 Coordinator.playerSprites[i] = chars.characters[data.playerSpritesNumber[i]].GetComponent<SpriteRenderer>().sprite;
+                Coordinator.savecPos[i].x = data.playerPos[i, 0];
+                Coordinator.savecPos[i].y = data.playerPos[i, 1];
+                Coordinator.savecPos[i].z = data.playerPos[i, 2];
+                    
             }
-            
 
+            Coordinator.isFromSavedGame = true;
             SceneManager.LoadScene("BoardMain");
         }
     }
@@ -126,6 +141,7 @@ class CoordinatorSerializable
     public  int nbPlayer;
     public  int nbBonus;
     public  int[] playerSpritesNumber;
+    public float[,] playerPos;
 
 
     

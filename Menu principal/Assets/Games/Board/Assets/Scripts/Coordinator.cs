@@ -5,15 +5,17 @@ using UnityEngine.UI;
 
 public class Coordinator : MonoBehaviour {
 
+    public static bool isFromSavedGame = false;
+
     public static int nbPlayer = 4;
     public static int nbBonus = 3;
     public GameObject Dice;
     public GameObject Map;
-    public GameObject[] Players = new GameObject[nbPlayer];
+    public static GameObject[] Players = new GameObject[nbPlayer];
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
     public static Sprite[] playerSprites = new Sprite[4]; // MODIFIED THIS
-    public static GameObject[] selectedPlayer = new GameObject[nbPlayer]; //I ADDED THIS
+    public static Vector3[] savecPos = new Vector3[nbPlayer]; //added this
     public GameObject Canvas;
     public GameObject TextComp;
 
@@ -52,8 +54,10 @@ public class Coordinator : MonoBehaviour {
         {
             Players[i] = (GameObject)Instantiate(player);
             Players[i].GetComponent<SpriteRenderer>().sprite = playerSprites[i];
-          //  Players[i] = selectedPlayer[i]; // I ADDED THIS
+
+
             Players[i].transform.position = pos;
+                
             Players[i].SetActive(true);
         }  
         d = Dice.GetComponent<Dice>();
@@ -68,12 +72,22 @@ public class Coordinator : MonoBehaviour {
             }
         }
         for (int i = 0; i < nbPlayer; ++i)
+        {
+            if (isFromSavedGame)
+            {
+                Players[i].transform.position = savecPos[i];
+                Debug.Log("KOUKOU" + Players[i].transform.position);
+            }
+
+        }
+
+        for (int i = 0; i < nbPlayer; ++i)
             playerPos[i] = -1;
         for (int i = 0; i < nbPlayer; ++i)
         {
             playerPos[i] = 0;
             SetSecondaryPlayer(Players[i], i);
-        } 
+        }
         SetMainPlayer(Players[currentPlayer], currentPlayer);
 
         for (int i = 0; i < nbPlayer; ++i)
@@ -81,23 +95,25 @@ public class Coordinator : MonoBehaviour {
             goodAnswersinARow[i] = 0;
         }
 
-            //Setting Bonus Behaviors
-            bonusesBehavior[0] = BonusMoins1;
-            bonusesBehavior[1] = BonusMoins2;
-            bonusesBehavior[2] = BonusPlus3;
-         
+        //Setting Bonus Behaviors
+        bonusesBehavior[0] = BonusMoins1;
+        bonusesBehavior[1] = BonusMoins2;
+        bonusesBehavior[2] = BonusPlus3;
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-        /* TESTING PURPOSE
+        /* TESTING PURPOSE*/
         if (currentPlayer == 1)
         {
-            BoardMenu.Save();
             Debug.Log("Saved");
-
+            int turn = 0;
+            turn++;
+            if (turn == 4)
+                BoardMenu.Save();
         }
-        */
+        
         time += Time.deltaTime;
 
         if(beginOfTurn)
@@ -176,7 +192,8 @@ public class Coordinator : MonoBehaviour {
     void SetMainPlayer(GameObject player, int place)
     {
         player.GetComponent<Animator>().enabled = true;
-        player.transform.position = m.tiles[playerPos[place]].transform.position;
+        if (!isFromSavedGame)
+            player.transform.position = m.tiles[playerPos[place]].transform.position;
         player.transform.GetChild(0).gameObject.SetActive(true);
         player.transform.localScale = new Vector3(1, 1, 1);
         for (int i = 0; i < nbBonus; ++i)
@@ -193,7 +210,8 @@ public class Coordinator : MonoBehaviour {
         foreach(int i in playerPos)
             if (i == playerPos[place])
                 nbPlayerOnSameTile++;
-        player.transform.position = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y, pos.z - 0.3f);
+        if (!isFromSavedGame)
+            player.transform.position = new Vector3(pos.x - 0.3f + 0.3f * nbPlayerOnSameTile, pos.y, pos.z - 0.3f);
         player.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         for (int i = 0; i < nbBonus; ++i)
             bonus[place][i].SetActive(false);
