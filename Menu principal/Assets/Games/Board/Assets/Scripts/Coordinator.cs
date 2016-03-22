@@ -83,14 +83,21 @@ public class Coordinator : MonoBehaviour {
 
             //Setting Bonus Behaviors
             bonusesBehavior[0] = BonusMoins1;
-        bonusesBehavior[1] = BonusMoins2;
-        bonusesBehavior[2] = BonusPlus3;
+            bonusesBehavior[1] = BonusMoins2;
+            bonusesBehavior[2] = BonusPlus3;
          
     }
 	
 	// Update is called once per frame
 	void Update () {
+        /* TESTING PURPOSE
+        if (currentPlayer == 1)
+        {
+            BoardMenu.Save();
+            Debug.Log("Saved");
 
+        }
+        */
         time += Time.deltaTime;
 
         if(beginOfTurn)

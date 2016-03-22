@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class CharacterSelection : MonoBehaviour {
 
-    private List<GameObject> characters;
+    public List<GameObject> characters;
     private int selectionIndex = 0;
 
-  
-    
+   
+
     void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
@@ -55,6 +55,7 @@ public class CharacterSelection : MonoBehaviour {
     public void confirmSelectedChar()
     {
         Coordinator.playerSprites[BoardMenu.currentChoosingPlayerNumber] = characters[selectionIndex].GetComponent<SpriteRenderer>().sprite;
+        BoardMenu.playerSpritesNumber[BoardMenu.currentChoosingPlayerNumber] = selectionIndex;
         BoardMenu.currentChoosingPlayerNumber++;
     }
 

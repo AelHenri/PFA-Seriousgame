@@ -2,10 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 public class BoardMenu : MonoBehaviour {
 
-
+    public CharacterSelection chars;
 
     public GameObject playerNumberPanel;
     public GameObject charSelectPanel;
@@ -16,7 +18,7 @@ public class BoardMenu : MonoBehaviour {
     public PanelAnimation playerNumberAnim;
     public PanelAnimation currChoosingPlayer;
 
-
+    public static int[] playerSpritesNumber;
 
     public Text playerText;
 
@@ -40,6 +42,7 @@ public class BoardMenu : MonoBehaviour {
     public void setNbPlayers(int nbPlayers)
     {
         Coordinator.nbPlayer = nbPlayers;
+        playerSpritesNumber = new int[nbPlayers];
         StartCoroutine(showCharSelect());
     }
 
@@ -63,11 +66,11 @@ public class BoardMenu : MonoBehaviour {
     {
         SceneManager.LoadScene("BoardMain");
     }
-  
+
     // Update is called once per frame
-    void Update () {
+    void Update() {
         if (currentChoosingPlayerNumber < Coordinator.nbPlayer)
-            playerText.text = "Joueur n° " + (currentChoosingPlayerNumber+1);
+            playerText.text = "Joueur n° " + (currentChoosingPlayerNumber + 1);
 
         if (currentChoosingPlayerNumber == Coordinator.nbPlayer)
         {
@@ -76,6 +79,54 @@ public class BoardMenu : MonoBehaviour {
             launchGameButton.SetActive(true);
         }
 
-        
-	}
+    }
+
+    public static void Save()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Create);
+
+        CoordinatorSerializable data = new CoordinatorSerializable();
+
+        data.nbPlayer = Coordinator.nbPlayer;
+        data.nbBonus =  Coordinator.nbBonus;
+        data.playerSpritesNumber = playerSpritesNumber;
+
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    
+
+
+    public  void Load()
+    {
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat",FileMode.Open);
+            Debug.Log(Application.persistentDataPath);
+            CoordinatorSerializable data = (CoordinatorSerializable)bf.Deserialize(file);
+            Coordinator.nbPlayer = data.nbPlayer;
+            Coordinator.nbBonus = data.nbBonus;
+            for (int i = 0; i < data.nbPlayer; ++i)
+            {
+                Coordinator.playerSprites[i] = chars.characters[data.playerSpritesNumber[i]].GetComponent<SpriteRenderer>().sprite;
+            }
+            
+
+            SceneManager.LoadScene("BoardMain");
+        }
+    }
+	
+}
+[Serializable]
+class CoordinatorSerializable
+{
+    public  int nbPlayer;
+    public  int nbBonus;
+    public  int[] playerSpritesNumber;
+
+
+    
 }
