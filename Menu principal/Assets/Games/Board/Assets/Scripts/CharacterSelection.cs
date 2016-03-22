@@ -9,8 +9,7 @@ public class CharacterSelection : MonoBehaviour {
     private List<GameObject> characters;
     private int selectionIndex = 0;
 
-    /*private List<Button> characterButtons;
-    public GameObject buttons;*/
+  
     
     void Awake()
     {
@@ -26,14 +25,7 @@ public class CharacterSelection : MonoBehaviour {
             t.gameObject.SetActive(false);
         }
 
-        characters[selectionIndex].SetActive(true);
-        /*
-        characterButtons = new List<Button>();
-        foreach (Transform t in buttons.transform)
-        {
-            characterButtons.Add(buttons.GetComponentInChildren<Button>());
-        }
-        */
+ 
 	}
 	
     public void selectCharacter(int index)
@@ -60,8 +52,16 @@ public class CharacterSelection : MonoBehaviour {
         
     }
 
-	// Update is called once per frame
-	void Update () {
+    public void confirmSelectedChar()
+    {
+        Coordinator.playerSprites[BoardMenu.currentChoosingPlayerNumber] = characters[selectionIndex].GetComponent<SpriteRenderer>().sprite;
+        BoardMenu.currentChoosingPlayerNumber++;
+    }
 
-	}
+
+    // Update is called once per frame
+    void Update () {
+        if (BoardMenu.currentChoosingPlayerNumber != 666)
+            characters[selectionIndex].SetActive(true);
+    }
 }

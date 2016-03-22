@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Games\Board\Assets\Scripts\BoardMenu.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Bonus.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Cam.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\CharacterSelection.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Assets\Games\Board\Assets\Scripts\Line.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Map.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Move.cs" />
+    <Compile Include="Assets\Games\Board\Assets\Scripts\PanelAnimation.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\RPS.cs" />
     <Compile Include="Assets\Games\Board\Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Box.cs" />
