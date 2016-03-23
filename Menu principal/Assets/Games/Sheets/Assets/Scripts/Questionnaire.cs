@@ -87,6 +87,7 @@ public class Questionnaire : MonoBehaviour{
     }
     public IEnumerator startDisplay()
     {
+        Fading.loadedFromGame = true;
         showExemple();
         while (!GlobalQuestionnaire.hasAnswered)
             yield return new WaitUntil(() => GlobalQuestionnaire.hasAnswered);
