@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour {
-    public uint navigatorScreen;
 
     void Awake()
     {
@@ -23,36 +22,34 @@ public class MenuButtons : MonoBehaviour {
         switch (optionsNb)
         {
             case 0: //Reprendre la partie
-                Debug.Log("Selection de reprendre la partie dans le menu");
+                Debug.Log("Sélection de reprendre la partie dans le menu");
                 GameState.pauseMenuLoaded = false;
                 GameState.unfreezeTime();
                 SceneManager.UnloadScene("PauseMenu");
                 break;
             case 1: //Options
-                Debug.Log("Selection de options dans le menu");
-                GameState.pauseMenuLoaded = false;
-                GlobalQuestionnaire.startQuestionnaire();
-                GameState.titleScreenOnlyLoaded = false;
-                SceneManager.UnloadScene("PauseMenu");
+                Debug.Log("Sélection de options dans le menu");
+                //GameState.pauseMenuLoaded = false;
+                //GlobalQuestionnaire.startQuestionnaire();
+                //GameState.titleScreenOnlyLoaded = false;
+                //SceneManager.UnloadScene("PauseMenu");
+                SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
                 break;
             case 2: //Recommencer
-                Debug.Log("Selection de recommencer dans le menu");
+                Debug.Log("Sélection de recommencer dans le menu");
                 break;
             case 3: //Quitter la partie
-                Debug.Log("Selection de quitter la partie dans le menu");
+                Debug.Log("Sélection de quitter la partie dans le menu");
                 if (GameState.titleScreenOnlyLoaded == false)
                 {
                     GameState.pauseMenuLoaded = false;
-                    SceneManager.LoadSceneAsync((int)navigatorScreen);
+                    SceneManager.LoadSceneAsync("TitleScreen");
                     GameState.titleScreenOnlyLoaded = true;
                     GameState.unfreezeTime();
-                    if (GameState.labyrinth != null)
-                        Destroy(GameState.labyrinth);
-                    if (GameState.narrative != null)
-                    {
-                        Destroy(GameState.narrative);
-                        Destroy(GameState.narrativeSound);
-                    }
+
+                    GameState.quitNarrative();
+                    GameState.quitLabyrinth();
+                    
                         
                     GameState.gameCurrentlyLoaded = 0;
                 }   

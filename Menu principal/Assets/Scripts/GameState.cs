@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public static class GameState  {
     //Pause menu
@@ -50,4 +51,26 @@ public static class GameState  {
             timeAlreadyFrozen = false;
         }
     }
+
+    public static void quitNarrative()
+    {
+        if (narrative != null)
+        {
+            Object.Destroy(narrative);
+            Object.Destroy(narrativeSound);
+        }
+    }
+
+    public static void quitLabyrinth()
+    {
+
+        if (labyrinth != null)
+            Object.Destroy(labyrinth);
+    }
+
+    public static void quitBoard()
+    {
+
+    }
+
 }
