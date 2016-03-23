@@ -76,7 +76,6 @@ public class Coordinator : MonoBehaviour {
             if (isFromSavedGame)
             {
                 Players[i].transform.position = savecPos[i];
-                Debug.Log("KOUKOU" + Players[i].transform.position);
             }
 
         }
@@ -118,13 +117,17 @@ public class Coordinator : MonoBehaviour {
 
         if(beginOfTurn)
         {
-            Canvas.SetActive(true);
-            Text t = TextComp.GetComponent<Text>();
-            t.text = "Joueur " + (currentPlayer + 1) + " à toi de jouer !";  
-            if(!timeSet)
+            if (!timeSet)
             {
                 turnBegin = time;
                 timeSet = true;
+            }
+
+            if ((time - turnBegin > 1) && beginOfTurn)
+            {
+                Canvas.SetActive(true);
+                Text t = TextComp.GetComponent<Text>();
+                t.text = "Joueur " + (currentPlayer + 1) + " à toi de jouer !";
             }
             //AddBonus();
         }
@@ -132,7 +135,7 @@ public class Coordinator : MonoBehaviour {
         if((time - turnBegin > 3) && beginOfTurn)
         {
             Canvas.SetActive(false);
-            if(!questionnaireLaunched)
+            if (!questionnaireLaunched)
             {
                 GlobalQuestionnaire.startQuestionnaire();
                 questionnaireLaunched = true;
