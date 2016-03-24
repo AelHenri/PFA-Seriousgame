@@ -56,6 +56,8 @@ public class Player : MonoBehaviour {
 				EndingText.gameObject.SetActive (true);
 				Invoke ("Hide", 4.5f);
 			} else {
+				
+				GameManager.instance.timers [GameManager.instance.level - 1] = GameObject.Find ("Timer").GetComponent<Timer> ().get ();
 				enabled = false;
 				Invoke ("Restart", restartLevelDelay);
 			}

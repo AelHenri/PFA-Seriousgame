@@ -11,9 +11,14 @@ public class GameManager : MonoBehaviour {
 	public int nbKeys = 0;
 	public List<Key> keys;
 	public GameBonus bonus;
+	private GameObject endGameImage;
+	private GameObject scores;
+	private Text scoresText;
 	public GameObject gameText;
+	private GameObject endGameText;
 	public bool bonusPresent = false;
-	private Text levelText;		
+	private Text levelText;
+	public float[] timers = new float[4];
 	public int level =1;
     public AudioSource audioSource;
     public AudioClip[] music = new AudioClip[4];
@@ -39,7 +44,7 @@ public class GameManager : MonoBehaviour {
 
 	private void OnLevelWasLoaded(int index){
 		if (!doingSetup) {
-			level++; 
+			level++;
 			InitGame ();
 		}
 
@@ -47,27 +52,78 @@ public class GameManager : MonoBehaviour {
 
 
 	void InitGame(){
-		bonusPresent = false;
+		Debug.Log ("level");
+		Debug.Log (level);
 		doingSetup = true;
+		bonusPresent = false;
+
 		gameText = GameObject.Find ("gameText");
-		gameText.GetComponent<Text>().text = "Bravo! Tu as gagné un cornichon!";
+		gameText.GetComponent<Text> ().text = "Bravo! Tu as gagné un cornichon!";
 		gameText.SetActive (false);
+		levelImage = GameObject.Find ("LevelImage");
+		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
 
-		levelImage =GameObject.Find("LevelImage");
-		levelText = GameObject.Find("LevelText").GetComponent<Text>();
-		levelText.text = "Niveau " + level;
-		levelImage.SetActive (true);
-		keys.Clear ();
-		maze.SetupScene (level);
-		GameObject.Find("Timer").GetComponent<Timer>().launch();
-		Invoke ("HideLevelImage", levelStartDelay);
-		GameObject.Find("Main Camera").GetComponent<CamCentering>().centerCamera();
-        
-        audioSource.clip = music[(level-1)%3];
-        audioSource.Play();
+		GameObject timerText = GameObject.Find ("Timer");
+		endGameImage = GameObject.Find ("endGameImage");
+		scores = GameObject.Find ("scores");
+		scoresText = GameObject.Find ("scoresText").GetComponent<Text> ();
+		scores.SetActive (false);
 
+		endGameText = GameObject.Find ("endGameText");
+		endGameText.GetComponent<Text> ().text = "Bravo! Tu as gagné!";
+		endGameText.SetActive (false);
+
+		endGameImage.SetActive (false);
+		if (level == 2) {
+			timerText.SetActive (false);
+			endGameText.SetActive (true);
+			endGameImage.SetActive (true);
+
+			int j;
+			int taille = 1;
+			for (j = 0; j < 4; j++) {
+				if (Mathf.Round (timers [j]) > 10)
+					taille = Mathf.Max (taille, 2);
+				if (Mathf.Round (timers [j]) > 100)
+					taille = Mathf.Max (taille, 3);
+			}
+			scoresText.text = "Résultats\n\n";
+			for (j = 0; j < 4; j++) {
+				if (taille == 1) {
+					scoresText.text += "Niveau " + (j + 1) + " :   " + Mathf.Round (timers [j]) + " secondes\n";
+				} else if (taille == 2) {
+					if ( Mathf.Round (timers [j])<10)
+						scoresText.text += "Niveau " + (j + 1) + " :   0" + Mathf.Round (timers [j]) + " secondes\n";	
+					else
+						scoresText.text += "Niveau " + (j + 1) + " :   " + Mathf.Round (timers [j]) + " secondes\n";
+				} else {
+					if ( Mathf.Round (timers [j])<10)
+						scoresText.text += "Niveau " + (j + 1) + " :  00" + Mathf.Round (timers [j]) + " secondes\n";	
+					else if ( Mathf.Round (timers [j])<100)
+						scoresText.text += "Niveau " + (j + 1) + " :  0" + Mathf.Round (timers [j]) + " secondes\n";
+					else
+						scoresText.text += "Niveau " + (j + 1) + " :  " + Mathf.Round (timers [j]) + " secondes\n";	
+				}
+			}
+				scores.SetActive (true);
+		//	Invoke ("HideLevelImage", 5f);
+			enabled = false;
+			//GameOver ();
+			enabled = false;
+			Application.Quit ();
+		} else {
+			levelText.text = "Niveau " + level;
+			levelImage.SetActive (true);
+			keys.Clear ();
+			maze.SetupScene (level);
+			GameObject.Find ("Timer").GetComponent<Timer> ().launch ();
+			Invoke ("HideLevelImage", levelStartDelay);
+			GameObject.Find ("Main Camera").GetComponent<CamCentering> ().centerCamera ();
+			audioSource.clip = music [(level - 1) % 3];
+			audioSource.Play ();
+		}
 	}
-
+		
 
 	private void HideLevelImage(){
 		levelImage.SetActive (false);
