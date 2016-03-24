@@ -42,6 +42,8 @@ public class Coordinator : MonoBehaviour {
     private bool timeSet = false;
     private int[] goodAnswersinARow = new int[nbPlayer];
 
+    public Animator animator;
+
     // Use this for initialization
     void Start () {
         m = Map.GetComponent<Map>();
@@ -49,6 +51,8 @@ public class Coordinator : MonoBehaviour {
         Vector3 pos = m.tiles[0].transform.position + new Vector3(0, 0, 0);
         GameObject player = (GameObject)Resources.Load("Player", typeof(GameObject));
         RPS = (GameObject)Resources.Load("RandomPlayerSelector", typeof(GameObject));
+
+        //animator = Canvas.GetComponent("LevelImage").GetComponent<Animator>();
 
         for (int i = 0; i < nbPlayer; ++i)
         {
@@ -129,6 +133,10 @@ public class Coordinator : MonoBehaviour {
                 Text t = TextComp.GetComponent<Text>();
                 t.text = "Joueur " + (currentPlayer + 1) + " à toi de jouer !";
             }
+
+            if ((time - turnBegin > 2) && beginOfTurn)
+                animator.SetTrigger("End Transition");
+
             //AddBonus();
         }
 
@@ -136,7 +144,7 @@ public class Coordinator : MonoBehaviour {
         {
             Canvas.SetActive(false);
             if (!questionnaireLaunched)
-            {
+            { 
                 GlobalQuestionnaire.startQuestionnaire();
                 questionnaireLaunched = true;
             }
@@ -367,6 +375,7 @@ public class Coordinator : MonoBehaviour {
             }
         bonusEnd = true;
     }
+
 
     
 }

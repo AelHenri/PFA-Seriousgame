@@ -39,7 +39,6 @@ public class Question : MonoBehaviour {
         currentSheet = GlobalQuestionnaire.currentSheet;
 
         audioSource = GetComponent<AudioSource>();
-        //audioSource.clip = mistake;
     }
 
     public static Texture2D LoadPNG(string filePath)
