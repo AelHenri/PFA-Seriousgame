@@ -108,6 +108,7 @@ public class Coordinator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         /* TESTING PURPOSE*/
+        /*
         if (currentPlayer == 1)
         {
             Debug.Log("Saved");
@@ -116,7 +117,7 @@ public class Coordinator : MonoBehaviour {
             if (turn == 4)
                 BoardMenu.Save();
         }
-        
+        */
         time += Time.deltaTime;
 
         if(beginOfTurn)

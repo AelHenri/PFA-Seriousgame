@@ -13,6 +13,8 @@ public class Questionnaire : MonoBehaviour{
     Scene questionScene;
     Scene exempleScene;
 
+    Fading fading;
+
     private float time;
 
     public void Start()
@@ -20,6 +22,8 @@ public class Questionnaire : MonoBehaviour{
         GlobalQuestionnaire.q = this;
         questionScene = SceneManager.GetSceneByName("Question");
         exempleScene = SceneManager.GetSceneByName("Exemple");
+
+        fading = GameObject.Find("Navigator").GetComponent<Fading>();
         
     }
 
@@ -74,7 +78,7 @@ public class Questionnaire : MonoBehaviour{
 
 
     public void startQuestionnaire() {
-        GameState.freezeTime();
+       GameState.freezeTime();
         GlobalQuestionnaire.hasAnswered = false;
         //StartCoroutine(WaitAndPrint(2.0F));
         StartCoroutine(startDisplay());
@@ -87,8 +91,12 @@ public class Questionnaire : MonoBehaviour{
     }
     public IEnumerator startDisplay()
     {
-        Fading.loadedFromGame = true;
+
+        fading.beginFade(1);
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(0.8f));
         showExemple();
+        fading.beginFade(-1);
+
         while (!GlobalQuestionnaire.hasAnswered)
             yield return new WaitUntil(() => GlobalQuestionnaire.hasAnswered);
         Debug.Log("AfterAnswer");
@@ -98,11 +106,15 @@ public class Questionnaire : MonoBehaviour{
 
    public IEnumerator endQuestionnaire() 
     {
+
         GlobalQuestionnaire.updateSheetState();
         time = Time.realtimeSinceStartup;
         yield return new WaitUntil(hasSecondPassed);
+        fading.beginFade(1);
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(0.8f));
         SceneManager.UnloadScene("Exemple");
         SceneManager.UnloadScene("Question");
+        fading.beginFade(-1);
         answerGiven();
     } 
  
@@ -115,6 +127,22 @@ public class Questionnaire : MonoBehaviour{
     private bool hasSecondPassed()
     {
         return (Time.realtimeSinceStartup - time) >= 1;
+    }
+
+    /*
+     * Coroutine used to have a WaitForSeconds alike even if the the time is frozen
+     */
+
+    public static class CoroutineUtil
+    {
+        public static IEnumerator WaitForRealSeconds(float time)
+        {
+            float start = Time.realtimeSinceStartup;
+            while (Time.realtimeSinceStartup < start + time)
+            {
+                yield return null;
+            }
+        }
     }
 }
 
