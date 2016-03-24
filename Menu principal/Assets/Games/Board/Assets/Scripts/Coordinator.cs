@@ -47,6 +47,8 @@ public class Coordinator : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        GameObject terrain = (GameObject)Resources.Load((UnityEngine.Random.Range(0,2) == 0)?"TIle":"TGlace", typeof(GameObject));
+        Instantiate(terrain);
         m = Map.GetComponent<Map>();
         m.PrepareMap();
         Vector3 pos = m.tiles[0].transform.position + new Vector3(0, 0, 0);
