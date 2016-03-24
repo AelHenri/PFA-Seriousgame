@@ -46,7 +46,7 @@ public class MenuButtons : MonoBehaviour {
                     //SceneManager.LoadSceneAsync("TitleScreen");
                     GameState.titleScreenOnlyLoaded = true;
                     GameState.unfreezeTime();
-
+                    GameState.unfreezeTime();//Unfreeze again in case of a pending question
                     GameState.quitNarrative();
                     GameState.quitLabyrinth();
                     
