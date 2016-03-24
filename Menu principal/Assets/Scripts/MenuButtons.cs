@@ -43,7 +43,7 @@ public class MenuButtons : MonoBehaviour {
                 if (GameState.titleScreenOnlyLoaded == false)
                 {
                     GameState.pauseMenuLoaded = false;
-                    SceneManager.LoadSceneAsync("TitleScreen");
+                    //SceneManager.LoadSceneAsync("TitleScreen");
                     GameState.titleScreenOnlyLoaded = true;
                     GameState.unfreezeTime();
 

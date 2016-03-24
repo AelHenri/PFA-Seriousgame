@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Credits : MonoBehaviour
 {
@@ -6,12 +7,15 @@ public class Credits : MonoBehaviour
     public float speed = 29.0f;
     public GUIStyle style;
     public Rect viewArea;
+    public AudioSource erwan;
+    private bool soundPlayed = false;
+    public Texture2D background;
 
     private void Start()
     {
         if (this.viewArea.width == 0.0f)
         {
-            this.viewArea = new Rect(transform.GetComponent<RectTransform>().anchorMin.x*Screen.width,
+            this.viewArea = new Rect(transform.GetComponent<RectTransform>().anchorMin.x * Screen.width,
                                      transform.GetComponent<RectTransform>().anchorMin.y * Screen.height,
                                      (transform.GetComponent<RectTransform>().anchorMax.x - transform.GetComponent<RectTransform>().anchorMin.x) * Screen.width,
                                      (transform.GetComponent<RectTransform>().anchorMax.y - transform.GetComponent<RectTransform>().anchorMin.y) * Screen.height);
@@ -22,50 +26,51 @@ public class Credits : MonoBehaviour
 
     private void Update()
     {
-        this.offset -= Time.deltaTime * this.speed;
-    }
+        this.offset -= Time.unscaledDeltaTime * this.speed;
+        Debug.Log("Offset: " + offset);
+        if (offset < -200 && !soundPlayed) // Screen.height)
+        {
+            erwan.Play();
+            soundPlayed = true;
+            
+        }
+        if(offset < -300 || Input.anyKeyDown)
+        {
+            SceneManager.UnloadScene("Credits");
+        }
+     }
 
     private void OnGUI()
     {
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), background);
         GUI.BeginGroup(this.viewArea);
-
+        GUI.depth = -100;
         var position = new Rect(0, this.offset, this.viewArea.width, this.viewArea.height);
-        var text = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- Quisque a mauris sit amet neque posuere molestie at laoreet lorem.
- Suspendisse accumsan pretium ante, sit amet tincidunt tortor tempor ac.
-  
-  
-  
- Sed condimentum mi id nisi egestas non vulputate urna porttitor.
- Mauris sed mauris vitae velit imperdiet vulputate ut nec velit.
- Maecenas convallis posuere velit, quis interdum justo mattis vel.
-  
-  
-  
- Aliquam hendrerit ullamcorper dui, a laoreet dolor ornare sit amet.
- Praesent sed odio purus, a convallis tellus.
- Nulla porttitor arcu vel ipsum luctus euismod.
-  
-  
-  
- Duis tincidunt vehicula nisl, nec venenatis velit convallis non.
- Sed semper metus egestas libero venenatis imperdiet.
- Pellentesque venenatis orci nisi, vel fringilla dolor.
-  
-  
-  
- Nam at lacus massa, commodo pellentesque velit.
- In accumsan velit sed nisi aliquam tristique.
- Ut eu quam tellus, eu egestas diam.
-  
-  
-  
- Maecenas vel dui vitae orci accumsan molestie.
- Donec pulvinar metus nec turpis rutrum quis gravida ante dignissim.
- Ut quis justo quis nisl eleifend ornare non at ipsum.";
+        var text = @"PFA - Serious Game
+
+
+Réalisation, Musique, Histoire, Graphisme, Voix:
+
+Borel Hugo,
+Fichant Le Fur Florian,
+Grelet Léo, 
+Le Moigne Yves,
+Montaigu Thomas,
+Rakotosaona Lalatiana,
+Toussaint Henri
+
+
+
+
+(et un peu Internet)
+
+
+
+";
 
         GUI.Label(position, text, this.style);
 
         GUI.EndGroup();
+        
     }
 }

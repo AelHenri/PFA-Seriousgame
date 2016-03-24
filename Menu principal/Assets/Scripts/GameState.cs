@@ -58,6 +58,7 @@ public static class GameState  {
         {
             Object.Destroy(narrative);
             Object.Destroy(narrativeSound);
+            SceneManager.LoadSceneAsync("TitleScreen");
         }
     }
 
@@ -65,12 +66,15 @@ public static class GameState  {
     {
 
         if (labyrinth != null)
+        {
             Object.Destroy(labyrinth);
+            SceneManager.LoadSceneAsync("TitleScreen");
+        }
     }
 
     public static void quitBoard()
     {
-
+        //SceneManager.LoadSceneAsync("TitleScreen");
     }
 
 }

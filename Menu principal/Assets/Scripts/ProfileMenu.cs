@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Profile : MonoBehaviour {
+public class ProfileMenu : MonoBehaviour {
     public bool hasFinishedGame1;
     public bool hasFinishedGame2;
     public bool hasFinishedGame3;

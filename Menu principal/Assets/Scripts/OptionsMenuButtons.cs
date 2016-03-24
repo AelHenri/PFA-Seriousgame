@@ -32,7 +32,7 @@ public class OptionsMenuButtons : MonoBehaviour
                 //SceneManager.UnloadScene("OptionsMenu");
                 break;
             case 1: //Changer le volume des voix
-                Debug.Log("Sélection de options dans le menu");
+                Debug.Log("Sélection de changer la musique voix dans le menu");
                 /*GameState.pauseMenuLoaded = false;
                 GlobalQuestionnaire.startQuestionnaire();
                 GameState.titleScreenOnlyLoaded = false;
@@ -40,6 +40,7 @@ public class OptionsMenuButtons : MonoBehaviour
                 break;
             case 2: //Crédits
                 Debug.Log("Sélection de crédits dans le menu options");
+                SceneManager.LoadScene("Credits", LoadSceneMode.Additive);
                 break;
             case 3: //Quitter les options
                 Debug.Log("Sélection de quitter les options dans le menu options");
