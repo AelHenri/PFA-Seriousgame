@@ -7,7 +7,6 @@ public class Fading : MonoBehaviour {
     private int drawDepth = -1000;
     private float alpha = 0.0f;
     public int fadeDir = -1; // -1 = in, out = 1 
-    public static bool loadedFromGame = true;
     public bool finished = false;
 
     void OnGUI()
@@ -15,14 +14,6 @@ public class Fading : MonoBehaviour {
 
         GUI.depth = drawDepth;
 
-        if (loadedFromGame)
-        {
-            alpha += fadeDir * fadingSpeed * Time.unscaledDeltaTime;
-            alpha = Mathf.Clamp01(alpha);
-
-            GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeOutTexture);
-        }
         alpha += fadeDir * fadingSpeed * Time.unscaledDeltaTime;
         alpha = Mathf.Clamp01(alpha);
 
@@ -36,7 +27,6 @@ public class Fading : MonoBehaviour {
 
     public  float beginFade( int direction)
     {
-        //alpha = 1.0f;
         fadeDir = direction;
         return fadingSpeed;
     }
@@ -72,9 +62,7 @@ public class Fading : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // To avoid having the fade in animation when coming from the "Question" scene
-        if (alpha == 0.0f)
-            loadedFromGame = false;
+        // To avoid having the fade in animation when coming from the "Question" 
 
         if (alpha == 0 || alpha == 1)
             finished = true;

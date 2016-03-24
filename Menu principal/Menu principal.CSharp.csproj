@@ -103,12 +103,12 @@
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StorySceneManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\Teleporter.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
-    <Compile Include="Assets\Games\Sheets\Assets\Scripts\Fading.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\GlobalQuestionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />
     <Compile Include="Assets\Scripts\Credits.cs" />
+    <Compile Include="Assets\Scripts\Fading.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\Games.cs" />
     <Compile Include="Assets\Scripts\LoadOnClick.cs" />
