@@ -77,13 +77,12 @@ public class RPS : MonoBehaviour {
             rotation += speed * 1 / Mathf.Pow(currentTime + 1, 2);
             Vector3 ang = Arrow.transform.eulerAngles;
             Arrow.transform.eulerAngles = new Vector3(ang.x, rotation, ang.z);
-            Debug.Log((int)Mathf.Floor(((rotation + 90f) % 360f / (360f / nbPlayer))));
         }
         currentTime += Time.deltaTime;
         if (currentTime >= endTime)
             end = true;
         if (end && currentTime > endTime + 2)
             Destroy(gameObject);
-        currentArrowPos = (int)Mathf.Floor(((rotation + 90f) % 360f / (360f / nbPlayer)));
+        currentArrowPos = (nbPlayer - 1) - (int)Mathf.Floor(((rotation + 90f) % 360f / (360f / nbPlayer)));
     }
 }

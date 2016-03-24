@@ -8,7 +8,7 @@ public class Dice : MonoBehaviour {
     private SpriteRenderer sr;
     private int nbFrameSinceStart = 0;
     public Sprite[] sprites = new Sprite[6];
-    private bool roll;
+    public bool roll;
     public int currentValue;
     public GameObject indicator;
     public bool hasBeenRolled = false;

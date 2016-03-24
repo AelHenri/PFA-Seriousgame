@@ -14,7 +14,7 @@ public class Coordinator : MonoBehaviour {
     public static GameObject[] Players = new GameObject[nbPlayer];
     public int[] playerPos = new int[nbPlayer];
     public GameObject[] bonusPrefabs = new GameObject[nbBonus];
-    public static Sprite[] playerSprites = new Sprite[4]; // MODIFIED THIS
+    public static Sprite[] playerSprites = new Sprite[nbPlayer]; // MODIFIED THIS
     public static Vector3[] savecPos = new Vector3[nbPlayer]; //added this
     public GameObject Canvas;
     public GameObject TextComp;
@@ -41,6 +41,7 @@ public class Coordinator : MonoBehaviour {
     private bool questionnaireLaunched = false;
     private bool timeSet = false;
     private int[] goodAnswersinARow = new int[nbPlayer];
+    private bool end = false;
 
     public Animator animator;
 
@@ -120,8 +121,21 @@ public class Coordinator : MonoBehaviour {
         */
         time += Time.deltaTime;
 
+        if(end)
+        {
+            d.gameObject.SetActive(false);
+            for (int i = 0; i < nbBonus; ++i)
+                bonus[currentPlayer][i].SetActive(false); 
+            Canvas.SetActive(true);
+            Text t = TextComp.GetComponent<Text>();
+            t.text = "Bravo Joueur " + (currentPlayer + 1) + ", tu as gagné !";
+        }
+
         if(beginOfTurn)
         {
+            d.gameObject.SetActive(false);
+            for (int i = 0; i < nbBonus; ++i)
+                bonus[currentPlayer][i].SetActive(false); 
             if (!timeSet)
             {
                 turnBegin = time;
@@ -161,27 +175,38 @@ public class Coordinator : MonoBehaviour {
                         goodAnswersinARow[currentPlayer] += 1;
                         if (goodAnswersinARow[currentPlayer] % 3 == 0)
                             AddBonus();
+                        d.gameObject.SetActive(true);
+                        for (int i = 0; i < nbBonus; ++i)
+                            bonus[currentPlayer][i].SetActive(true); 
                     }
                     else
                     {
+                        goodAnswersinARow[currentPlayer] = 0;
                         TurnEnd();
                     }
                 }     
             }
         }
 
-        if(beforeDiceThrow)
+        if(beforeDiceThrow && !d.roll)
         {
             for (int i = 0; i < nbBonus; ++i)
                 if (bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed)
                 {
+                    d.gameObject.SetActive(false);
                     bonusEnd = false;
                     bonusesBehavior[i](currentPlayer);
                     if (bonusEnd)
                     {
                         bonus[currentPlayer][i].GetComponent<Bonus>().wasUsed = false;
+                        d.gameObject.SetActive(true);
                     }
                 }    
+        }
+        else if(beforeDiceThrow && d.roll)
+        {
+            for (int i = 0; i < nbBonus; ++i)
+                bonus[currentPlayer][i].SetActive(false); 
         }
 
         Move move = Players[currentPlayer].GetComponent<Move>();
@@ -197,6 +222,11 @@ public class Coordinator : MonoBehaviour {
         //Happen when player move is over
         if(!move.moving && rolled)
         {
+            if(playerPos[currentPlayer] == m.nbTiles - 1)
+            {
+                end = true;
+                return;
+            }
             TileBehavior();
         }    
     }
