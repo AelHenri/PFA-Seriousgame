@@ -33,12 +33,15 @@ public class Question : MonoBehaviour {
     public AudioClip successSound;
     AudioSource audioSource;
 
+    Questionnaire questionanire;
+
     // Use this for initialization
     void Start () {
 	    
         currentSheet = GlobalQuestionnaire.currentSheet;
-
+        questionanire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
         audioSource = GetComponent<AudioSource>();
+
     }
 
     public static Texture2D LoadPNG(string filePath)

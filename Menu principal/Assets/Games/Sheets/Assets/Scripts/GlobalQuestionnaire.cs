@@ -30,12 +30,6 @@ public static class GlobalQuestionnaire {
         sheetsPath = System.IO.Directory.GetFiles(sheetsDirectoryPath, "*.xml", System.IO.SearchOption.AllDirectories);
         unansweredSheet = totalSheets = sheetsPath.Length;
         sheetState = new int[sheetsPath.Length];
-        for (int i = 0; i < sheetsPath.Length; i++)
-        {
-            //sDebug.Log("sheetsPath[" + i + "] :" + sheetsPath[i]);
-            Debug.Log("sheets State [" + i + "]" + sheetState[i]);
-        }
-
 
 
       changeCurrentSheet();

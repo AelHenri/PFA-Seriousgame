@@ -9,7 +9,7 @@ public class Exemple : MonoBehaviour {
     Texture2D img_exemple = null;
     WWW www;
 
-
+    Questionnaire questionnaire;
 
     public RawImage rawImageExemple;
 
@@ -23,6 +23,7 @@ public class Exemple : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
     }
 
     // Update is called once per frame
