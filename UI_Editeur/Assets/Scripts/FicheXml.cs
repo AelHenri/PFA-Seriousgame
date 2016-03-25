@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Xml.Linq;
+using System.IO;
 
 
 /* 
@@ -21,6 +22,7 @@ public class FicheXml : MonoBehaviour {
     string valueRep3;
 
     string nomFiche;
+    string numeroFiche;
     string textExemple;
     string textReponse1;
     string textReponse2;
@@ -43,19 +45,20 @@ public class FicheXml : MonoBehaviour {
         valueRep3 = vali.toggleRep3.isOn.ToString().ToLower();
 
         nomFiche = vali.nomFiche.text;
+        numeroFiche = vali.intputNumeroFiche.text;
         textExemple = vali.inputExemple.text;
         textReponse1 = vali.inputReponse1.text;
         textReponse2 = vali.inputReponse2.text;
         textReponse3 = vali.inputReponse3.text;
 
         cheminFiche = Application.dataPath + "/../Fiches/";
-        cheminFiche = System.IO.Path.Combine(cheminFiche, nomFiche);
+        cheminFiche = Path.Combine(cheminFiche, nomFiche);
 
-        destImageExemple = System.IO.Path.Combine(cheminFiche, "image_exemple.jpg");
-        destImageExemple = System.IO.Path.GetFullPath(destImageExemple);
+        destImageExemple = Path.Combine(cheminFiche, "image_exemple.jpg");
+        destImageExemple = Path.GetFullPath(destImageExemple);
 
-        destImageQuestion = System.IO.Path.Combine(cheminFiche, "image_question.jpg");
-        destImageQuestion = System.IO.Path.GetFullPath(destImageQuestion);
+        destImageQuestion = Path.Combine(cheminFiche, "image_question.jpg");
+        destImageQuestion = Path.GetFullPath(destImageQuestion);
         
     }
 	
@@ -64,13 +67,12 @@ public class FicheXml : MonoBehaviour {
     {
         fiche = new XDocument(new XElement("MCQSheet",
                                    new XElement("title", nomFiche ),
-
+                                   new XElement("number", numeroFiche),
                                    new XElement("ExamplePart",
                                         new XElement("text", textExemple)
-                                        //new XElement("image", destImageExemple) // Path a modifier vu que les images seront copiées dans le même dossier que la fiche
                                                 ),//</partieExemple>
                                    new XElement("QuestionPart",
-                                        new XElement("question"),             //utile ?
+                                        new XElement("question"),
                                         //new XElement("image", destImageQuestion),
                                         new XElement("answer1", textReponse1, new XAttribute("value", valueRep1)),
                                         new XElement("answer2", textReponse2, new XAttribute("value", valueRep2)),
@@ -80,24 +82,24 @@ public class FicheXml : MonoBehaviour {
                                     );
 
 
-        destFiche = System.IO.Path.Combine(cheminFiche, nomFiche + ".xml");
-        fiche.Save(destFiche); //A sauver dans un dossier aver les images de la fiches.
+        destFiche = Path.Combine(cheminFiche, nomFiche + ".xml");
+        fiche.Save(destFiche); 
     }
 
     public void copierImages()
     {
 
         if (ajt.imagePathIndic != destImageExemple)
-            System.IO.File.Copy(ajt.imagePathIndic, destImageExemple, true);
+            File.Copy(ajt.imagePathIndic, destImageExemple, true);
 
         if (ajt.imagePathQues != destImageQuestion)
-            System.IO.File.Copy(ajt.imagePathQues, destImageQuestion, true);
+            File.Copy(ajt.imagePathQues, destImageQuestion, true);
     }
 
     public void creerDossierFiche()
     {
         this.Start();
-        if (!System.IO.Directory.Exists(cheminFiche))
-            System.IO.Directory.CreateDirectory(cheminFiche);
+        if (!Directory.Exists(cheminFiche))
+            Directory.CreateDirectory(cheminFiche);
     }
 }

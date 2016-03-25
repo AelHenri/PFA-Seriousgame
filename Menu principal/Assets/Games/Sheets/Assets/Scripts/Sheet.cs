@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System.Xml.Linq;
+using System;
 
-public class Sheet {
+public class Sheet : Comparer<Sheet>, IComparable<Sheet>
+{
     XDocument xmlFile;
 
     public string textExemple;
-
+    public string sheetTitle;
     public string[] answers;
     public string imgExemplePath, imgQuestionPath;
+    public int sheetNumber;
 
     private string dirName;
 
@@ -19,7 +22,8 @@ public class Sheet {
     {
         xmlFile = XDocument.Load(Path);
         textExemple = xmlFile.Root.Element("ExamplePart").Element("text").Value;
-
+        sheetTitle = xmlFile.Root.Element("title").Value;
+        sheetNumber = Int32.Parse(xmlFile.Root.Element("number").Value);
         imgExemplePath = Path;
         imgQuestionPath = Path; 
         answers = new string[3];
@@ -55,6 +59,10 @@ public class Sheet {
         return imgsPath;
     }
 
+    public int getSheetNumber()
+    {
+        return sheetNumber;
+    }
 
 
     public bool isRightAnswer(int myAnsmer)
@@ -62,16 +70,28 @@ public class Sheet {
         return myAnsmer == rightAnswer;
     }
 
-    // Use this for initialization
-    void Start () {
 
-	
-	}
-	
+    /*
+     * Needed in order to be able to use List<Sheet>.Sort(), the number of the Sheet represent it's difficulty
+     */
+     override
+    public int Compare(Sheet x, Sheet y)
+    {
+        if (x.getSheetNumber() < y.getSheetNumber())
+            return -1;
+        else if (x.getSheetNumber() > y.getSheetNumber())
+            return 1;
+        else
+            return 0;
+    }
 
-   
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public int CompareTo(Sheet x)
+    {
+        if (this.getSheetNumber() < x.getSheetNumber())
+            return -1;
+        else if (this.getSheetNumber() > x.getSheetNumber())
+            return 1;
+        else
+            return 0;
+    }
 }

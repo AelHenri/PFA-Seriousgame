@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MCQSheet>
   <title>elephant</title>
+   <number>3</number>
   <ExamplePart>
     <text>L'éléphant a un parapluie</text>
   </ExamplePart>

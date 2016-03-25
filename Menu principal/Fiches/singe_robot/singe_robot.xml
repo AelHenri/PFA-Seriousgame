@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MCQSheet>
   <title>singe_robot</title>
+  <number>45</number>
   <ExamplePart>
     <text>Le singe dessine un bonhomme</text>
   </ExamplePart>

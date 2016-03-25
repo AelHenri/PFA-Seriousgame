@@ -69,6 +69,7 @@ public class OuvrirFicheXml : MonoBehaviour {
 
 
         vali.nomFiche.text = ffs.Root.Element("title").Value;
+        vali.intputNumeroFiche.text = ffs.Root.Element("number").Value;
         vali.inputExemple.text = ffs.Root.Element("ExamplePart").Element("text").Value;
         vali.inputReponse1.text = ffs.Root.Element("QuestionPart").Element("answer1").Value;
         vali.inputReponse2.text = ffs.Root.Element("QuestionPart").Element("answer2").Value;
@@ -83,9 +84,6 @@ public class OuvrirFicheXml : MonoBehaviour {
 
 
         getImagesPath();
-
-        //StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathIndic), ajt.img_indication));
-        //StartCoroutine(ajt.LoadATexture(("file:///" + ajt.imagePathQues), ajt.img_question));
 
         ajt.img_indication = ajt.LoadPNG(ajt.imagePathIndic);
         ajt.rawImageExemple.texture = ajt.img_indication;

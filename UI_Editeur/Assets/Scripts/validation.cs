@@ -13,6 +13,7 @@ public class Validation : MonoBehaviour {
     public AjoutImage ajt;
 
     public InputField nomFiche;
+    public InputField intputNumeroFiche;
     public InputField inputExemple;
     public InputField inputReponse1;
     public InputField inputReponse2;

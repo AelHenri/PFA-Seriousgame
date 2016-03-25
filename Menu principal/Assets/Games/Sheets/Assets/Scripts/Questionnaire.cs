@@ -80,6 +80,13 @@ public class Questionnaire : MonoBehaviour{
             for (int i = 0; i < totalSheets; i++)
             {
                 availableSheet.Add(new Sheet(sheetsPath[i]));
+                Debug.Log("sheet Number : " + availableSheet[i].getSheetNumber());
+            }
+            availableSheet.Sort();
+            Debug.Log("Now sorted");
+            for (int i = 0; i < totalSheets; i++)
+            {
+                Debug.Log("sheet Number : " + availableSheet[i].getSheetNumber());
             }
         }
         sheetsExists = true;
@@ -232,8 +239,16 @@ public class Questionnaire : MonoBehaviour{
                 // It may be cool to set a variable in order not to spam the same uncorrectlyAnsweredSheet if there are other uncorrect sheet available
             }
         }
-
+        sortAllSheetList();
         changeCurrentSheet();
+    }
+
+
+    private void sortAllSheetList()
+    {
+        availableSheet.Sort();
+        correctlyAnsweredSheet.Sort();
+        uncorrectlyAnsweredSheet.Sort();
     }
 
     /*
@@ -261,7 +276,10 @@ public class Questionnaire : MonoBehaviour{
                 currentSheetIndex = rnd.Next(0, correctlyAnsweredSheet.Count);
                 currentSheet = correctlyAnsweredSheet[currentSheetIndex];
             }
-            count++;
+
+            if (uncorrectlyAnsweredSheet.Count != 0)
+                count++;
+
             if (count > howManyAvailableBeforeUncorrectlyAnswered)
                 count = 0;
         }
