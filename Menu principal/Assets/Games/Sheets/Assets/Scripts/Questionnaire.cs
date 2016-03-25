@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 
 /*
@@ -13,23 +15,17 @@ public class Questionnaire : MonoBehaviour{
 
     Scene questionScene;
     Scene exempleScene;
-
     Fading fading;
+    
 
     private float time;
+    private bool sheetsExists;
 
 
     string sheetsDirectoryPath;
+    string[] sheetsPath;
 
-     string[] sheetsPath;
-    /* 
-     * 0  = Sheet not yet shown
-     * 1  = Sheet Shown and aswered correctly
-     * -1 = Sheet shown and answered wrongly
-     */
-     int[] sheetState;
-
-    private int totalSheets, unansweredSheet;
+    private int totalSheets;
     private int currentSheetIndex;
 
     List<Sheet> availableSheet;
@@ -45,33 +41,54 @@ public class Questionnaire : MonoBehaviour{
     public  bool hasAnswered = false;
 
     public void Start()
-    {
-        
+    {        
         questionScene = SceneManager.GetSceneByName("Question");
         exempleScene = SceneManager.GetSceneByName("Exemple");
         fading = GameObject.Find("Navigator").GetComponent<Fading>();
-
-        sheetsDirectoryPath = Application.dataPath + "/../Fiches";
-        System.IO.Path.GetFullPath(sheetsDirectoryPath);
-        sheetsPath = System.IO.Directory.GetFiles(sheetsDirectoryPath, "*.xml", System.IO.SearchOption.AllDirectories);
-        unansweredSheet = totalSheets = sheetsPath.Length;
-        sheetState = new int[sheetsPath.Length];
 
         availableSheet = new List<Sheet>();
         uncorrectlyAnsweredSheet = new List<Sheet>();
         correctlyAnsweredSheet = new List<Sheet>();
 
+        sheetsDirectoryPath = Application.dataPath + "/../Fiches";
+        sheetsDirectoryPath = Path.GetFullPath(sheetsDirectoryPath); // Returns a nice formated path String, no more: "dir/../another_dir"
 
-        for (int i = 0; i < totalSheets; i++)
+        if (!Directory.Exists(sheetsDirectoryPath))
         {
-            availableSheet.Add(new Sheet(sheetsPath[i]));
+            
+            Directory.CreateDirectory(sheetsDirectoryPath);
+            sheetsExists = false;
+            return;
         }
+        else
+        {
+            sheetsPath = Directory.GetFiles(sheetsDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
-        Debug.Log("start");
+            if (sheetsPath.Length == 0)
+            {
+                sheetsExists = false;
+                return;
+            }
+            totalSheets = sheetsPath.Length;
+            for (int i = 0; i < totalSheets; i++)
+            {
+                availableSheet.Add(new Sheet(sheetsPath[i]));
+            }
+        }
+        sheetsExists = true;
         changeCurrentSheet();
 
     }
 
+    public bool areThereSheets()
+    {
+        return sheetsExists;
+    }
+
+    public string getSheetDirectoryPath()
+    {
+        return sheetsDirectoryPath;
+    }
 
     public void showQuestion()
     {
@@ -155,7 +172,6 @@ public class Questionnaire : MonoBehaviour{
    public  void setResult(bool result)
     {
         isAnswerRight = result;
-
     }
 
     private void answerGiven()
@@ -184,9 +200,33 @@ public class Questionnaire : MonoBehaviour{
     public void updateSheetState()
     {
         if (isAnswerRight)
-            sheetState[currentSheetIndex] = 1;
+        {
+            if (availableSheet.Contains(currentSheet))
+            {
+                //correctlyAnsweredSheet.Add(availableSheet[currentSheetIndex]);
+                correctlyAnsweredSheet.Add(currentSheet);
+                availableSheet.RemoveAt(currentSheetIndex);
+            }
+            else if (uncorrectlyAnsweredSheet.Contains(currentSheet))
+            {
+                correctlyAnsweredSheet.Add(currentSheet);
+                uncorrectlyAnsweredSheet.RemoveAt(currentSheetIndex);
+            }
+         }
         else
-            sheetState[currentSheetIndex] = -1;
+        {
+            if (availableSheet.Contains(currentSheet))
+            {
+                uncorrectlyAnsweredSheet.Add(currentSheet);
+                availableSheet.RemoveAt(currentSheetIndex);
+            }
+            else if (uncorrectlyAnsweredSheet.Contains(currentSheet))
+            {
+                // No need to add the currentSheet since it's already in the uncorrectlyAnsweredSheet List
+                // It may be cool to set a variable in order not to spam the same uncorrectlyAnsweredSheet if there are other uncorrect sheet available
+            }
+        }
+
         changeCurrentSheet();
     }
 
@@ -194,41 +234,33 @@ public class Questionnaire : MonoBehaviour{
      * Select the first unanswered sheet and makes it the currentSheet
      * if there are no unanswered sheet, it will select the first one not correctly answered
      */
-    private  void changeCurrentSheet()
+    private void changeCurrentSheet()
     {
-        countUnansweredSheet();
-        for (int i = 0; i < totalSheets; i++)
+        if (sheetsExists)
         {
-
-            if (sheetState[i] == 0 && unansweredSheet > 0)
+            if (availableSheet.Count != 0)
             {
-                currentSheetIndex = i;
-                //currentSheet = new Sheet(sheetsPath[currentSheetIndex]);
-                currentSheet = availableSheet[i];
-                break;
+                currentSheetIndex = 0;
+                currentSheet = availableSheet[0];
             }
 
-            else if (sheetState[i] == -1 && unansweredSheet == 0)
+            else if (availableSheet.Count == 0 && uncorrectlyAnsweredSheet.Count != 0)
             {
-                currentSheetIndex = i;
-                //currentSheet = new Sheet(sheetsPath[currentSheetIndex]);
-                currentSheet = availableSheet[i];
-                break;
+                currentSheetIndex = 0;
+                currentSheet = uncorrectlyAnsweredSheet[0];
+            }
+            else if (availableSheet.Count == 0 && uncorrectlyAnsweredSheet.Count == 0)
+            {
+                System.Random rnd = new System.Random();
+                currentSheetIndex = rnd.Next(0, correctlyAnsweredSheet.Count);
+                currentSheet = correctlyAnsweredSheet[currentSheetIndex];
             }
         }
+        else
+            return;
     }
 
-    private void countUnansweredSheet()
-    {
-        int count = 0;
-        for (int i = 0; i < totalSheets; i++)
-            if (sheetState[i] == 0)
-                count++;
-
-        unansweredSheet = count;
-        //Debug.Log("unsansweredSheet" + count);
-    }
-
+ 
 
 
     /*
