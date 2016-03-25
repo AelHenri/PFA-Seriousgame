@@ -21,7 +21,7 @@ public class Arrow
 public class StorySceneManager : MonoBehaviour {
 
     public StoryScene[] scene;
-    public int level = 0;
+    public int level = 2;
 
     private Transform sceneHolder;
     private StoryGameManager gameManager;

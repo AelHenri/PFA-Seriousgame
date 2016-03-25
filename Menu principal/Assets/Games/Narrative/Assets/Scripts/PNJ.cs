@@ -35,8 +35,12 @@ public class PNJ : MonoBehaviour {
 
     private bool isAnswering = false;
 
+    Questionnaire questionnaire;
+
 	// Use this for initialization
 	protected virtual void Start () {
+        questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
+
         transform.position = new Vector3(x, y);
         minSize = transform.localScale;
 
@@ -105,7 +109,7 @@ public class PNJ : MonoBehaviour {
 
     protected virtual void Question()
     {
-        GlobalQuestionnaire.startQuestionnaire();
+        questionnaire.startQuestionnaire();
         isAnswering = true;
     }
 
@@ -113,9 +117,9 @@ public class PNJ : MonoBehaviour {
     {
         if (isAnswering)
         {
-            if (GlobalQuestionnaire.hasAnswered && !GameState.isTimeFrozen)
+            if (questionnaire.hasAnswered && !GameState.isTimeFrozen)
             {
-                if (GlobalQuestionnaire.isAnswerRight)
+                if (questionnaire.isAnswerRight)
                 {
                     RightAnswerEvent();
                     if (!gameManager.IsPNJPresent(PNJName))

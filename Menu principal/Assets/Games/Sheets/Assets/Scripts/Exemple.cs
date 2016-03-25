@@ -30,10 +30,10 @@ public class Exemple : MonoBehaviour {
     void Update()
     {
         //Debug.Log("GlobalQ:"+ GlobalQuestionnaire.currentSheet);
-        exempleText.text = GlobalQuestionnaire.currentSheet.textExemple;
+        exempleText.text = questionnaire.currentSheet.textExemple;
 
         if (img_exemple == null) {
-            img_exemple = LoadPNG(GlobalQuestionnaire.currentSheet.imgExemplePath);
+            img_exemple = LoadPNG(questionnaire.currentSheet.imgExemplePath);
             rawImageExemple.texture = img_exemple;
         }
      

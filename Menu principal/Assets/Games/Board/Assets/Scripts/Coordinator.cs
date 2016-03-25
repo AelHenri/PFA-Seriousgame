@@ -45,8 +45,12 @@ public class Coordinator : MonoBehaviour {
 
     public Animator animator;
 
+    Questionnaire questionnaire;
+
     // Use this for initialization
     void Start () {
+        questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
+
         GameObject terrain = (GameObject)Resources.Load((UnityEngine.Random.Range(0,2) == 0)?"TIle":"TGlace", typeof(GameObject));
         Instantiate(terrain);
         m = Map.GetComponent<Map>();
@@ -162,15 +166,15 @@ public class Coordinator : MonoBehaviour {
             Canvas.SetActive(false);
             if (!questionnaireLaunched)
             { 
-                GlobalQuestionnaire.startQuestionnaire();
+                questionnaire.startQuestionnaire();
                 questionnaireLaunched = true;
             }
             else
             {
-                if (GlobalQuestionnaire.hasAnswered)
+                if (questionnaire.hasAnswered)
                 {
                     questionnaireLaunched = false;
-                    if (GlobalQuestionnaire.isAnswerRight)
+                    if (questionnaire.isAnswerRight)
                     {
                         beginOfTurn = false;
                         beforeDiceThrow = true;

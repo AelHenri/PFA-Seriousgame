@@ -13,7 +13,7 @@ public class Navigator : MonoBehaviour {
     {
         DontDestroyOnLoad(transform.gameObject);//Has to remain between scenes
         games = new Games[gamesNb];
-        GlobalQuestionnaire.Start();
+ 
         
     }
 

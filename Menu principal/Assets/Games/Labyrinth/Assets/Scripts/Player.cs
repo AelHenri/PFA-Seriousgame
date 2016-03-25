@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 	float moveVertical;
 	float restartLevelDelay = 1f;
 
+    Questionnaire questionnaire;
+
 	// Use this for initialization
 	void Start () {
 		Debug.Log("new key");
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour {
 		localKeys = 0;
 		//KeyText.text = "Clés : " + globalKeys;
 		KeyText.text = "Clés : " + localKeys;
+
+        questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
 	}
 
 	private void OnDisable(){
@@ -62,13 +66,13 @@ public class Player : MonoBehaviour {
 				Invoke ("Restart", restartLevelDelay);
 			}
 		} else if (other.tag == "key") {
-			GlobalQuestionnaire.startQuestionnaire ();	
+			questionnaire.startQuestionnaire ();	
 			isAnswering = true;
 			collidedKey = other.gameObject;
 		} else if (other.tag == "gamebonus") {
 			Debug.Log ("collided a bonus");
 			collidedBonus = other.gameObject;
-			GlobalQuestionnaire.startQuestionnaire ();	
+			questionnaire.startQuestionnaire ();	
 			bonus = true;
 		}
 	}
@@ -77,8 +81,8 @@ public class Player : MonoBehaviour {
 		moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
 		moveVertical = Input.GetAxis ("Vertical")*speed;
 		if (isAnswering) {
-				if (GlobalQuestionnaire.hasAnswered) {
-					if (GlobalQuestionnaire.isAnswerRight) {
+				if (questionnaire.hasAnswered) {
+					if (questionnaire.isAnswerRight) {
 						globalKeys = globalKeys + 1;
 						localKeys = localKeys + 1;
 						collidedKey.SetActive(false);
@@ -100,8 +104,8 @@ public class Player : MonoBehaviour {
 			}
 
 		if (bonus) {
-			if (GlobalQuestionnaire.hasAnswered) {
-				if (GlobalQuestionnaire.isAnswerRight) {
+			if (questionnaire.hasAnswered) {
+				if (questionnaire.isAnswerRight) {
 					Debug.Log ("bonus gagne");
 					GameManager.instance.bonusPresent = false;
 					GameManager.instance.gameText.GetComponent<Text>().text = "Bravo! \n Tu as gagné un cornichon!";	

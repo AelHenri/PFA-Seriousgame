@@ -109,7 +109,6 @@
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StorySceneManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\Teleporter.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
-    <Compile Include="Assets\Games\Sheets\Assets\Scripts\GlobalQuestionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />

@@ -37,9 +37,8 @@ public class Question : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	    
-        currentSheet = GlobalQuestionnaire.currentSheet;
         questionanire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
+        currentSheet = questionanire.currentSheet;    
         audioSource = GetComponent<AudioSource>();
 
     }
@@ -96,12 +95,11 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(1));
-        GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(1));
-        GlobalQuestionnaire.hasAnswered = true;
+        questionanire.setResult(currentSheet.isRightAnswer(1));
+        questionanire.hasAnswered = true;
 
         playAnswerSound(currentSheet.isRightAnswer(1));
-        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
+        StartCoroutine(questionanire.endQuestionnaire());
     }
 
     public void answer2Chosen()
@@ -111,10 +109,9 @@ public class Question : MonoBehaviour {
         else
             wrongAnswerPanel.SetActive(true);
         playAnswerSound(currentSheet.isRightAnswer(2));
-        Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(2));
-        GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(2));
-        GlobalQuestionnaire.hasAnswered = true;
-        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
+       questionanire.setResult(currentSheet.isRightAnswer(2));
+        questionanire.hasAnswered = true;
+        StartCoroutine(questionanire.endQuestionnaire());
     }
 
     public void answer3Chosen()
@@ -124,9 +121,8 @@ public class Question : MonoBehaviour {
         else
             wrongAnswerPanel.SetActive(true);
         playAnswerSound(currentSheet.isRightAnswer(3));
-        Debug.Log("currentSheet.isrightanswer:" + currentSheet.isRightAnswer(3));
-        GlobalQuestionnaire.setResult(currentSheet.isRightAnswer(3));
-        GlobalQuestionnaire.hasAnswered = true;
-        StartCoroutine(GlobalQuestionnaire.q.endQuestionnaire());
+        questionanire.setResult(currentSheet.isRightAnswer(3));
+       questionanire.hasAnswered = true;
+        StartCoroutine(questionanire.endQuestionnaire());
     }
 }
