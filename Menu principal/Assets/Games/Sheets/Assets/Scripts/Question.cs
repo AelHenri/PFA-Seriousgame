@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 
 
@@ -34,18 +35,41 @@ public class Question : MonoBehaviour {
     AudioSource audioSource;
 
     Questionnaire questionanire;
-
+    Scene questionScene;
+    Scene exempleScene;
     // Use this for initialization
     void Start () {
         questionanire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
         currentSheet = questionanire.currentSheet;    
         audioSource = GetComponent<AudioSource>();
 
+        questionScene = SceneManager.GetSceneByName("Question");
+        exempleScene = SceneManager.GetSceneByName("Exemple");
+    }
+
+    public void showExemple()
+    {
+        StartCoroutine(loadExemple());
+    }
+
+    /*
+     * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
+     * in order to avoid having a few frames shown without scene
+     */
+    IEnumerator loadExemple()
+    {
+        if (questionScene.isLoaded)
+        {
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+            yield return exempleScene.isLoaded;
+            SceneManager.UnloadScene("Question");
+        }
+        else
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
     }
 
     public static Texture2D LoadPNG(string filePath)
     {
-
         Texture2D tex = null;
         byte[] fileData;
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
 public class Exemple : MonoBehaviour {
 
     public Text exempleText;
@@ -10,7 +11,8 @@ public class Exemple : MonoBehaviour {
     WWW www;
 
     Questionnaire questionnaire;
-
+    Scene questionScene;
+    Scene exempleScene;
     public RawImage rawImageExemple;
 
 
@@ -24,12 +26,39 @@ public class Exemple : MonoBehaviour {
     // Use this for initialization
     void Start () {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
+
+        questionScene = SceneManager.GetSceneByName("Question");
+        exempleScene = SceneManager.GetSceneByName("Exemple");
+    }
+
+
+
+
+    public void showQuestion()
+    {
+        StartCoroutine(loadQuestion());
+    }
+
+
+    /*
+    * Loads the Question scene then wait for it to be fully loaded before destroying the Exemple scene 
+    * in order to avoid having a few frames shown without scene
+    */
+    IEnumerator loadQuestion()
+    {
+        if (exempleScene.isLoaded)
+        {
+            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            yield return questionScene.isLoaded;
+            SceneManager.UnloadScene("Exemple");
+        }
+        else
+            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("GlobalQ:"+ GlobalQuestionnaire.currentSheet);
         exempleText.text = questionnaire.currentSheet.textExemple;
 
         if (img_exemple == null) {

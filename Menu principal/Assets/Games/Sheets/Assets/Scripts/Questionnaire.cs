@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,7 +22,8 @@ public class Questionnaire : MonoBehaviour{
     string sheetsDirectoryPath;
 
      string[] sheetsPath;
-    /* 0  = Sheet not yet shown
+    /* 
+     * 0  = Sheet not yet shown
      * 1  = Sheet Shown and aswered correctly
      * -1 = Sheet shown and answered wrongly
      */
@@ -29,9 +31,17 @@ public class Questionnaire : MonoBehaviour{
 
     private int totalSheets, unansweredSheet;
     private int currentSheetIndex;
+
+    List<Sheet> availableSheet;
+    List<Sheet> uncorrectlyAnsweredSheet;
+    List<Sheet> correctlyAnsweredSheet;
+ 
+
     [HideInInspector]
     public Sheet currentSheet;
+    [HideInInspector]
     public  bool isAnswerRight;
+    [HideInInspector]
     public  bool hasAnswered = false;
 
     public void Start()
@@ -47,15 +57,21 @@ public class Questionnaire : MonoBehaviour{
         unansweredSheet = totalSheets = sheetsPath.Length;
         sheetState = new int[sheetsPath.Length];
 
+        availableSheet = new List<Sheet>();
+        uncorrectlyAnsweredSheet = new List<Sheet>();
+        correctlyAnsweredSheet = new List<Sheet>();
 
+
+        for (int i = 0; i < totalSheets; i++)
+        {
+            availableSheet.Add(new Sheet(sheetsPath[i]));
+        }
+
+        Debug.Log("start");
         changeCurrentSheet();
 
     }
 
-    void Update()
-    {
-      
-    }
 
     public void showQuestion()
     {
@@ -104,15 +120,9 @@ public class Questionnaire : MonoBehaviour{
     public void startQuestionnaire() {
        GameState.freezeTime();
         this.hasAnswered = false;
-        //StartCoroutine(WaitAndPrint(2.0F));
         StartCoroutine(startDisplay());
     }
 
-    IEnumerator WaitAndPrint(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        print("WaitAndPrint " + Time.time);
-    }
     public IEnumerator startDisplay()
     {
 
@@ -123,7 +133,6 @@ public class Questionnaire : MonoBehaviour{
 
         while (!this.hasAnswered)
             yield return new WaitUntil(() => this.hasAnswered);
-        Debug.Log("AfterAnswer");
         yield return null;
     }
 
@@ -152,7 +161,6 @@ public class Questionnaire : MonoBehaviour{
     private void answerGiven()
     {
         GameState.unfreezeTime();
-        Debug.Log("isAnswerRight:" + this.isAnswerRight);
     }
 
     public void setAnswer(bool answer)
@@ -188,20 +196,23 @@ public class Questionnaire : MonoBehaviour{
      */
     private  void changeCurrentSheet()
     {
+        countUnansweredSheet();
         for (int i = 0; i < totalSheets; i++)
         {
 
             if (sheetState[i] == 0 && unansweredSheet > 0)
             {
                 currentSheetIndex = i;
-                currentSheet = new Sheet(sheetsPath[currentSheetIndex]);
+                //currentSheet = new Sheet(sheetsPath[currentSheetIndex]);
+                currentSheet = availableSheet[i];
                 break;
             }
 
-            else if (sheetState[i] == -1 && unansweredSheet <= 0)
+            else if (sheetState[i] == -1 && unansweredSheet == 0)
             {
                 currentSheetIndex = i;
-                currentSheet = new Sheet(sheetsPath[currentSheetIndex]);
+                //currentSheet = new Sheet(sheetsPath[currentSheetIndex]);
+                currentSheet = availableSheet[i];
                 break;
             }
         }
@@ -215,9 +226,8 @@ public class Questionnaire : MonoBehaviour{
                 count++;
 
         unansweredSheet = count;
+        //Debug.Log("unsansweredSheet" + count);
     }
-
-
 
 
 
