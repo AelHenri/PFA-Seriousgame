@@ -49,7 +49,7 @@ public class MenuButtons : MonoBehaviour {
                     GameState.unfreezeTime();//Unfreeze again in case of a pending question
                     GameState.quitNarrative();
                     GameState.quitLabyrinth();
-                    
+                    GameState.quitBoard();
                         
                     GameState.gameCurrentlyLoaded = 0;
                 }   

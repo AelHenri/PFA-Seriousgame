@@ -74,7 +74,7 @@ public static class GameState  {
 
     public static void quitBoard()
     {
-        //SceneManager.LoadSceneAsync("TitleScreen");
+        SceneManager.LoadSceneAsync("TitleScreen");
     }
 
 }
