@@ -20,6 +20,7 @@ public class Questionnaire : MonoBehaviour{
 
     private float time;
     private bool sheetsExists;
+    private float fadingTime;
 
 
     string sheetsDirectoryPath;
@@ -31,7 +32,13 @@ public class Questionnaire : MonoBehaviour{
     List<Sheet> availableSheet;
     List<Sheet> uncorrectlyAnsweredSheet;
     List<Sheet> correctlyAnsweredSheet;
- 
+
+    /* 
+     * The purpose of the variable is to put some time before re-showing a sheet that was previouly uncorrectly answered
+     * Ex : If this variable = 2 , the there will be 3 sheet of the availableSheet list shown before re showing a sheet that was previously uncorrecly answered 
+     */
+    public int howManyAvailableBeforeUncorrectlyAnswered = 2;
+    private int count = 0;
 
     [HideInInspector]
     public Sheet currentSheet;
@@ -143,8 +150,8 @@ public class Questionnaire : MonoBehaviour{
     public IEnumerator startDisplay()
     {
 
-        fading.beginFade(1);
-        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(0.8f));
+        fadingTime = fading.beginFade(1);
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(fadingTime));
         showExemple();
         fading.beginFade(-1);
 
@@ -160,8 +167,8 @@ public class Questionnaire : MonoBehaviour{
         this.updateSheetState();
         time = Time.realtimeSinceStartup;
         yield return new WaitUntil(hasSecondPassed);
-        fading.beginFade(1);
-        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(0.8f));
+        fadingTime = fading.beginFade(1);
+        yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(fadingTime));
         SceneManager.UnloadScene("Exemple");
         SceneManager.UnloadScene("Question");
         fading.beginFade(-1);
@@ -203,7 +210,6 @@ public class Questionnaire : MonoBehaviour{
         {
             if (availableSheet.Contains(currentSheet))
             {
-                //correctlyAnsweredSheet.Add(availableSheet[currentSheetIndex]);
                 correctlyAnsweredSheet.Add(currentSheet);
                 availableSheet.RemoveAt(currentSheetIndex);
             }
@@ -238,23 +244,26 @@ public class Questionnaire : MonoBehaviour{
     {
         if (sheetsExists)
         {
-            if (availableSheet.Count != 0)
+            if (availableSheet.Count != 0 && count != howManyAvailableBeforeUncorrectlyAnswered)
             {
                 currentSheetIndex = 0;
                 currentSheet = availableSheet[0];
             }
 
-            else if (availableSheet.Count == 0 && uncorrectlyAnsweredSheet.Count != 0)
+            else if (uncorrectlyAnsweredSheet.Count != 0)
             {
                 currentSheetIndex = 0;
                 currentSheet = uncorrectlyAnsweredSheet[0];
             }
-            else if (availableSheet.Count == 0 && uncorrectlyAnsweredSheet.Count == 0)
+            else if (uncorrectlyAnsweredSheet.Count == 0)
             {
                 System.Random rnd = new System.Random();
                 currentSheetIndex = rnd.Next(0, correctlyAnsweredSheet.Count);
                 currentSheet = correctlyAnsweredSheet[currentSheetIndex];
             }
+            count++;
+            if (count > howManyAvailableBeforeUncorrectlyAnswered)
+                count = 0;
         }
         else
             return;

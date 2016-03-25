@@ -116,7 +116,7 @@ public class BoardMenu : MonoBehaviour {
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat",FileMode.Open);
-            Debug.Log(Application.persistentDataPath);
+            //Debug.Log(Application.persistentDataPath);
             CoordinatorSerializable data = (CoordinatorSerializable)bf.Deserialize(file);
             Coordinator.nbPlayer = data.nbPlayer;
             Coordinator.nbBonus = data.nbBonus;

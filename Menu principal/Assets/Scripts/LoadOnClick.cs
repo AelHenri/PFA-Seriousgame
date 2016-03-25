@@ -22,9 +22,8 @@ public class LoadOnClick : MonoBehaviour
 
     public void LoadScene(string level)
     {
-        Debug.Log("Loading in progress");
+
         loadingImage.SetActive(true);
-        Debug.Log("Loading screen loaded, trying to load async");
         if (String.Equals(level, "WIP"))
         {
             Debug.Log("WIP, not ready yet!!");
@@ -33,7 +32,6 @@ public class LoadOnClick : MonoBehaviour
         {
             AsyncOperation async = SceneManager.LoadSceneAsync(level);
             GameState.pauseMenuLoaded = false;
-            Debug.Log("Attempting to load asynchronously");
             //yield return async;
             //yield return 0;
             //SceneManager.LoadScene(level);
@@ -45,20 +43,16 @@ public class LoadOnClick : MonoBehaviour
     public void BeginLoadScene(string level)
     {
         LoadScene(level);
-        Debug.Log("level "+level+" should be finished loading");
     }
 
     public void BeginLoadSceneAdditive(string level)
     {
         LoadSceneAdditive(level);
-        Debug.Log("level " + level + " should be finished loading");
     }
 
     public void LoadSceneAdditive(string level)
     {
-        Debug.Log("Loading additive in progress");
         //loadingImage.SetActive(true);
-        Debug.Log("Loading screen loaded, trying to load async");
         if (String.Equals(level, "WIP"))
         {
             Debug.Log("WIP, not ready yet!!");

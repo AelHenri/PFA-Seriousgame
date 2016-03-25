@@ -26,12 +26,12 @@ public static class GameState  {
     {
         if (!isTimeFrozen)
         {
-            Debug.Log("Freezing time");
+            //Debug.Log("Freezing time");
             Time.timeScale = 0;
         }
         else
         {
-            Debug.Log("Time already frozen");
+            //Debug.Log("Time already frozen");
             timeAlreadyFrozen = true;
         }
         isTimeFrozen = true;
@@ -41,13 +41,13 @@ public static class GameState  {
     {
         if (!timeAlreadyFrozen)
         {
-            Debug.Log("Unfreezing time");
+            //Debug.Log("Unfreezing time");
             Time.timeScale = 1;
             isTimeFrozen = false;
         }
         else
         {
-            Debug.Log("Time still frozen");
+            //Debug.Log("Time still frozen");
             timeAlreadyFrozen = false;
         }
     }

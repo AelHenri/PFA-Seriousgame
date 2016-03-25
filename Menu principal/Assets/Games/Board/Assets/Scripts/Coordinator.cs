@@ -250,7 +250,7 @@ public class Coordinator : MonoBehaviour {
 
     void SetSecondaryPlayer(GameObject player, int place)
     {
-        Debug.Log(player.transform.childCount);
+        //Debug.Log(player.transform.childCount);
         player.transform.GetChild(0).gameObject.SetActive(false);
         player.GetComponent<Animator>().enabled = false;
         Vector3 pos = player.transform.position;
