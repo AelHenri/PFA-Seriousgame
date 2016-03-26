@@ -33,6 +33,15 @@ public class Profile {
         sheets.Sort();
         return sheets;
     }
+
+    public void updateSheetList(List<SheetInfos> list)
+    {
+        sheets = list;
+    }
+    public string getFileName()
+    {
+        return getFirstName() + "_" + getLastName() + ".profile";
+    }
    public string getFirstName()
     {
         return fisrtName;

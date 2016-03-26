@@ -23,7 +23,7 @@ public class ProfileMenu : MonoBehaviour {
     // Use this for initialization
     void Start () {
         profileSelector.ClearOptions();
-
+        profileSelector.options.Add(new Dropdown.OptionData() { text = "Choisis ton profil" });
         if (hasFinishedGame1)
         {
             firstStar.SetActive(false);
@@ -49,7 +49,7 @@ public class ProfileMenu : MonoBehaviour {
         {
             foreach (Profile p in profiles)
             {
-                profileSelector.options.Add(new Dropdown.OptionData() { text = p.getFirstName() });
+                profileSelector.options.Add(new Dropdown.OptionData() { text = p.getFirstName() + " " + p.getLastName()[0] });
             }
         }
 	}
@@ -57,10 +57,16 @@ public class ProfileMenu : MonoBehaviour {
 
     public void loadSelectedProfile()
     {
-        profileManager.setCurrentProfile(profileSelector.value);
+        Debug.Log("selectorvalue = " + profileSelector.value);
+        profileManager.setCurrentProfile(profileSelector.value-1);
     }
 	// Update is called once per frame
 	void Update () {
-        text.text = profiles[profileSelector.value].getFirstName();
+        if (!profileManager.thereIsAProfile())
+            profileSelector.value = 0;
+        else if (profileManager.thereIsAProfile())
+            profileSelector.value = profileManager.getCurrentProfileIndex() + 1;
+    
+        text.text = profileSelector.options[profileSelector.value].text;
     }
 }

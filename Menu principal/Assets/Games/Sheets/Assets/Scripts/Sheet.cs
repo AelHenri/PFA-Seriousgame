@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System;
 
+
+
 public class Sheet : Comparer<Sheet>, IComparable<Sheet>
 {
     protected XDocument xmlFile;
 
     public string textExemple;
-    public string sheetTitle;
+    public string sheetName;
     public string[] answers;
     public string imgExemplePath, imgQuestionPath;
     public int sheetNumber;
@@ -23,7 +25,7 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
     {
         xmlFile = XDocument.Load(Path);
         textExemple = xmlFile.Root.Element("ExamplePart").Element("text").Value;
-        sheetTitle = xmlFile.Root.Element("title").Value;
+        sheetName = xmlFile.Root.Element("title").Value;
         sheetNumber = Int32.Parse(xmlFile.Root.Element("number").Value);
         imgExemplePath = Path;
         imgQuestionPath = Path;
@@ -68,6 +70,10 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
         return sheetNumber;
     }
 
+    public string getName()
+    {
+        return sheetName;
+    }
 
     public bool isRightAnswer(int myAnsmer)
     {

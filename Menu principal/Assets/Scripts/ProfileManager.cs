@@ -18,6 +18,7 @@ public class ProfileManager : MonoBehaviour {
     
     private string[] profilesPath;
     private Profile[] profiles;
+    private int currentProfileIndex;
     Profile currentProfile = null;
     Questionnaire questionnaire;
 
@@ -32,7 +33,6 @@ public class ProfileManager : MonoBehaviour {
         profilesDir = Application.dataPath + "/../Profiles";
         profilesDir = Path.GetFullPath(profilesDir);
 
-        //saveNewProfile();
         if (!Directory.Exists(profilesDir))
         {
             profilesPath = null;
@@ -58,7 +58,8 @@ public class ProfileManager : MonoBehaviour {
         }
 
 
-       
+        currentProfileIndex = 0;
+        currentProfile = null;
        //loadExistingProfile();
     }
 	
@@ -68,17 +69,18 @@ public class ProfileManager : MonoBehaviour {
         return profiles;
     }
 
+    public bool thereIsAProfile()
+    {
+        return currentProfile != null;
+    }
 
-
-    //TODO better Naming
+  
     void saveNewProfile()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        Profile pro = new Profile("Thomas", "Montegrave");
-        FileStream file = File.Open(Application.dataPath + "/../Profiles/playerInfo.profile", FileMode.Create);
-        //SheetInfos s = new SheetInfos("koukou", 1, 1, 1);
-        Debug.Log(new SheetInfos("Elepant", 2, 0, 5).sheetName);
-        pro.addSheetInfo(new SheetInfos("koukou", 1, 1, 1));
+        Profile pro = new Profile("Azir", "SHURIMA");
+        FileStream file = File.Open(Application.dataPath + "/../Profiles/" + pro.getFileName(), FileMode.Create);
+        
 
         bf.Serialize(file, pro);
         file.Close();
@@ -88,35 +90,59 @@ public class ProfileManager : MonoBehaviour {
 
     void saveExistingProfile(Profile profileToBeSaved)
     {
-
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(Application.dataPath + "/../Profiles/" + profileToBeSaved.getFileName(), FileMode.Create);
+        bf.Serialize(file, profileToBeSaved);
+        file.Close();
     }
-    //TODO BETTER NAMING
+
     Profile loadExistingProfile(string path)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        //FileStream file = File.Open(Application.dataPath + "/../Profiles/playerInfo.profile", FileMode.Open);
         FileStream file = File.Open(path, FileMode.Open);
-        
-
         Profile profile = (Profile)bf.Deserialize(file);
-        
-       /* Debug.Log("Prénom: " + profile.getFirstName() + "Nom: " + profile.getLastName());
+        /*
+        Debug.Log("Prénom: " + profile.getFirstName() + "Nom: " + profile.getLastName());
         Debug.Log("Sheet count: " + profile.getSheetList().Count);
-        Debug.Log(profile.getSheetList()[0]);
-        */
+        Debug.Log(profile.getSheetList()[0]);*/
+        
         file.Close();
         return profile;
     }
     public void setCurrentProfile(int index)
     {
         Debug.Log("Set Current Profile");
-        currentProfile = profiles[index];
-        questionnaire.updateAccordindTo(currentProfile);
-        
+        if (index < 0)
+        {
+            currentProfile = null;
+            currentProfileIndex = 0;
+        }
+        else
+        {
+            if (currentProfile != null) //means that a profile is already selected, thus we need to save it before changing to another profile
+            {
+                questionnaire.updateCurrentProfile();
+                saveExistingProfile(currentProfile);
+            }
+            currentProfileIndex = index;
+            currentProfile = profiles[index];
+            questionnaire.setCurrentProfile(currentProfile);
+            questionnaire.updateAccordindTo(currentProfile);
+        }
     }
-	// Update is called once per frame
-	void Update () {
 
-
+    public int getCurrentProfileIndex()
+    {
+        return currentProfileIndex;
+    }
+    void OnApplicationQuit()
+    {
+        if (currentProfile != null)
+        {
+            Debug.Log("OUKOUK0");
+            questionnaire.updateCurrentProfile();
+            saveExistingProfile(currentProfile);
+        }
+        Debug.Log("Application ending after " + Time.time + " seconds");
     }
 }

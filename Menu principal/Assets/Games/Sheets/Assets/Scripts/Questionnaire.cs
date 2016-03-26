@@ -17,6 +17,7 @@ public class Questionnaire : MonoBehaviour{
     Scene questionSceneWithoutAnswerText;
     Scene exempleScene;
     Fading fading;
+    Profile currentProfile = null;
     
 
     private float time;
@@ -29,6 +30,7 @@ public class Questionnaire : MonoBehaviour{
 
     private int totalSheets;
     private int currentSheetIndex;
+    private int currentSheetNumber; //the number is a totally different thing compared to the index
 
     List<Sheet> availableSheet;
     List<Sheet> uncorrectlyAnsweredSheet;
@@ -101,6 +103,10 @@ public class Questionnaire : MonoBehaviour{
     public string getSheetDirectoryPath()
     {
         return sheetsDirectoryPath;
+    }
+    public void setCurrentProfile(Profile p)
+    {
+        currentProfile = p;
     }
 
     public void showQuestion()
@@ -254,7 +260,8 @@ public class Questionnaire : MonoBehaviour{
             }
         }
 
-       
+        if (currentProfile != null)
+            updateSheetsInfos();
         sortAllSheetList();
         changeCurrentSheet();
     }
@@ -282,18 +289,21 @@ public class Questionnaire : MonoBehaviour{
             {
                 currentSheetIndex = 0;
                 currentSheet = availableSheet[0];
+                currentSheetNumber = availableSheet[0].getSheetNumber();
             }
 
             else if (uncorrectlyAnsweredSheet.Count != 0)
             {
                 currentSheetIndex = 0;
                 currentSheet = uncorrectlyAnsweredSheet[0];
+                currentSheetNumber = uncorrectlyAnsweredSheet[0].getSheetNumber();
             }
             else if (uncorrectlyAnsweredSheet.Count == 0)
             {
                 System.Random rnd = new System.Random();
                 currentSheetIndex = rnd.Next(0, correctlyAnsweredSheet.Count);
                 currentSheet = correctlyAnsweredSheet[currentSheetIndex];
+                currentSheetNumber = correctlyAnsweredSheet[currentSheetIndex].getSheetNumber();
             }
 
             if (uncorrectlyAnsweredSheet.Count != 0)
@@ -336,6 +346,52 @@ public class Questionnaire : MonoBehaviour{
 
     }
 
+
+    void updateSheetsInfos()
+    {
+        int index, insertIndex;
+        SheetInfos s;
+        if (sheetsInfos.Exists(x => x.sheetNumber == currentSheetNumber)) 
+        {
+            index = sheetsInfos.FindIndex(x => x.sheetNumber == currentSheetNumber);
+            if (isAnswerRight)
+                sheetsInfos[index].addSucces();
+            else 
+                sheetsInfos[index].addFailure();          
+        }
+        else /* We create a new SheetInfos for that sheet and put it in the list */
+        {
+            if (isAnswerRight)
+                s = new SheetInfos(currentSheet.getName(), currentSheet.getSheetNumber(), 0, 1);
+            else
+                s = new SheetInfos(currentSheet.getName(), currentSheet.getSheetNumber(), 1, 0);
+
+            /* the goal is to find  the right index in order to break the sorting*/
+            insertIndex = sheetsInfos.FindIndex(x => x.sheetNumber >= currentSheet.getSheetNumber());
+            if (insertIndex == -1 || insertIndex == 0) //means there's no sheetNumber above this new one
+                sheetsInfos.Add(s);
+            else
+            {
+                Debug.Log("INDEX " + insertIndex);
+                sheetsInfos.Insert(insertIndex - 1, s);
+            }
+
+        }
+
+ 
+    }
+
+
+    public void updateCurrentProfile()
+    {
+        if (currentProfile != null)
+        {
+            Debug.Log("KOUKOU");
+            currentProfile.updateSheetList(sheetsInfos);
+        }
+        else
+            return;
+    }
     /*
      * Coroutine used to have a WaitForSeconds alike even if the the time is frozen
      */

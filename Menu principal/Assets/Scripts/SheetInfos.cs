@@ -41,6 +41,15 @@ public struct SheetInfos : IComparer<SheetInfos>, IComparable<SheetInfos>
         this.succesCount= sucess;
     }
 
+    public void addSucces()
+    {
+        this.sheetNumber++;
+    }
+    public void addFailure()
+    {
+        this.errorCount++;
+    }
+
     override
     public string ToString()
     {
