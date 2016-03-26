@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public class ProfileManager : MonoBehaviour {
 
@@ -40,15 +41,7 @@ public class ProfileManager : MonoBehaviour {
         }
      else
         {
-            /* Gets all the profiles */
-            profilesPath = Directory.GetFiles(profilesDir, "*.profile", SearchOption.AllDirectories);
-            profilesCount = profilesPath.Length;
-
-            profiles = new Profile[profilesCount];
-            for (int i = 0; i < profilesCount; i++)
-            {
-                profiles[i] = loadExistingProfile(profilesPath[i]);
-            }
+            refreshProfiles();
         }
 
         if (profilesPath == null)
@@ -57,12 +50,26 @@ public class ProfileManager : MonoBehaviour {
             return;
         }
 
-        //saveNewProfile();
+
         currentProfileIndex = 0;
         currentProfile = null;
     }
 	
+    /*
+     * Scans / Re Scans the profileDir
+     */
+    public void refreshProfiles()
+    {
+        /* Gets all the profiles */
+        profilesPath = Directory.GetFiles(profilesDir, "*.profile", SearchOption.AllDirectories);
+        profilesCount = profilesPath.Length;
 
+        profiles = new Profile[profilesCount];
+        for (int i = 0; i < profilesCount; i++)
+        {
+            profiles[i] = loadExistingProfile(profilesPath[i]);
+        }
+    }
     public Profile[] getProfiles()
     {
         return profiles;
@@ -73,18 +80,15 @@ public class ProfileManager : MonoBehaviour {
         return currentProfile != null;
     }
 
-  
-    void saveNewProfile()
+   public void saveNewProfile(string firstName, string lastName)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        Profile pro = new Profile("Malfurion", "Hurlorage");
+        Profile pro = new Profile(firstName, lastName);
         FileStream file = File.Open(Application.dataPath + "/../Profiles/" + pro.getFileName(), FileMode.Create);
         
 
         bf.Serialize(file, pro);
         file.Close();
-
-
     }
 
     void saveExistingProfile(Profile profileToBeSaved)
@@ -110,7 +114,6 @@ public class ProfileManager : MonoBehaviour {
     }
     public void setCurrentProfile(int index)
     {
-        Debug.Log("Set Current Profile");
         if (index < 0)
         {
             currentProfile = null;
@@ -138,10 +141,8 @@ public class ProfileManager : MonoBehaviour {
     {
         if (currentProfile != null)
         {
-            Debug.Log("OUKOUK0");
             questionnaire.updateCurrentProfile();
             saveExistingProfile(currentProfile);
         }
-        Debug.Log("Application ending after " + Time.time + " seconds");
     }
 }

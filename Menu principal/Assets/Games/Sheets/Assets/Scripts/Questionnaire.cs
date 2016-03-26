@@ -340,10 +340,7 @@ public class Questionnaire : MonoBehaviour{
                 }
             }
         }
-
-        count = howManyAvailableBeforeUncorrectlyAnswered; // In order to start with a prviously uncorectly answerd Question if possible 
         changeCurrentSheet();
-
     }
 
 

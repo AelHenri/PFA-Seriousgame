@@ -63,7 +63,7 @@ public class ProfileMenu : MonoBehaviour {
 
     public void loadProfileCreator()
     {
-        SceneManager.LoadScene("ProfileCreator");
+        SceneManager.LoadScene("ProfileCreator", LoadSceneMode.Additive);
     }
 	// Update is called once per frame
 	void Update () {
