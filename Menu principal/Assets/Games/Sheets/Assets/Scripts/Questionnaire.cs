@@ -34,6 +34,8 @@ public class Questionnaire : MonoBehaviour{
     List<Sheet> uncorrectlyAnsweredSheet;
     List<Sheet> correctlyAnsweredSheet;
 
+    List<SheetInfos> sheetsInfos;
+
     /* 
      * The purpose of the variable is to put some time before re-showing a sheet that was previouly uncorrectly answered
      * Ex : If this variable = 2 , the there will be 3 sheet of the availableSheet list shown before re showing a sheet that was previously uncorrecly answered 
@@ -88,6 +90,7 @@ public class Questionnaire : MonoBehaviour{
         sheetsExists = true;
         changeCurrentSheet();
 
+        sheetsInfos = null;
     }
 
     public bool areThereSheets()
@@ -250,6 +253,8 @@ public class Questionnaire : MonoBehaviour{
                 // It may be cool to set a variable in order not to spam the same uncorrectlyAnsweredSheet if there are other uncorrect sheet available
             }
         }
+
+       
         sortAllSheetList();
         changeCurrentSheet();
     }
@@ -263,8 +268,11 @@ public class Questionnaire : MonoBehaviour{
     }
 
     /*
-     * Select the first unanswered sheet and makes it the currentSheet
-     * if there are no unanswered sheet, it will select the first one not correctly answered
+     * Select the first available sheet and makes it the currentSheet
+     * if count = howManyAvailableBeforeUncorrectlyAnswered
+     *  then the current sheet becomes a uncorrectly answered one
+     * if there are no available sheet, it will select the first one not correctly answered
+     * if all sheets have been correctly answered once, the current sheet is elected randomly
      */
     private void changeCurrentSheet()
     {
@@ -298,8 +306,35 @@ public class Questionnaire : MonoBehaviour{
             return;
     }
 
- 
 
+    // maybe usefull to recall start() 
+    public void updateAccordindTo(Profile p)
+    {
+        sheetsInfos = p.getSheetList();
+        for (int i = 0; i < sheetsInfos.Count; i++)
+        {
+            for (int j = 0; j < availableSheet.Count; j++)
+            {
+                if (sheetsInfos[i].sheetNumber == availableSheet[j].getSheetNumber())
+                {
+                    if (sheetsInfos[i].succesCount > 0) //means that the student already succeeded at least once
+                    {
+                        correctlyAnsweredSheet.Add(availableSheet[j]);
+                        availableSheet.RemoveAt(j);
+                    }
+                    else if (sheetsInfos[i].errorCount > 0)
+                    {
+                        uncorrectlyAnsweredSheet.Add(availableSheet[j]);
+                        availableSheet.RemoveAt(j);
+                    }
+                }
+                else if (sheetsInfos[i].sheetNumber > availableSheet[j].sheetNumber)
+                    break; // As the list are sorted by the sheet number
+            }
+        }
+        changeCurrentSheet();
+
+    }
 
     /*
      * Coroutine used to have a WaitForSeconds alike even if the the time is frozen

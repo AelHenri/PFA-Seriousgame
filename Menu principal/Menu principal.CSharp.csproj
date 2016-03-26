@@ -118,6 +118,7 @@
     <Compile Include="Assets\Scripts\Profile.cs" />
     <Compile Include="Assets\Scripts\ProfileManager.cs" />
     <Compile Include="Assets\Scripts\ProfileMenu.cs" />
+    <Compile Include="Assets\Scripts\SheetInfos.cs" />
     <Compile Include="Assets\Scripts\TitleScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

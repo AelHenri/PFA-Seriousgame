@@ -54,6 +54,11 @@ public class ProfileMenu : MonoBehaviour {
         }
 	}
 	
+
+    public void loadSelectedProfile()
+    {
+        profileManager.setCurrentProfile(profileSelector.value);
+    }
 	// Update is called once per frame
 	void Update () {
         text.text = profiles[profileSelector.value].getFirstName();
