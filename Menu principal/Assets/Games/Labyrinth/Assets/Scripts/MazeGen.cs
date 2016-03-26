@@ -30,7 +30,6 @@ public class MazeGen : MonoBehaviour {
 	public Transform exit;
 	public Transform arrow;
 	public Transform gradiant;
-	//public Transform key;
 	public int width;
 	public int height;
 	public List<Point> deadEnd;
@@ -144,8 +143,6 @@ public class MazeGen : MonoBehaviour {
 		
 		// on lance la generation
 		recursiveGeneration (width - 1, height / 2);
-		//for (int i = 0; i < deadEnd.Count; i++)
-		//	Debug.Log (deadEnd [i].x + " " + deadEnd [i].y + "\n");
 	}
 	
 	private void recursiveGeneration(int x, int y){
@@ -208,9 +205,6 @@ public class MazeGen : MonoBehaviour {
 		
 		if (isDeadEnd && (x!= 0 || y != GameManager.instance.maze.height / 2) ) {
 			deadEnd.Add (new Point (x, y));
-			Debug.Log ("cul de sac");
-			Debug.Log (x);
-			Debug.Log (y);
 		}
 	}
 }

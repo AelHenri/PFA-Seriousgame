@@ -6,25 +6,29 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
-	public float levelStartDelay = 2f;	
+	private float levelStartDelay = 2f;	
 	public MazeGen maze;
-	public int nbKeys = 0;
 	public List<Key> keys;
 	public GameBonus bonus;
+	public bool bonusPresent = false;
+	public float[] timers = new float[4];
+	public int level = 1;
+	public int levelMax = 2;
+	private bool doingSetup;
+	//public int nbKeys; if we want to count the total number of keys
+
+	// images and texts
 	private GameObject endGameImage;
 	private GameObject scores;
 	private Text scoresText;
 	public GameObject gameText;
 	private GameObject endGameText;
-	public bool bonusPresent = false;
 	private Text levelText;
-	public float[] timers = new float[4];
-	public int level =1;
-    public AudioSource audioSource;
-    public AudioClip[] music = new AudioClip[4];
 	private GameObject levelImage;
-	private bool doingSetup;
-	// Use this for initialization
+
+	// audio gestion
+	public AudioSource audioSource;
+    public AudioClip[] music = new AudioClip[4];
 
 	void Awake () {
 		if (instance == null) {
@@ -38,9 +42,8 @@ public class GameManager : MonoBehaviour {
 		maze = GetComponent<MazeGen> ();
         audioSource = GetComponent<AudioSource>();
 		InitGame ();
-
-
 	}
+
 
 	private void OnLevelWasLoaded(int index){
 		if (!doingSetup) {
@@ -52,8 +55,6 @@ public class GameManager : MonoBehaviour {
 
 
 	void InitGame(){
-		Debug.Log ("level");
-		Debug.Log (level);
 		doingSetup = true;
 		bonusPresent = false;
 
@@ -74,7 +75,7 @@ public class GameManager : MonoBehaviour {
 		endGameText.SetActive (false);
 
 		endGameImage.SetActive (false);
-		if (level == 2) {
+		if (level == levelMax + 1) {
 			timerText.SetActive (false);
 			endGameText.SetActive (true);
 			endGameImage.SetActive (true);
@@ -106,11 +107,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 				scores.SetActive (true);
-		//	Invoke ("HideLevelImage", 5f);
 			enabled = false;
-			//GameOver ();
-			enabled = false;
-			Application.Quit ();
 		} else {
 			levelText.text = "Niveau " + level;
 			levelImage.SetActive (true);
@@ -129,9 +126,7 @@ public class GameManager : MonoBehaviour {
 		levelImage.SetActive (false);
 		doingSetup = false;
 	}
-
-
-
+		
 	public void AddKeyToList(Key script){
 		keys.Add (script);
 	}
@@ -139,8 +134,7 @@ public class GameManager : MonoBehaviour {
 	public void SetBonus(GameBonus script){
 		bonus = script;
 	}
-
-
+		
 	IEnumerator MoveKeys(){
 		int i;
 		for (i= 0; i< level; i++) {
@@ -149,13 +143,12 @@ public class GameManager : MonoBehaviour {
 		}
 		yield return null;
 	}
-
-
+		
 	IEnumerator MoveBonus(){
 		bonus.MoveBonus(1);
 		yield return null;
 	}
-	// Update is called once per frame
+
 	void Update () {
 		if (doingSetup) {
 			return;

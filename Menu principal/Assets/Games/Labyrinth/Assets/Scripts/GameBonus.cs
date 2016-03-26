@@ -18,7 +18,7 @@ public class GameBonus : MonoBehaviour {
 	public void MoveBonus (int i) {
 		gameObject.GetComponent<Renderer> ().enabled = true;
 		MazeAccessB.maze = (MazeGen)FindObjectOfType (typeof(MazeGen));
-		//ceci est juste un verification, on choisi s'il y a un bonus ou non dans mazeGen
+		// this is just a verification , we choose whether there is a bonus or not
 		if (MazeAccessB.maze.deadEnd.Count - GameManager.instance.level <= 1) {
 			MazeAccessB.mazeSet = 1;
 			gameObject.GetComponent<Renderer> ().enabled = false;
