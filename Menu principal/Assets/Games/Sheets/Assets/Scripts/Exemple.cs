@@ -11,6 +11,7 @@ public class Exemple : MonoBehaviour {
     WWW www;
 
     Questionnaire questionnaire;
+    Sheet currentSheet;
     Scene questionScene;
     Scene exempleScene;
     public RawImage rawImageExemple;
@@ -26,6 +27,7 @@ public class Exemple : MonoBehaviour {
     // Use this for initialization
     void Start () {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
+        currentSheet = questionnaire.currentSheet;
 
         questionScene = SceneManager.GetSceneByName("Question");
         exempleScene = SceneManager.GetSceneByName("Exemple");
@@ -48,13 +50,22 @@ public class Exemple : MonoBehaviour {
     {
         if (exempleScene.isLoaded)
         {
-            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            if (currentSheet.sheetStyle == "normal")
+                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            else if (currentSheet.sheetStyle == "noAnswerText")
+                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
             yield return questionScene.isLoaded;
             SceneManager.UnloadScene("Exemple");
         }
         else
-            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+        {
+            if (currentSheet.sheetStyle == "normal")
+                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            else if (currentSheet.sheetStyle == "noAnswerText")
+                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+        }
     }
+
 
     // Update is called once per frame
     void Update()

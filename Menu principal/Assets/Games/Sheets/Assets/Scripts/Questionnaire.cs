@@ -14,6 +14,7 @@ using System;
 public class Questionnaire : MonoBehaviour{
 
     Scene questionScene;
+    Scene questionSceneWithoutAnswerText;
     Scene exempleScene;
     Fading fading;
     
@@ -51,6 +52,7 @@ public class Questionnaire : MonoBehaviour{
     {        
         questionScene = SceneManager.GetSceneByName("Question");
         exempleScene = SceneManager.GetSceneByName("Exemple");
+        questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
         fading = GameObject.Find("Navigator").GetComponent<Fading>();
 
         availableSheet = new List<Sheet>();
@@ -80,14 +82,8 @@ public class Questionnaire : MonoBehaviour{
             for (int i = 0; i < totalSheets; i++)
             {
                 availableSheet.Add(new Sheet(sheetsPath[i]));
-                Debug.Log("sheet Number : " + availableSheet[i].getSheetNumber());
             }
             availableSheet.Sort();
-            Debug.Log("Now sorted");
-            for (int i = 0; i < totalSheets; i++)
-            {
-                Debug.Log("sheet Number : " + availableSheet[i].getSheetNumber());
-            }
         }
         sheetsExists = true;
         changeCurrentSheet();
@@ -126,6 +122,12 @@ public class Questionnaire : MonoBehaviour{
             yield return exempleScene.isLoaded;
             SceneManager.UnloadScene("Question");
         }
+        else if (questionSceneWithoutAnswerText.isLoaded)
+        {
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+            yield return exempleScene.isLoaded;
+            SceneManager.UnloadScene("QuestionWithoutAnswerText");
+        }
         else
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
     }
@@ -138,13 +140,21 @@ public class Questionnaire : MonoBehaviour{
     {
         if (exempleScene.isLoaded)
         {
-            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            if (currentSheet.sheetStyle == "normal")
+                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            else if (currentSheet.sheetStyle == "noAnswerText")
+                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
             yield return questionScene.isLoaded;
             SceneManager.UnloadScene("Exemple");
         }
         else
-            SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-    }
+        {
+            if (currentSheet.sheetStyle == "normal")
+                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            else if (currentSheet.sheetStyle == "noAnswerText")
+                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+        }
+      }
 
 
 
@@ -178,6 +188,7 @@ public class Questionnaire : MonoBehaviour{
         yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(fadingTime));
         SceneManager.UnloadScene("Exemple");
         SceneManager.UnloadScene("Question");
+        SceneManager.UnloadScene("QuestionWithoutAnswerText");
         fading.beginFade(-1);
         answerGiven();
 

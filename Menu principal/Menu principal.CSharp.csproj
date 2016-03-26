@@ -106,6 +106,7 @@
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />
+    <Compile Include="Assets\Games\Sheets\Assets\Scripts\SheetWithAnswerText.cs" />
     <Compile Include="Assets\Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\Fading.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />

@@ -9,7 +9,7 @@ public class OuvrirFicheXml : MonoBehaviour {
 
     private int topLayerNumber = 0;
 
-    bool updateFile = false; // pour controler le fait que Update() ne recharge pas la fiche continuellement
+    bool updateFile = true; // pour controler le fait que Update() ne recharge pas la fiche continuellement
     bool showFileBrowser = false;
     string xmlFilePath;
 
@@ -67,9 +67,11 @@ public class OuvrirFicheXml : MonoBehaviour {
         reponses[1] = vali.inputReponse2;
         reponses[2] = vali.inputReponse3;
 
+        
 
         vali.nomFiche.text = ffs.Root.Element("title").Value;
         vali.intputNumeroFiche.text = ffs.Root.Element("number").Value;
+        Debug.Log(ffs.Root.Element("style").Value);
         vali.inputExemple.text = ffs.Root.Element("ExamplePart").Element("text").Value;
         vali.inputReponse1.text = ffs.Root.Element("QuestionPart").Element("answer1").Value;
         vali.inputReponse2.text = ffs.Root.Element("QuestionPart").Element("answer2").Value;

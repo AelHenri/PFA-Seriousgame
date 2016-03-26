@@ -2,6 +2,7 @@
 <MCQSheet>
   <title>singe_robot</title>
   <number>45</number>
+  <style>normal</style>
   <ExamplePart>
     <text>Le singe dessine un bonhomme</text>
   </ExamplePart>

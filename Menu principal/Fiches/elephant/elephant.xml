@@ -2,6 +2,7 @@
 <MCQSheet>
   <title>elephant</title>
    <number>3</number>
+   <style>normal</style>
   <ExamplePart>
     <text>L'éléphant a un parapluie</text>
   </ExamplePart>

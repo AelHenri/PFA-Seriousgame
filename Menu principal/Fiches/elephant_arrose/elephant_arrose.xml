@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>elephant_arrose</title>
+  <number>6</number>
+  <style>noAnswerText</style>
+  <ExamplePart>
+    <text>L'éléphant arrose le bonhomme</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="false" />
+    <answer2 value="false" />
+    <answer3 value="true" />
+  </QuestionPart>
+</MCQSheet>

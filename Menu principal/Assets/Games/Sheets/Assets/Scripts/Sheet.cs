@@ -5,7 +5,7 @@ using System;
 
 public class Sheet : Comparer<Sheet>, IComparable<Sheet>
 {
-    XDocument xmlFile;
+    protected XDocument xmlFile;
 
     public string textExemple;
     public string sheetTitle;
@@ -13,7 +13,8 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
     public string imgExemplePath, imgQuestionPath;
     public int sheetNumber;
 
-    private string dirName;
+    protected string dirName;
+    public string sheetStyle;
 
     int rightAnswer;
     
@@ -25,12 +26,15 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
         sheetTitle = xmlFile.Root.Element("title").Value;
         sheetNumber = Int32.Parse(xmlFile.Root.Element("number").Value);
         imgExemplePath = Path;
-        imgQuestionPath = Path; 
-        answers = new string[3];
-        answers[0] = xmlFile.Root.Element("QuestionPart").Element("answer1").Value;
-        answers[1] = xmlFile.Root.Element("QuestionPart").Element("answer2").Value;
-        answers[2] = xmlFile.Root.Element("QuestionPart").Element("answer3").Value;
-
+        imgQuestionPath = Path;
+        sheetStyle = xmlFile.Root.Element("style").Value;
+        if (sheetStyle == "normal")
+        {
+            answers = new string[3];
+            answers[0] = xmlFile.Root.Element("QuestionPart").Element("answer1").Value;
+            answers[1] = xmlFile.Root.Element("QuestionPart").Element("answer2").Value;
+            answers[2] = xmlFile.Root.Element("QuestionPart").Element("answer3").Value;
+        }
         dirName = System.IO.Path.GetDirectoryName(Path);
         imgExemplePath = System.IO.Path.Combine(dirName, "image_exemple.jpg");
         imgQuestionPath = System.IO.Path.Combine(dirName, "image_question.jpg");
@@ -50,7 +54,7 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
     {
         return answers;
     }
-
+    
     public string[] getImagesPath()
     {
         string[] imgsPath = new string[2];

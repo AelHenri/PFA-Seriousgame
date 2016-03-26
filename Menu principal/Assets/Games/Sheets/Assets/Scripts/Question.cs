@@ -37,6 +37,8 @@ public class Question : MonoBehaviour {
     Questionnaire questionanire;
     Scene questionScene;
     Scene exempleScene;
+    Scene questionSceneWithoutAnswerText;
+
     // Use this for initialization
     void Start () {
         questionanire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
@@ -44,6 +46,7 @@ public class Question : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
 
         questionScene = SceneManager.GetSceneByName("Question");
+        questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
         exempleScene = SceneManager.GetSceneByName("Exemple");
     }
 
@@ -63,6 +66,13 @@ public class Question : MonoBehaviour {
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
             yield return exempleScene.isLoaded;
             SceneManager.UnloadScene("Question");
+        }
+        else if (questionSceneWithoutAnswerText.isLoaded)
+        {
+            Debug.Log("KOUKO");
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+            yield return exempleScene.isLoaded;
+            SceneManager.UnloadScene("QuestionWithoutAnswerText");
         }
         else
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
@@ -85,9 +95,12 @@ public class Question : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        answer1.text = currentSheet.answers[0];
-        answer2.text = currentSheet.answers[1];
-        answer3.text = currentSheet.answers[2];
+        if (currentSheet.sheetStyle == "normal")
+        {
+            answer1.text = currentSheet.answers[0];
+            answer2.text = currentSheet.answers[1];
+            answer3.text = currentSheet.answers[2];
+        }
 
         if (img_question == null)
         {

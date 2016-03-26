@@ -2,6 +2,7 @@
 <MCQSheet>
   <title>poisson</title>
   <number>1</number>
+  <style>normal</style>
   <ExamplePart>
     <text>Un poisson</text>
   </ExamplePart>
