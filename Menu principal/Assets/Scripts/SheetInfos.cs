@@ -43,7 +43,7 @@ public struct SheetInfos : IComparer<SheetInfos>, IComparable<SheetInfos>
 
     public void addSucces()
     {
-        this.sheetNumber++;
+        this.succesCount++;
     }
     public void addFailure()
     {

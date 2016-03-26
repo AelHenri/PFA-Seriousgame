@@ -4,9 +4,10 @@ using System.Xml.Linq;
 using System;
 
 
-
+[Serializable]
 public class Sheet : Comparer<Sheet>, IComparable<Sheet>
 {
+    [NonSerialized]
     protected XDocument xmlFile;
 
     public string textExemple;
@@ -14,6 +15,9 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
     public string[] answers;
     public string imgExemplePath, imgQuestionPath;
     public int sheetNumber;
+
+    private int successCount;
+    private int failureCount;
 
     protected string dirName;
     public string sheetStyle;
@@ -23,12 +27,16 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
 
     public Sheet(string Path)
     {
+
         xmlFile = XDocument.Load(Path);
         textExemple = xmlFile.Root.Element("ExamplePart").Element("text").Value;
         sheetName = xmlFile.Root.Element("title").Value;
         sheetNumber = Int32.Parse(xmlFile.Root.Element("number").Value);
         imgExemplePath = Path;
         imgQuestionPath = Path;
+
+        failureCount = 0;
+        successCount = 0;
         sheetStyle = xmlFile.Root.Element("style").Value;
         if (sheetStyle == "normal")
         {
@@ -50,8 +58,24 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
 
     }
 
+    public void addSucces()
+    {
+        this.successCount++;
+    }
+    public void addFailure()
+    {
+        this.failureCount++;
+    }
 
-    
+    public int getSuccesCount()
+    {
+        return successCount;
+    }
+    public int getFailureCount()
+    {
+        return failureCount;
+    }
+
     public string[] getAnswers()
     {
         return answers;

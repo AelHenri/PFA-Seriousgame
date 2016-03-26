@@ -57,10 +57,9 @@ public class ProfileManager : MonoBehaviour {
             return;
         }
 
-
+        //saveNewProfile();
         currentProfileIndex = 0;
         currentProfile = null;
-       //loadExistingProfile();
     }
 	
 
@@ -78,7 +77,7 @@ public class ProfileManager : MonoBehaviour {
     void saveNewProfile()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        Profile pro = new Profile("Azir", "SHURIMA");
+        Profile pro = new Profile("Malfurion", "Hurlorage");
         FileStream file = File.Open(Application.dataPath + "/../Profiles/" + pro.getFileName(), FileMode.Create);
         
 

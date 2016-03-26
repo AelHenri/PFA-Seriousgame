@@ -11,32 +11,27 @@ public class Profile {
     string lastName;
     bool []isGameFinished;
 
-    List<SheetInfos> sheets;
+    List<Sheet> sheetList;
     List<bool> collectedObjects;
 
     public Profile(string firstName, string lastName)
     {
         this.fisrtName = firstName;
         this.lastName = lastName;
-        sheets = new List<SheetInfos>();
+        sheetList = new List<Sheet>();
 
         isGameFinished = new bool[3]; // There are only 3 Games
     }
 
-    public void addSheetInfo(SheetInfos s)
+    public List<Sheet> getRealSheetList()
     {
-        sheets.Add(s);
+        sheetList.Sort();
+        return sheetList;
     }
 
-    public List<SheetInfos> getSheetList()
+    public void updateSheetList(List<Sheet> l)
     {
-        sheets.Sort();
-        return sheets;
-    }
-
-    public void updateSheetList(List<SheetInfos> list)
-    {
-        sheets = list;
+        sheetList = l;
     }
     public string getFileName()
     {

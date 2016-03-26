@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ProfileMenu : MonoBehaviour {
     public bool hasFinishedGame1;
@@ -57,8 +58,12 @@ public class ProfileMenu : MonoBehaviour {
 
     public void loadSelectedProfile()
     {
-        Debug.Log("selectorvalue = " + profileSelector.value);
         profileManager.setCurrentProfile(profileSelector.value-1);
+    }
+
+    public void loadProfileCreator()
+    {
+        SceneManager.LoadScene("ProfileCreator");
     }
 	// Update is called once per frame
 	void Update () {

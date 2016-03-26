@@ -36,7 +36,8 @@ public class Questionnaire : MonoBehaviour{
     List<Sheet> uncorrectlyAnsweredSheet;
     List<Sheet> correctlyAnsweredSheet;
 
-    List<SheetInfos> sheetsInfos;
+ 
+    List<Sheet> profileSheets;
 
     /* 
      * The purpose of the variable is to put some time before re-showing a sheet that was previouly uncorrectly answered
@@ -92,7 +93,7 @@ public class Questionnaire : MonoBehaviour{
         sheetsExists = true;
         changeCurrentSheet();
 
-        sheetsInfos = null;
+        profileSheets = null;
     }
 
     public bool areThereSheets()
@@ -320,28 +321,27 @@ public class Questionnaire : MonoBehaviour{
     // maybe usefull to recall start() 
     public void updateAccordindTo(Profile p)
     {
-        sheetsInfos = p.getSheetList();
-        for (int i = 0; i < sheetsInfos.Count; i++)
+        profileSheets = p.getRealSheetList();
+        Sheet tmp;
+        for (int i = 0; i < profileSheets.Count; i++)
         {
-            for (int j = 0; j < availableSheet.Count; j++)
+            if (availableSheet.Exists(x => x.sheetNumber == profileSheets[i].sheetNumber)) ////means that the student already encountered the sheet once
             {
-                if (sheetsInfos[i].sheetNumber == availableSheet[j].getSheetNumber())
+                tmp = availableSheet.Find(x => x.sheetNumber == profileSheets[i].sheetNumber);
+                if (profileSheets[i].getSuccesCount() > 0) //means that the student already succeeded at least once
                 {
-                    if (sheetsInfos[i].succesCount > 0) //means that the student already succeeded at least once
-                    {
-                        correctlyAnsweredSheet.Add(availableSheet[j]);
-                        availableSheet.RemoveAt(j);
-                    }
-                    else if (sheetsInfos[i].errorCount > 0)
-                    {
-                        uncorrectlyAnsweredSheet.Add(availableSheet[j]);
-                        availableSheet.RemoveAt(j);
-                    }
+                    correctlyAnsweredSheet.Add(tmp);
+                    availableSheet.RemoveAt(availableSheet.IndexOf(tmp));
                 }
-                else if (sheetsInfos[i].sheetNumber > availableSheet[j].sheetNumber)
-                    break; // As the list are sorted by the sheet number
+                else if (profileSheets[i].getFailureCount() > 0)
+                {
+                    uncorrectlyAnsweredSheet.Add(tmp);
+                    availableSheet.RemoveAt(availableSheet.IndexOf(tmp));
+                }
             }
         }
+
+        count = howManyAvailableBeforeUncorrectlyAnswered; // In order to start with a prviously uncorectly answerd Question if possible 
         changeCurrentSheet();
 
     }
@@ -350,35 +350,32 @@ public class Questionnaire : MonoBehaviour{
     void updateSheetsInfos()
     {
         int index, insertIndex;
-        SheetInfos s;
-        if (sheetsInfos.Exists(x => x.sheetNumber == currentSheetNumber)) 
-        {
-            index = sheetsInfos.FindIndex(x => x.sheetNumber == currentSheetNumber);
-            if (isAnswerRight)
-                sheetsInfos[index].addSucces();
-            else 
-                sheetsInfos[index].addFailure();          
-        }
-        else /* We create a new SheetInfos for that sheet and put it in the list */
-        {
-            if (isAnswerRight)
-                s = new SheetInfos(currentSheet.getName(), currentSheet.getSheetNumber(), 0, 1);
-            else
-                s = new SheetInfos(currentSheet.getName(), currentSheet.getSheetNumber(), 1, 0);
-
-            /* the goal is to find  the right index in order to break the sorting*/
-            insertIndex = sheetsInfos.FindIndex(x => x.sheetNumber >= currentSheet.getSheetNumber());
-            if (insertIndex == -1 || insertIndex == 0) //means there's no sheetNumber above this new one
-                sheetsInfos.Add(s);
-            else
-            {
-                Debug.Log("INDEX " + insertIndex);
-                sheetsInfos.Insert(insertIndex - 1, s);
-            }
-
-        }
-
+        Sheet tmp;
  
+ 
+        if (profileSheets.Exists(x => x.sheetNumber == currentSheetNumber))
+        {
+            index = profileSheets.FindIndex(x => x.sheetNumber == currentSheetNumber);
+            if (isAnswerRight)
+                profileSheets[index].addSucces();
+            else
+                profileSheets[index].addFailure();
+        }
+        else
+        {
+            tmp = currentSheet;
+            if (isAnswerRight)
+                tmp.addSucces();
+            else
+                tmp.addFailure();
+
+            insertIndex = profileSheets.FindIndex(x => x.sheetNumber >= tmp.getSheetNumber());
+            if (insertIndex == -1 || insertIndex == 0) //means there's no sheetNumber above this new one
+                profileSheets.Add(tmp);
+            else
+                profileSheets.Insert(insertIndex - 1, tmp);
+        }
+
     }
 
 
@@ -386,8 +383,7 @@ public class Questionnaire : MonoBehaviour{
     {
         if (currentProfile != null)
         {
-            Debug.Log("KOUKOU");
-            currentProfile.updateSheetList(sheetsInfos);
+            currentProfile.updateSheetList(profileSheets);
         }
         else
             return;
