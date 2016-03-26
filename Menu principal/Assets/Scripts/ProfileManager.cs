@@ -10,8 +10,7 @@ public class ProfileManager : MonoBehaviour {
 
 
 
-    public Dropdown profileSelector;
-    public Text text;
+
   
 
     private string profilesDir;
@@ -25,45 +24,54 @@ public class ProfileManager : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        profileSelector.ClearOptions();
 
-        openProfilesDir();
-        
-        /* Gets all the profiles stored in xml files */
-        profilesPath = Directory.GetFiles(profilesDir, "*.profile", SearchOption.AllDirectories);
-        profilesCount = profilesPath.Length;
+        profilesDir = Application.dataPath + "/../Profiles";
+        profilesDir = Path.GetFullPath(profilesDir);
+
+        if (!Directory.Exists(profilesDir))
+        {
+            profilesPath = null;
+            profiles = null;
+        }
+     else
+        {
+            /* Gets all the profiles */
+            profilesPath = Directory.GetFiles(profilesDir, "*.profile", SearchOption.AllDirectories);
+            profilesCount = profilesPath.Length;
+
+            profiles = new Profile[profilesCount];
+            for (int i = 0; i < profilesCount; i++)
+            {
+                profiles[i] = loadExistingProfile(profilesPath[i]);
+            }
+        }
+
         if (profilesPath == null)
         {
             Debug.Log("Pas de profiles dans le dossier");
             return;
         }
-        profiles = new Profile[profilesCount];
-        for (int i = 0; i < profilesCount; i++)
-        {
-            profiles[i] = loadExistingProfile(profilesPath[i]);
-        }
 
+
+
+        /* a ajouter dans Profile Menu;
         foreach (Profile p in profiles)
         {
             profileSelector.options.Add(new Dropdown.OptionData() { text = p.getFirstName() });     
         }
+        */
 
        //saveNewProfile();
-        //loadExistingProfile();
+       //loadExistingProfile();
     }
 	
-    void openProfilesDir()
+
+    public Profile[] getProfiles()
     {
-        try
-        {
-            profilesDir = Application.dataPath + "/../Profiles";
-            profilesDir = Path.GetFullPath(profilesDir);
-        }
-        catch (DirectoryNotFoundException)
-        {
-            Debug.Log("Pas de dossier profils");
-        }
+        return profiles;
     }
+
+
 
     //TODO better Naming
     void saveNewProfile()
@@ -102,8 +110,8 @@ public class ProfileManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+        /* A ajouter dans profile menu;
         text.text = profiles[profileSelector.value].getFirstName();
-
+        */
     }
 }
