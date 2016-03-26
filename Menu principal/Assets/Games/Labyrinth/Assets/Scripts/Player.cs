@@ -66,7 +66,7 @@ public class Player : MonoBehaviour {
 			}
 
 		} else if (other.tag == "key") {
-			questionnaire.startQuestionnaire ();	
+			questionnaire.startQuestionnaire (2);	
 			isAnswering = true;
 			collidedKey = other.gameObject;
 
@@ -82,8 +82,8 @@ public class Player : MonoBehaviour {
 		moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
 		moveVertical = Input.GetAxis ("Vertical")*speed;
 		if (isAnswering) {
-				if (questionnaire.hasAnswered) {
-					if (questionnaire.isAnswerRight) {
+				if (questionnaire.hasAnsweredAll) {
+					if (questionnaire.howManyRightAnswers > 0) {
 						// globalKeys = globalKeys + 1;
 						localKeys = localKeys + 1;
 						collidedKey.SetActive(false);

@@ -52,6 +52,12 @@ public class Questionnaire : MonoBehaviour{
     public  bool isAnswerRight;
     [HideInInspector]
     public  bool hasAnswered = false;
+    [HideInInspector]
+    public bool hasAnsweredAll = false;
+
+    public int howManyRightAnswers;
+
+    private bool isAnswering;
 
     public void Start()
     {        
@@ -166,7 +172,29 @@ public class Questionnaire : MonoBehaviour{
         }
       }
 
+    public void startQuestionnaire(int numberOfQuestion)
+    {
+        StartCoroutine(multipleQuestionnaire(numberOfQuestion));
+    }
 
+    public IEnumerator multipleQuestionnaire(int numberOfQuestion)
+    {
+        int count = 0;
+        hasAnsweredAll= false;
+        howManyRightAnswers = 0;
+        while (count < numberOfQuestion)
+        {
+
+            startQuestionnaire();
+            while (!this.hasAnswered)
+                yield return new WaitUntil(() => this.hasAnswered);
+            yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(1)); //this is mandatory, without this, it doesn't work
+            count++;
+            if (isAnswerRight)
+                howManyRightAnswers++;
+        }
+        hasAnsweredAll = true;
+    }
 
     public void startQuestionnaire() {
        GameState.freezeTime();
@@ -176,7 +204,6 @@ public class Questionnaire : MonoBehaviour{
 
     public IEnumerator startDisplay()
     {
-
         fadingTime = fading.beginFade(1);
         yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(fadingTime));
         showExemple();
