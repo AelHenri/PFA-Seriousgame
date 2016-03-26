@@ -46,11 +46,13 @@ public class FicheXml : MonoBehaviour {
 
         nomFiche = vali.nomFiche.text;
         numeroFiche = vali.intputNumeroFiche.text;
-        textExemple = vali.inputExemple.text;
-        textReponse1 = vali.inputReponse1.text;
-        textReponse2 = vali.inputReponse2.text;
-        textReponse3 = vali.inputReponse3.text;
-
+        if (!vali.isStyleTwo())
+        {
+            textExemple = vali.inputExemple.text;
+            textReponse1 = vali.inputReponse1.text;
+            textReponse2 = vali.inputReponse2.text;
+            textReponse3 = vali.inputReponse3.text;
+        }
         cheminFiche = Application.dataPath + "/../Fiches/";
         cheminFiche = Path.Combine(cheminFiche, nomFiche);
 

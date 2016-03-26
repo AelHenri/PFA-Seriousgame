@@ -44,6 +44,14 @@ public class Validation : MonoBehaviour {
     }
 
  
+    public bool isStyleTwo()
+    {
+        if (inputReponse1 == null && inputReponse2 == null && inputReponse3 == null)
+            return true;
+        else
+            return false;
+    }
+
 
 	// Use this for initialization
 	void Start ()
@@ -73,14 +81,16 @@ public class Validation : MonoBehaviour {
 
     bool isEverythingFilled()
     {
-        if (nomFiche.text != "" &&
-            inputExemple.text != "" &&
-            inputReponse1.text != "" &&
-            inputReponse2.text != "" &&
-            inputReponse3.text != ""
-            )
-            return true;
-        return false;
+
+        if (nomFiche.text == "" || inputExemple.text == "")
+            return false;
+        if (!isStyleTwo())
+        {
+            if (inputReponse1.text == "" || inputReponse2.text == "" || inputReponse3.text == "" )
+            return false;
+        }
+        return true;
+        
     }
     
 
