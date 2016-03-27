@@ -164,7 +164,7 @@ public class AjoutImage : MonoBehaviour
         GUI.depth = bottomLayerNumber;
         
         xImgQuestion = rawImageQuestion.gameObject.transform.position.x - (rawImageQuestion.rectTransform.rect.width/2);
-        yImgQuestion = rawImageQuestion.gameObject.transform.position.y - rawImageQuestion.rectTransform.rect.height + 15;
+        yImgQuestion = rawImageQuestion.gameObject.transform.position.y - rawImageQuestion.rectTransform.rect.height + 40;
         Rect rectImgQuestion = new Rect(xImgQuestion, yImgQuestion, rawImageQuestion.rectTransform.rect.width, rawImageQuestion.rectTransform.rect.height);
         
         xImgExemple= rawImageExemple.gameObject.transform.position.x - (rawImageExemple.rectTransform.rect.width/2);
