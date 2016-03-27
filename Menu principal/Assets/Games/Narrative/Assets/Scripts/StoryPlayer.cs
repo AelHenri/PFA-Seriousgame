@@ -61,6 +61,7 @@ public class StoryPlayer : MonoBehaviour
             {
                 sceneManager.level++;
             } */
+
             Application.LoadLevel(Application.loadedLevel);
         }
         else if (trig.tag == "TP")
