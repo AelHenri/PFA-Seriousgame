@@ -28,7 +28,6 @@ public class OuvrirFicheXml : MonoBehaviour {
     /* Paramètres pour le skin de l'explorateur de fichier, les valeurs a modifier sont dans Unity */
     public GUISkin[] skins;
     public Texture2D file, folder, back, drive;
-    public GUIStyle backStyle, cancelStyle, selectStyle;
     string[] layoutTypes = { "Type 0", "Type 1" };
 
 
@@ -48,6 +47,7 @@ public class OuvrirFicheXml : MonoBehaviour {
         fileBrowser.driveTexture = drive;
         fileBrowser.showSearch = true;
         fileBrowser.searchRecursively = true;
+        fileBrowser.guiSkin = skins[0];
     }
 
     /* Fonction qui récupère les chemin des images */

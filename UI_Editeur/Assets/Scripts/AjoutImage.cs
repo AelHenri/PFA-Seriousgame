@@ -11,6 +11,7 @@ public class AjoutImage : MonoBehaviour
     public OuvrirFicheXml ovFich;
     public menu menu;
 
+
     /* Sert a afficher ou non l'explorateur de fichiers */
 	private bool showFileBrowser = false;
 
@@ -42,7 +43,6 @@ public class AjoutImage : MonoBehaviour
     /* Paramètres pour le skin de l'explorateur de fichier */
     public GUISkin[] skins;
     public Texture2D file, folder, back, drive;
-    public GUIStyle backStyle, cancelStyle, selectStyle; 
     string[] layoutTypes = { "Type 0", "Type 1" };
 
     /* Pour afficher les images, et le bouton de changement d'image en mouseover */
@@ -94,6 +94,7 @@ public class AjoutImage : MonoBehaviour
         fb.directoryTexture = folder;
         fb.backTexture = back;
         fb.driveTexture = drive;
+        fb.guiSkin = skins[0];
         //show the search bar
         fb.showSearch = true;
         //search recursively (setting recursive search may cause a long delay)
