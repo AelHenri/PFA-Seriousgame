@@ -57,6 +57,10 @@ public class StoryPlayer : MonoBehaviour
     {
         if (trig.tag == "Arrow")
         {
+            /*if (sceneManager.level == 3 && trig.name == "Arrow 1")
+            {
+                sceneManager.level++;
+            } */
             Application.LoadLevel(Application.loadedLevel);
         }
         else if (trig.tag == "TP")

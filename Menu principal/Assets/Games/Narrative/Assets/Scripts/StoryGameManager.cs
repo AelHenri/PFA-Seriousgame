@@ -54,6 +54,7 @@ public class StoryGameManager : MonoBehaviour {
         PNJTable.Add("Pixie");
         PNJTable.Add("Gaby");
         PNJTable.Add("Philibert");
+        //PNJTable.Add("Camille");
 
         InitGame();
 	
@@ -70,6 +71,8 @@ public class StoryGameManager : MonoBehaviour {
 
     void InitGame()
     {
+        Debug.Log("Scène :");
+        Debug.Log(scene.level);
         firstScene = true;
         scene.SetupScene();
         messageBox = GameObject.Find("MessageBox");

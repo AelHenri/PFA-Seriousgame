@@ -155,6 +155,10 @@ public class PNJ : MonoBehaviour {
     {
         sceneManager.PlaceArrows();
     }
+    protected void callPlaceArrows(int i, int j)
+    {
+        sceneManager.PlaceArrows(i, j);
+    }
 
     protected void callPlaceTPs()
     {
@@ -179,5 +183,9 @@ public class PNJ : MonoBehaviour {
         return gameManager.isMessagesFinished();
     }
 
-    
+    public void DummyFunction()
+    {
+        // Just for an animator event, so that the last frame can have a duration
+    }
+
 }
