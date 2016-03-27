@@ -11,10 +11,6 @@ public class CharacterSelection : MonoBehaviour {
 
    
 
-    void Awake()
-    {
-        DontDestroyOnLoad(transform.gameObject);
-    }
 
 	// Use this for initialization
 	void Start () {
@@ -62,5 +58,7 @@ public class CharacterSelection : MonoBehaviour {
     void Update () {
         if (BoardMenu.currentChoosingPlayerNumber != 666)
             characters[selectionIndex].SetActive(true);
+
+
     }
 }

@@ -71,6 +71,11 @@ public class ProfileMenu : MonoBehaviour {
             profileSelector.value = 0;
         else if (profileManager.thereIsAProfile())
             profileSelector.value = profileManager.getCurrentProfileIndex() + 1;
+
+
+
+
+            
     
         text.text = profileSelector.options[profileSelector.value].text;
     }
