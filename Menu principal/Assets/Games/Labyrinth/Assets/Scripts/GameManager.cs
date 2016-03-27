@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	public bool bonusPresent = false;
 	public float[] timers = new float[4];
 	public int level = 1;
-	public int levelMax = 2;
+	public int levelMax = 1;
 	private bool doingSetup;
 	//public int nbKeys; if we want to count the total number of keys
 
@@ -106,7 +106,8 @@ public class GameManager : MonoBehaviour {
 						scoresText.text += "Niveau " + (j + 1) + " :  " + Mathf.Round (timers [j]) + " secondes\n";	
 				}
 			}
-				scores.SetActive (true);
+			scores.SetActive (true);
+			Invoke ("endGame", 7.0f);
 			enabled = false;
 		} else {
 			levelText.text = "Niveau " + level;
@@ -127,6 +128,10 @@ public class GameManager : MonoBehaviour {
 		doingSetup = false;
 	}
 		
+	private void endGame(){
+		GameState.quitLabyrinth();
+	
+	}
 	public void AddKeyToList(Key script){
 		keys.Add (script);
 	}

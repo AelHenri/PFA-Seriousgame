@@ -88,7 +88,6 @@
      <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
      <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
      <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />
-     <Compile Include="Assets\Games\Sheets\Assets\Scripts\SheetWithAnswerText.cs" />
      <Compile Include="Assets\Scripts\Credits.cs" />
      <Compile Include="Assets\Scripts\Fading.cs" />
      <Compile Include="Assets\Scripts\GameState.cs" />
@@ -98,6 +97,7 @@
      <Compile Include="Assets\Scripts\Navigator.cs" />
      <Compile Include="Assets\Scripts\OptionsMenuButtons.cs" />
      <Compile Include="Assets\Scripts\Profile.cs" />
+     <Compile Include="Assets\Scripts\ProfileCreator.cs" />
      <Compile Include="Assets\Scripts\ProfileManager.cs" />
      <Compile Include="Assets\Scripts\ProfileMenu.cs" />
      <Compile Include="Assets\Scripts\SheetInfos.cs" />
