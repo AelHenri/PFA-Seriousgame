@@ -42,6 +42,11 @@ public class Coordinator : MonoBehaviour {
     private bool timeSet = false;
     private int[] goodAnswersinARow = new int[nbPlayer];
     private bool end = false;
+    private float timeEnd = 0f;
+    private float timeEOT = 0f;
+    private float timeDice = 0f;
+    private bool relaunch = false;
+    private bool endOfTurn;
 
     public Animator animator;
 
@@ -51,8 +56,8 @@ public class Coordinator : MonoBehaviour {
     void Start () {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
 
-        GameObject terrain = (GameObject)Resources.Load((UnityEngine.Random.Range(0,2) == 0)?"TIle":"TGlace", typeof(GameObject));
-        Instantiate(terrain);
+        //GameObject terrain = (GameObject)Resources.Load((UnityEngine.Random.Range(0,2) == 0)?"TIle":"TGlace", typeof(GameObject));
+        //Instantiate(terrain);
         m = Map.GetComponent<Map>();
         m.PrepareMap();
         Vector3 pos = m.tiles[0].transform.position + new Vector3(0, 0, 0);
@@ -127,6 +132,26 @@ public class Coordinator : MonoBehaviour {
         */
         time += Time.deltaTime;
 
+        if(endOfTurn && (time - timeEOT) > 2f)
+        {
+            endOfTurn = false;
+            TurnEnd();
+        }
+            
+        if(endOfTurn)
+            return;
+
+        if (relaunch && (time - timeDice) > 2f)
+            relaunch = false;
+
+        if (relaunch)
+            return;
+
+        if(end && (time - timeEnd) > 10f)
+        {
+            GameState.quitBoard();
+        }
+
         if(end)
         {
             d.gameObject.SetActive(false);
@@ -135,6 +160,8 @@ public class Coordinator : MonoBehaviour {
             Canvas.SetActive(true);
             Text t = TextComp.GetComponent<Text>();
             t.text = "Bravo Joueur " + (currentPlayer + 1) + ", tu as gagné !";
+            timeEnd = time;
+            return;
         }
 
         if(beginOfTurn)
@@ -188,7 +215,8 @@ public class Coordinator : MonoBehaviour {
                     else
                     {
                         goodAnswersinARow[currentPlayer] = 0;
-                        TurnEnd();
+                        endOfTurn = true;
+                        timeEOT = time;
                     }
                 }     
             }
@@ -314,16 +342,19 @@ public class Coordinator : MonoBehaviour {
         Tile.TileType tileType = m.tiles[playerPos[currentPlayer]].GetComponent<Tile>().type;
         if (tileType == Tile.TileType.Dice)
         {
+            Debug.Log("Dice tile");
             rolled = false;
             beginOfTurn = true;
+            timeDice = time;
+            relaunch = true;
         }
         else if (tileType == Tile.TileType.Event)
         {
-            SetSecondaryPlayer(Players[currentPlayer], currentPlayer);
-            currentPlayer = (currentPlayer + 1) % nbPlayer;
-            SetMainPlayer(Players[currentPlayer], currentPlayer);
+            Debug.Log("Dice tile");
             rolled = false;
             beginOfTurn = true;
+            timeDice = time;
+            relaunch = true;
         }
         else if (tileType == Tile.TileType.Warp && !warping)
         {
@@ -341,7 +372,9 @@ public class Coordinator : MonoBehaviour {
         }
         else
         {
-            TurnEnd();
+            Debug.Log("Normal Tile");
+            endOfTurn = true;
+            timeEOT = time;
         }
     }
 

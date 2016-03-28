@@ -10,7 +10,11 @@ public class RPS : MonoBehaviour {
     public int nbPlayer = 4;
     public GameObject Arrow;
     public GameObject[] Players;
-    public bool end;
+    public bool end
+    {
+        get;
+        private set;
+    }
     public int currentArrowPos;
 
     private Color[] colors = {new Color(84.0f / 255, 172.0f / 255, 210.0f / 255),

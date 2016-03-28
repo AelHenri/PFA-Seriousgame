@@ -4,10 +4,18 @@ using System.Collections;
 public class Map : MonoBehaviour {
 
     public int nbTiles = 20;
-    public float width = 8.0f;
-    public float height = 4.0f;
-    public GameObject[] tiles;
-    public bool isReady = false;
+    //public float width = 8.0f;
+    //public float height = 4.0f;
+    public GameObject[] tiles
+    {
+        get;
+        private set;
+    }
+    public bool isReady
+    {
+        get;
+        private set;
+    }
 
     private Vector3[] positions = {new Vector3(-7.73f,10f,-3.89f),
                                    new Vector3(-8.43f,10f,-1.21f),
@@ -42,7 +50,7 @@ public class Map : MonoBehaviour {
                                   };
 	// Use this for initialization
 	void Start () {
-        
+        isReady = false; 
 	}
 	
 	// Update is called once per frame

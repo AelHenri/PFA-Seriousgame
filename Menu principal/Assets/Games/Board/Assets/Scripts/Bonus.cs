@@ -5,13 +5,23 @@ public class Bonus : MonoBehaviour {
 
     public Sprite actif;
     public Sprite inactif;
-    public bool active = false;
-    public bool wasUsed = false;
+    public bool active
+    {
+        get;
+        private set;
+    }
+    public bool wasUsed
+    {
+        get;
+        set;
+    }
 
     private SpriteRenderer sr;
 
 	// Use this for initialization
 	void Start () {
+        active = false;
+        wasUsed = false;
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = inactif;
 	}

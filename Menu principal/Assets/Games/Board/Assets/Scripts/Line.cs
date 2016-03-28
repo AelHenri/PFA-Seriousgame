@@ -3,8 +3,16 @@ using System.Collections;
 
 public class Line : MonoBehaviour {
 
-    public GameObject begin;
-    public GameObject end;
+    public GameObject begin
+    {
+        private get;
+        set;
+    }
+    public GameObject end
+    {
+        private get;
+        set;
+    }
 
     private LineRenderer lr;
 
