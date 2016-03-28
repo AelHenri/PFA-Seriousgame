@@ -11,7 +11,7 @@ public class gaby4 : PNJ{
         }
         else
         {
-            displayDialog(0, 1);
+            displayDialog(1, 2);
         }
         base.PNJLoadEvent();
     }
