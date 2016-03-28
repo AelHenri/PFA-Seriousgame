@@ -44,11 +44,18 @@ public class Thierry5 : PNJ{
 
         if (clickEventDone && !secondDialogDone && IsEndDialog())
         {
-            if (hasAnsweredTrue)
+            if (StoryGameManager.instance.IsPNJPresent("Victor"))
             {
-                if (noGlasses)
+                if (hasAnsweredTrue)
                 {
-                    displayDialog(3, dialog.Length);
+                    if (noGlasses)
+                    {
+                        displayDialog(3, dialog.Length);
+                    }
+                    else
+                    {
+                        displayDialog(4, dialog.Length);
+                    }
                 }
                 else
                 {
@@ -57,8 +64,23 @@ public class Thierry5 : PNJ{
             }
             else
             {
-                displayDialog(4, dialog.Length);
+                if (hasAnsweredTrue)
+                {
+                    if (noGlasses)
+                    {
+                        displayDialog(3, dialog.Length-2);
+                    }
+                    else
+                    {
+                        displayDialog(4, dialog.Length-2);
+                    }
+                }
+                else
+                {
+                    displayDialog(4, dialog.Length);
+                }
             }
+            
 
             secondDialogDone = true;
         }
