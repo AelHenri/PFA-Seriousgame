@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Victor4 : PNJ{
+public class Victor5 : PNJ{
+
     private bool inClickEvent = false;
     private bool firstDialogDone = false;
     private bool questionAsked = false;
     private bool clickEventDone = false;
-    private bool arrowsPlaced = false;
-    private bool hasAnsweredTrue = false;
 
     protected override void Update()
     {
+
         base.Update();
+
         if (!firstDialogDone && inClickEvent && IsEndDialog())
         {
             firstDialogDone = true;
@@ -22,35 +23,35 @@ public class Victor4 : PNJ{
             questionAsked = true;
             Question();
         }
-
-        if (clickEventDone && IsEndDialog() && !arrowsPlaced)
-        {
-            callPlaceArrows();
-            arrowsPlaced = true;
-        }
-
     }
 
     protected override void PNJClickEvent()
     {
         inClickEvent = true;
-        displayDialog(0, 1);
+        displayDialog(1, 2);
         base.PNJClickEvent();
+    }
+
+    protected override void PNJLoadEvent()
+    {
+        displayDialog(0, 1);
+        base.PNJLoadEvent();
     }
 
     protected override void RightAnswerEvent()
     {
         clickEventDone = true;
-        displayDialog(1, 3);
-        StoryGameManager.instance.AddPNJ("Victor");
-        hasAnsweredTrue = true;
+
+        displayDialog(2, 3);
+        StoryGameManager.instance.AddObject("Seve");
+        
         base.RightAnswerEvent();
     }
 
     protected override void FalseAnswerEvent()
     {
         clickEventDone = true;
-        displayDialog(3, dialog.Length);
-        base.RightAnswerEvent();
+        displayDialog(3, 4);
+        base.FalseAnswerEvent();
     }
 }

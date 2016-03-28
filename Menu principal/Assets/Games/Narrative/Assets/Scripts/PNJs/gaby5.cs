@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Victor4 : PNJ{
+public class gaby5 : PNJ{
+
+    private Thierry5 thierry;
+
     private bool inClickEvent = false;
     private bool firstDialogDone = false;
     private bool questionAsked = false;
@@ -23,7 +26,7 @@ public class Victor4 : PNJ{
             Question();
         }
 
-        if (clickEventDone && IsEndDialog() && !arrowsPlaced)
+        if (clickEventDone && !hasAnsweredTrue && IsEndDialog() && !arrowsPlaced)
         {
             callPlaceArrows();
             arrowsPlaced = true;
@@ -34,15 +37,15 @@ public class Victor4 : PNJ{
     protected override void PNJClickEvent()
     {
         inClickEvent = true;
-        displayDialog(0, 1);
+        displayDialog(0, 2);
         base.PNJClickEvent();
     }
 
     protected override void RightAnswerEvent()
     {
         clickEventDone = true;
-        displayDialog(1, 3);
-        StoryGameManager.instance.AddPNJ("Victor");
+        thierry = (Thierry5)FindObjectOfType(typeof(Thierry5));
+        thierry.Disappeared = false;
         hasAnsweredTrue = true;
         base.RightAnswerEvent();
     }
@@ -50,7 +53,14 @@ public class Victor4 : PNJ{
     protected override void FalseAnswerEvent()
     {
         clickEventDone = true;
-        displayDialog(3, dialog.Length);
+        if (StoryGameManager.instance.IsPNJPresent("Victor"))
+        {
+            displayDialog(2, dialog.Length);
+        }
+        else
+        {
+            displayDialog(2, 5);
+        }
         base.RightAnswerEvent();
     }
 }
