@@ -58,6 +58,7 @@ public class StoryGameManager : MonoBehaviour {
         //PNJTable.Add("Victor");
 
         //ObjectsTable.Add("Lunettes");
+        //ObjectsTable.Add("Seve");
         InitGame();
 	
 	}

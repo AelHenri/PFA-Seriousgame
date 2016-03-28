@@ -92,6 +92,7 @@
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Camille2.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Camille3.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Charlotte3.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Olivier6.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Philibert2.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie0.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie1.cs" />
