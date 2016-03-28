@@ -97,9 +97,11 @@
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie1.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie2.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Pixie3.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Victor4.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby1.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby2.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby3.cs" />
+    <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\gaby4.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\SkipArrow.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\StoryGameManager.cs" />

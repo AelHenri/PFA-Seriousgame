@@ -5,6 +5,7 @@ public class SoundManager : MonoBehaviour {
     
     public AudioSource efxSource;                   
     public AudioSource beginningMusicSource;                
+    public AudioSource villageMusicSource;
     public AudioSource rootsMusicSource;
     public static SoundManager instance = null;                 
     public float lowPitchRange = .95f;              
@@ -47,6 +48,12 @@ public class SoundManager : MonoBehaviour {
         if (sceneManager.level >= 2 && beginningMusicSource.isPlaying)
         {
             beginningMusicSource.Stop();
+            villageMusicSource.Play();
+        }
+
+        if (sceneManager.level >= 4 && villageMusicSource.isPlaying)
+        {
+            villageMusicSource.Stop();
             rootsMusicSource.Play();
         }
     }

@@ -54,7 +54,7 @@ public class StoryGameManager : MonoBehaviour {
         PNJTable.Add("Pixie");
         PNJTable.Add("Gaby");
         PNJTable.Add("Philibert");
-        //PNJTable.Add("Camille");
+        PNJTable.Add("Camille");
 
         InitGame();
 	
