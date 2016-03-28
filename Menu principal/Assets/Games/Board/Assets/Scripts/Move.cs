@@ -4,19 +4,35 @@ using System.Collections.Generic;
 
 public class Move : MonoBehaviour {
 
-    public int nbStep = 120;
+    public int nbStep = 300;
 
-    public List<Vector3> startPosition = new List<Vector3>();
-    public List<Vector3> endPosition = new List<Vector3>();
+    public List<Vector3> startPosition
+    {
+        get;
+        set;
+    }
+
+    public List<Vector3> endPosition
+    {
+        get;
+        set;
+    }
     private int i = 0;
 
     private int currentStep = 0;
     private Animator an;
-    public bool moving = false;
+    public bool moving
+    {
+        get;
+        set;
+    }
 
 	// Use this for initialization
 	void Start () {
+        startPosition = new List<Vector3>();
+        endPosition = new List<Vector3>();
         an = GetComponent<Animator>();
+        moving = false;
 	}
 	
 	// Update is called once per frame

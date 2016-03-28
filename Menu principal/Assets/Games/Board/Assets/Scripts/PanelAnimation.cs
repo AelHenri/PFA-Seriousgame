@@ -18,10 +18,7 @@ public class PanelAnimation : MonoBehaviour {
 
      public bool isPanelNowHidden()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Panel is now hidden"))
-            return true;
-        else
-            return false; 
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("Panel is now hidden");
     }
 
 	void Update () {
