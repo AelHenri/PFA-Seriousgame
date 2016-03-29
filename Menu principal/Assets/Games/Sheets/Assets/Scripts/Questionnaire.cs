@@ -92,7 +92,7 @@ public class Questionnaire : MonoBehaviour{
             totalSheets = sheetsPath.Length;
             for (int i = 0; i < totalSheets; i++)
             {
-                availableSheet.Add(new Sheet(sheetsPath[i]));
+                availableSheet.Add(new ReadingSheet(sheetsPath[i]));
             }
             availableSheet.Sort();
         }
@@ -381,17 +381,17 @@ public class Questionnaire : MonoBehaviour{
         {
             index = profileSheets.FindIndex(x => x.sheetNumber == currentSheetNumber);
             if (isAnswerRight)
-                profileSheets[index].addSucces();
+                profileSheets[index].incrementSuccesCount();
             else
-                profileSheets[index].addFailure();
+                profileSheets[index].incrementFailureCount();
         }
         else
         {
             tmp = currentSheet;
             if (isAnswerRight)
-                tmp.addSucces();
+                tmp.incrementSuccesCount();
             else
-                tmp.addFailure();
+                tmp.incrementFailureCount();
 
             insertIndex = profileSheets.FindIndex(x => x.sheetNumber >= tmp.getSheetNumber());
             if (insertIndex == -1 || insertIndex == 0) //means there's no sheetNumber above this new one

@@ -5,9 +5,10 @@ using System;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-[Serializable]
-public class Sheet : Comparer<Sheet>, IComparable<Sheet>
+
+public abstract class Sheet : Comparer<Sheet>, IComparable<Sheet>
 {
+
     [NonSerialized]
     protected XDocument xmlFile;
     [NonSerialized]
@@ -17,88 +18,43 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
     [NonSerialized]
     protected Scene questionSceneWithoutAnswerText;
 
-    public string textExemple;
     public string sheetName;
-    public string[] answers;
-    public string imgExemplePath, imgQuestionPath;
-    public int sheetNumber;
-
     private int successCount;
     private int failureCount;
-
+    public int sheetNumber;
+    public string textExemple;
+    public string imgExemplePath;
     protected string dirName;
+
+    //TODO should not ne used
     public string sheetStyle;
 
-    int rightAnswer;
-    
 
     public Sheet(string Path)
     {
-
         xmlFile = XDocument.Load(Path);
-        textExemple = xmlFile.Root.Element("ExamplePart").Element("text").Value;
         sheetName = xmlFile.Root.Element("title").Value;
         sheetNumber = Int32.Parse(xmlFile.Root.Element("number").Value);
-        imgExemplePath = Path;
-        imgQuestionPath = Path;
+        textExemple = xmlFile.Root.Element("ExamplePart").Element("text").Value;
 
-        failureCount = 0;
-        successCount = 0;
-        sheetStyle = xmlFile.Root.Element("style").Value;
-        if (sheetStyle == "normal")
-        {
-            answers = new string[3];
-            answers[0] = xmlFile.Root.Element("QuestionPart").Element("answer1").Value;
-            answers[1] = xmlFile.Root.Element("QuestionPart").Element("answer2").Value;
-            answers[2] = xmlFile.Root.Element("QuestionPart").Element("answer3").Value;
-        }
+
+        imgExemplePath = Path;
         dirName = System.IO.Path.GetDirectoryName(Path);
         imgExemplePath = System.IO.Path.Combine(dirName, "image_exemple.jpg");
-        imgQuestionPath = System.IO.Path.Combine(dirName, "image_question.jpg");
-
-        if (xmlFile.Root.Element("QuestionPart").Element("answer1").Attribute("value").ToString().Equals("value=\"true\""))
-            rightAnswer = 1;
-        else if (xmlFile.Root.Element("QuestionPart").Element("answer2").Attribute("value").ToString() == "value=\"true\"")
-            rightAnswer = 2;
-        else
-            rightAnswer = 3;
-
-        exempleScene = SceneManager.GetSceneByName("Exemple");
-        questionScene = SceneManager.GetSceneByName("Question");
-        questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
-
+        sheetStyle = xmlFile.Root.Element("style").Value;
     }
 
-    public void addSucces()
+
+
+    public void incrementSuccesCount()
     {
         this.successCount++;
     }
-    public void addFailure()
+    public void incrementFailureCount()
     {
         this.failureCount++;
     }
 
-    public int getSuccesCount()
-    {
-        return successCount;
-    }
-    public int getFailureCount()
-    {
-        return failureCount;
-    }
-
-    public string[] getAnswers()
-    {
-        return answers;
-    }
-    
-    public string[] getImagesPath()
-    {
-        string[] imgsPath = new string[2];
-        imgsPath[0] = imgExemplePath;
-        imgsPath[1] = imgQuestionPath;
-        return imgsPath;
-    }
 
     public int getSheetNumber()
     {
@@ -109,66 +65,19 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
     {
         return sheetName;
     }
-
-    public bool isRightAnswer(int myAnsmer)
+    public int getSuccesCount()
     {
-        return myAnsmer == rightAnswer;
+        return successCount;
+    }
+    public int getFailureCount()
+    {
+        return failureCount;
     }
 
 
 
-
-    /*
-     * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
-     * in order to avoid having a few frames shown without scene
-     */
-   public IEnumerator loadExemple()
-    {
-        if (questionScene.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("Question");
-        }
-        else if (questionSceneWithoutAnswerText.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("QuestionWithoutAnswerText");
-        }
-        else
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-    }
-
-    /*
-     * Loads the Question scene then wait for it to be fully loaded before destroying the Exemple scene 
-     * in order to avoid having a few frames shown without scene
-     */
-  public  IEnumerator loadQuestion()
-    {
-        if (exempleScene.isLoaded)
-        {
-            if (this.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (this.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
-            yield return questionScene.isLoaded;
-            SceneManager.UnloadScene("Exemple");
-        }
-        else
-        {
-            if (this.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (this.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
-        }
-    }
-
-
-
-
-
-
+    public abstract IEnumerator loadExemple();
+    public abstract IEnumerator loadQuestion();
 
     /*
      * Needed in order to be able to use List<Sheet>.Sort(), the number of the Sheet represent it's difficulty

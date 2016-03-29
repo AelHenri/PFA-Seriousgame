@@ -116,6 +116,7 @@
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
+    <Compile Include="Assets\Games\Sheets\Assets\Scripts\ReadingSheet.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />
     <Compile Include="Assets\Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\Fading.cs" />

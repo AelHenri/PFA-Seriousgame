@@ -15,6 +15,7 @@ public class Question : MonoBehaviour {
     WWW www;
 
     Sheet currentSheet;
+    ReadingSheet rs; 
 
     public Text answer1;
     public Text answer2;
@@ -42,8 +43,10 @@ public class Question : MonoBehaviour {
     // Use this for initialization
     void Start () {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
-        currentSheet = questionnaire.currentSheet;    
+        currentSheet = questionnaire.currentSheet;
+        rs = (ReadingSheet)currentSheet;
         audioSource = GetComponent<AudioSource>();
+        
 
         questionScene = SceneManager.GetSceneByName("Question");
         questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
@@ -97,14 +100,14 @@ public class Question : MonoBehaviour {
     void Update () {
         if (currentSheet.sheetStyle == "normal")
         {
-            answer1.text = currentSheet.answers[0];
-            answer2.text = currentSheet.answers[1];
-            answer3.text = currentSheet.answers[2];
+            answer1.text = rs.answers[0];
+            answer2.text = rs.answers[1];
+            answer3.text = rs.answers[2];
         }
 
         if (img_question == null)
         {
-            img_question = LoadPNG(currentSheet.imgQuestionPath);
+            img_question = LoadPNG(rs.imgQuestionPath);
             rawImageQuestion.texture = img_question;
 
         }
@@ -128,37 +131,37 @@ public class Question : MonoBehaviour {
 
     public void answer1Chosen()
     {
-        if (currentSheet.isRightAnswer(1))
+        if (rs.isRightAnswer(1))
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        questionnaire.setResult(currentSheet.isRightAnswer(1));
+        questionnaire.setResult(rs.isRightAnswer(1));
         questionnaire.hasAnswered = true;
 
-        playAnswerSound(currentSheet.isRightAnswer(1));
+        playAnswerSound(rs.isRightAnswer(1));
         StartCoroutine(questionnaire.endQuestionnaire());
     }
 
     public void answer2Chosen()
     {
-        if (currentSheet.isRightAnswer(2))
+        if (rs.isRightAnswer(2))
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        playAnswerSound(currentSheet.isRightAnswer(2));
-       questionnaire.setResult(currentSheet.isRightAnswer(2));
+        playAnswerSound(rs.isRightAnswer(2));
+       questionnaire.setResult(rs.isRightAnswer(2));
         questionnaire.hasAnswered = true;
         StartCoroutine(questionnaire.endQuestionnaire());
     }
 
     public void answer3Chosen()
     {
-        if (currentSheet.isRightAnswer(3))
+        if (rs.isRightAnswer(3))
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        playAnswerSound(currentSheet.isRightAnswer(3));
-        questionnaire.setResult(currentSheet.isRightAnswer(3));
+        playAnswerSound(rs.isRightAnswer(3));
+        questionnaire.setResult(rs.isRightAnswer(3));
        questionnaire.hasAnswered = true;
         StartCoroutine(questionnaire.endQuestionnaire());
     }
