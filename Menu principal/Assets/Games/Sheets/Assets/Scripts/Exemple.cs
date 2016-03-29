@@ -38,14 +38,14 @@ public class Exemple : MonoBehaviour {
 
     public void showQuestion()
     {
-        StartCoroutine(loadQuestion());
+        questionnaire.showQuestion();
     }
 
 
     /*
     * Loads the Question scene then wait for it to be fully loaded before destroying the Exemple scene 
     * in order to avoid having a few frames shown without scene
-    */
+    *//*
     IEnumerator loadQuestion()
     {
         if (exempleScene.isLoaded)
@@ -65,7 +65,7 @@ public class Exemple : MonoBehaviour {
                 SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
         }
     }
-
+    */
 
     // Update is called once per frame
     void Update()

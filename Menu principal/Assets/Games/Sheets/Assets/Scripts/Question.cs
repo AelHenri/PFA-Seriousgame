@@ -34,15 +34,15 @@ public class Question : MonoBehaviour {
     public AudioClip successSound;
     AudioSource audioSource;
 
-    Questionnaire questionanire;
+    Questionnaire questionnaire;
     Scene questionScene;
     Scene exempleScene;
     Scene questionSceneWithoutAnswerText;
 
     // Use this for initialization
     void Start () {
-        questionanire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
-        currentSheet = questionanire.currentSheet;    
+        questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
+        currentSheet = questionnaire.currentSheet;    
         audioSource = GetComponent<AudioSource>();
 
         questionScene = SceneManager.GetSceneByName("Question");
@@ -52,13 +52,13 @@ public class Question : MonoBehaviour {
 
     public void showExemple()
     {
-        StartCoroutine(loadExemple());
+        questionnaire.showExemple();
     }
 
     /*
      * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
      * in order to avoid having a few frames shown without scene
-     */
+     *//*
     IEnumerator loadExemple()
     {
         if (questionScene.isLoaded)
@@ -77,7 +77,7 @@ public class Question : MonoBehaviour {
         else
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
     }
-
+    */
     public static Texture2D LoadPNG(string filePath)
     {
         Texture2D tex = null;
@@ -132,11 +132,11 @@ public class Question : MonoBehaviour {
             rightAnswerPanel.SetActive(true);
         else
             wrongAnswerPanel.SetActive(true);
-        questionanire.setResult(currentSheet.isRightAnswer(1));
-        questionanire.hasAnswered = true;
+        questionnaire.setResult(currentSheet.isRightAnswer(1));
+        questionnaire.hasAnswered = true;
 
         playAnswerSound(currentSheet.isRightAnswer(1));
-        StartCoroutine(questionanire.endQuestionnaire());
+        StartCoroutine(questionnaire.endQuestionnaire());
     }
 
     public void answer2Chosen()
@@ -146,9 +146,9 @@ public class Question : MonoBehaviour {
         else
             wrongAnswerPanel.SetActive(true);
         playAnswerSound(currentSheet.isRightAnswer(2));
-       questionanire.setResult(currentSheet.isRightAnswer(2));
-        questionanire.hasAnswered = true;
-        StartCoroutine(questionanire.endQuestionnaire());
+       questionnaire.setResult(currentSheet.isRightAnswer(2));
+        questionnaire.hasAnswered = true;
+        StartCoroutine(questionnaire.endQuestionnaire());
     }
 
     public void answer3Chosen()
@@ -158,8 +158,8 @@ public class Question : MonoBehaviour {
         else
             wrongAnswerPanel.SetActive(true);
         playAnswerSound(currentSheet.isRightAnswer(3));
-        questionanire.setResult(currentSheet.isRightAnswer(3));
-       questionanire.hasAnswered = true;
-        StartCoroutine(questionanire.endQuestionnaire());
+        questionnaire.setResult(currentSheet.isRightAnswer(3));
+       questionnaire.hasAnswered = true;
+        StartCoroutine(questionnaire.endQuestionnaire());
     }
 }
