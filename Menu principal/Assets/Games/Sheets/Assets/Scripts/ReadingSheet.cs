@@ -8,25 +8,16 @@ using UnityEngine.SceneManagement;
 [Serializable]
 public class ReadingSheet : Sheet
 {
-    public string[] answers;
+ 
     public string imgQuestionPath;
     int rightAnswer;
     
 
     public ReadingSheet(string Path):base(Path)
     {
-
         xmlFile = XDocument.Load(Path); 
 
         imgQuestionPath = Path;    
-        if (sheetStyle == "normal")
-        {
-            answers = new string[3];
-            answers[0] = xmlFile.Root.Element("QuestionPart").Element("answer1").Value;
-            answers[1] = xmlFile.Root.Element("QuestionPart").Element("answer2").Value;
-            answers[2] = xmlFile.Root.Element("QuestionPart").Element("answer3").Value;
-        }
-
         imgQuestionPath = System.IO.Path.Combine(dirName, "image_question.jpg");
 
         if (xmlFile.Root.Element("QuestionPart").Element("answer1").Attribute("value").ToString().Equals("value=\"true\""))
@@ -44,10 +35,7 @@ public class ReadingSheet : Sheet
 
 
 
-    public string[] getAnswers()
-    {
-        return answers;
-    }
+
     
     public string[] getImagesPath()
     {

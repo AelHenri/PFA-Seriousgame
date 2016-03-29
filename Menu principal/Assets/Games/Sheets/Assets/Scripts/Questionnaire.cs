@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using System;
+using System.Xml.Linq;
 
 
 /*
@@ -55,6 +56,8 @@ public class Questionnaire : MonoBehaviour{
     [HideInInspector]
     public bool hasAnsweredAll = false;
 
+    private XDocument xmlSheet;
+
     public int howManyRightAnswers;
 
     private bool isAnswering;
@@ -92,7 +95,12 @@ public class Questionnaire : MonoBehaviour{
             totalSheets = sheetsPath.Length;
             for (int i = 0; i < totalSheets; i++)
             {
-                availableSheet.Add(new ReadingSheet(sheetsPath[i]));
+
+                xmlSheet = XDocument.Load(sheetsPath[i]);
+                if (xmlSheet.Root.Element("style").Value == "normal")
+                    availableSheet.Add(new TextReadingSheet(sheetsPath[i]));
+                else
+                    availableSheet.Add(new ReadingSheet(sheetsPath[i]));
             }
             availableSheet.Sort();
         }

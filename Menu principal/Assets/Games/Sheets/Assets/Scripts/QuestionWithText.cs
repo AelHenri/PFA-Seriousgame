@@ -8,14 +8,14 @@ using UnityEngine.SceneManagement;
 
 
 
-public class Question : MonoBehaviour {
+public class QuestionWithText : MonoBehaviour {
 
     [HideInInspector]
     Texture2D img_question = null;
     WWW www;
 
     Sheet currentSheet;
-    ReadingSheet rs; 
+    TextReadingSheet rs; 
 
     public Text answer1;
     public Text answer2;
@@ -44,7 +44,7 @@ public class Question : MonoBehaviour {
     void Start () {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
         currentSheet = questionnaire.currentSheet;
-        rs = (ReadingSheet)currentSheet;
+        rs = (TextReadingSheet)currentSheet;
         audioSource = GetComponent<AudioSource>();
         
 
@@ -98,7 +98,10 @@ public class Question : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
+            answer1.text = rs.answers[0];
+            answer2.text = rs.answers[1];
+            answer3.text = rs.answers[2];
+        
 
         if (img_question == null)
         {

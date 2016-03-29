@@ -115,9 +115,11 @@
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\Teleporter.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Exemple.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Question.cs" />
+    <Compile Include="Assets\Games\Sheets\Assets\Scripts\QuestionWithText.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Questionnaire.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\ReadingSheet.cs" />
     <Compile Include="Assets\Games\Sheets\Assets\Scripts\Sheet.cs" />
+    <Compile Include="Assets\Games\Sheets\Assets\Scripts\TextReadingSheet.cs" />
     <Compile Include="Assets\Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\Fading.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
