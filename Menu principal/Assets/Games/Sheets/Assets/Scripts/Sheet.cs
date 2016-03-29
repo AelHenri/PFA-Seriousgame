@@ -39,7 +39,7 @@ public abstract class Sheet : Comparer<Sheet>, IComparable<Sheet>
         imgExemplePath = Path;
         dirName = System.IO.Path.GetDirectoryName(Path);
         imgExemplePath = System.IO.Path.Combine(dirName, "image_exemple.jpg");
-        sheetStyle = xmlFile.Root.Element("style").Value;
+        sheetStyle = xmlFile.Root.Element("type").Value;
     }
 
 

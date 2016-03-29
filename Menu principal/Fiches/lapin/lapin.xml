@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCQSheet>
+  <title>lapin</title>
+  <number>5</number>
+  <type>TextReadingSheet</type>
+  <ExamplePart>
+    <text>Le lapin a mis un chapeau</text>
+  </ExamplePart>
+  <QuestionPart>
+    <question />
+    <answer1 value="false">Le cochon a mal à la tête</answer1>
+    <answer2 value="false">La mouche a pris une douche</answer2>
+    <answer3 value="true">Le lapin a mis un chapeau</answer3>
+  </QuestionPart>
+</MCQSheet>

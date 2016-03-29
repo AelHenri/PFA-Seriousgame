@@ -58,6 +58,7 @@ public class Questionnaire : MonoBehaviour{
     public int howManyRightAnswers;
 
     private bool isAnswering;
+    private string sheetType;
 
     public void Start()
     {        
@@ -86,14 +87,15 @@ public class Questionnaire : MonoBehaviour{
                 sheetsExists = false;
                 return;
             }
-            totalSheets = sheetsPath.Length;
+            totalSheets = sheetsPath.Length; 
             for (int i = 0; i < totalSheets; i++)
             {
-
                 xmlSheet = XDocument.Load(sheetsPath[i]);
-                if (xmlSheet.Root.Element("style").Value == "normal")
+                sheetType =  xmlSheet.Root.Element("type").Value.ToString();
+
+                if (sheetType == "TextReadingSheet")
                     availableSheet.Add(new TextReadingSheet(sheetsPath[i]));
-                else
+                else if (sheetType == "ReadingSheet")
                     availableSheet.Add(new ReadingSheet(sheetsPath[i]));
             }
             availableSheet.Sort();

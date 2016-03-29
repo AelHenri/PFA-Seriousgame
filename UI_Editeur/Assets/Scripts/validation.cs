@@ -44,7 +44,7 @@ public class Validation : MonoBehaviour {
     }
 
  
-    public bool isStyleTwo()
+    public bool isTextReadingSheet()
     {
         if (inputReponse1 == null && inputReponse2 == null && inputReponse3 == null)
             return true;
@@ -84,7 +84,7 @@ public class Validation : MonoBehaviour {
 
         if (nomFiche.text == "" || inputExemple.text == "")
             return false;
-        if (!isStyleTwo())
+        if (!isTextReadingSheet())
         {
             if (inputReponse1.text == "" || inputReponse2.text == "" || inputReponse3.text == "" )
             return false;
