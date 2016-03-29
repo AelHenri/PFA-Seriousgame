@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System;
-
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class Sheet : Comparer<Sheet>, IComparable<Sheet>
 {
     [NonSerialized]
     protected XDocument xmlFile;
+    [NonSerialized]
+    protected Scene exempleScene;
+    [NonSerialized]
+    protected Scene questionScene;
+    [NonSerialized]
+    protected Scene questionSceneWithoutAnswerText;
 
     public string textExemple;
     public string sheetName;
@@ -55,6 +62,10 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
             rightAnswer = 2;
         else
             rightAnswer = 3;
+
+        exempleScene = SceneManager.GetSceneByName("Exemple");
+        questionScene = SceneManager.GetSceneByName("Question");
+        questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
 
     }
 
@@ -105,10 +116,64 @@ public class Sheet : Comparer<Sheet>, IComparable<Sheet>
     }
 
 
+
+
+    /*
+     * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
+     * in order to avoid having a few frames shown without scene
+     */
+   public IEnumerator loadExemple()
+    {
+        if (questionScene.isLoaded)
+        {
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+            yield return exempleScene.isLoaded;
+            SceneManager.UnloadScene("Question");
+        }
+        else if (questionSceneWithoutAnswerText.isLoaded)
+        {
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+            yield return exempleScene.isLoaded;
+            SceneManager.UnloadScene("QuestionWithoutAnswerText");
+        }
+        else
+            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
+    }
+
+    /*
+     * Loads the Question scene then wait for it to be fully loaded before destroying the Exemple scene 
+     * in order to avoid having a few frames shown without scene
+     */
+  public  IEnumerator loadQuestion()
+    {
+        if (exempleScene.isLoaded)
+        {
+            if (this.sheetStyle == "normal")
+                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            else if (this.sheetStyle == "noAnswerText")
+                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+            yield return questionScene.isLoaded;
+            SceneManager.UnloadScene("Exemple");
+        }
+        else
+        {
+            if (this.sheetStyle == "normal")
+                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
+            else if (this.sheetStyle == "noAnswerText")
+                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+        }
+    }
+
+
+
+
+
+
+
     /*
      * Needed in order to be able to use List<Sheet>.Sort(), the number of the Sheet represent it's difficulty
      */
-     override
+    override
     public int Compare(Sheet x, Sheet y)
     {
         if (x.getSheetNumber() < y.getSheetNumber())

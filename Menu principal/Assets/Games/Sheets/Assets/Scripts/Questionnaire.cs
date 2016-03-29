@@ -118,18 +118,18 @@ public class Questionnaire : MonoBehaviour{
 
     public void showQuestion()
     {
-        StartCoroutine(loadQuestion());
+        StartCoroutine(currentSheet.loadQuestion());
     }
 
     public void showExemple()
     {
-        StartCoroutine(loadExemple());
+        StartCoroutine(currentSheet.loadExemple());
     }
 
     /*
      * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
      * in order to avoid having a few frames shown without scene
-     */
+     *//*
     IEnumerator loadExemple()
     {
         if (questionScene.isLoaded)
@@ -147,11 +147,11 @@ public class Questionnaire : MonoBehaviour{
         else
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
     }
-
+    */
     /*
      * Loads the Question scene then wait for it to be fully loaded before destroying the Exemple scene 
      * in order to avoid having a few frames shown without scene
-     */
+     *//*
     IEnumerator loadQuestion()
     {
         if (exempleScene.isLoaded)
@@ -171,7 +171,7 @@ public class Questionnaire : MonoBehaviour{
                 SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
         }
       }
-
+      */
     public void startQuestionnaire(int numberOfQuestion)
     {
         StartCoroutine(multipleQuestionnaire(numberOfQuestion));
