@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MCQSheet>
-  <title>elephant_arrose</title>
-  <number>6</number>
+  <title>télé_cassée</title>
+  <number>7</number>
   <type>ReadingSheet</type>
   <ExamplePart>
-    <text>L'éléphant arrose le bonhomme</text>
+    <text>La télévision est cassé</text>
   </ExamplePart>
   <QuestionPart>
     <question />
-    <answer1 value="false" />
+    <answer1 value="true" />
     <answer2 value="false" />
-    <answer3 value="true" />
+    <answer3 value="false" />
   </QuestionPart>
 </MCQSheet>

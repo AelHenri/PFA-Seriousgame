@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using System;
+using System.Xml.Linq;
 
 
 /*
@@ -13,9 +14,6 @@ using System;
 
 public class Questionnaire : MonoBehaviour{
 
-    Scene questionScene;
-    Scene questionSceneWithoutAnswerText;
-    Scene exempleScene;
     Fading fading;
     Profile currentProfile = null;
     
@@ -55,15 +53,15 @@ public class Questionnaire : MonoBehaviour{
     [HideInInspector]
     public bool hasAnsweredAll = false;
 
+    private XDocument xmlSheet;
+
     public int howManyRightAnswers;
 
     private bool isAnswering;
+    private string sheetType;
 
     public void Start()
     {        
-        questionScene = SceneManager.GetSceneByName("Question");
-        exempleScene = SceneManager.GetSceneByName("Exemple");
-        questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
         fading = GameObject.Find("Navigator").GetComponent<Fading>();
 
         availableSheet = new List<Sheet>();
@@ -89,10 +87,16 @@ public class Questionnaire : MonoBehaviour{
                 sheetsExists = false;
                 return;
             }
-            totalSheets = sheetsPath.Length;
+            totalSheets = sheetsPath.Length; 
             for (int i = 0; i < totalSheets; i++)
             {
-                availableSheet.Add(new Sheet(sheetsPath[i]));
+                xmlSheet = XDocument.Load(sheetsPath[i]);
+                sheetType =  xmlSheet.Root.Element("type").Value.ToString();
+
+                if (sheetType == "TextReadingSheet")
+                    availableSheet.Add(new TextReadingSheet(sheetsPath[i]));
+                else if (sheetType == "ReadingSheet")
+                    availableSheet.Add(new ReadingSheet(sheetsPath[i]));
             }
             availableSheet.Sort();
         }
@@ -118,59 +122,14 @@ public class Questionnaire : MonoBehaviour{
 
     public void showQuestion()
     {
-        StartCoroutine(loadQuestion());
+        StartCoroutine(currentSheet.loadQuestion());
     }
 
     public void showExemple()
     {
-        StartCoroutine(loadExemple());
+        StartCoroutine(currentSheet.loadExemple());
     }
 
-    /*
-     * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
-     * in order to avoid having a few frames shown without scene
-     */
-    IEnumerator loadExemple()
-    {
-        if (questionScene.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("Question");
-        }
-        else if (questionSceneWithoutAnswerText.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("QuestionWithoutAnswerText");
-        }
-        else
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-    }
-
-    /*
-     * Loads the Question scene then wait for it to be fully loaded before destroying the Exemple scene 
-     * in order to avoid having a few frames shown without scene
-     */
-    IEnumerator loadQuestion()
-    {
-        if (exempleScene.isLoaded)
-        {
-            if (currentSheet.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (currentSheet.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
-            yield return questionScene.isLoaded;
-            SceneManager.UnloadScene("Exemple");
-        }
-        else
-        {
-            if (currentSheet.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (currentSheet.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
-        }
-      }
 
     public void startQuestionnaire(int numberOfQuestion)
     {
@@ -218,16 +177,15 @@ public class Questionnaire : MonoBehaviour{
     public IEnumerator endQuestionnaire()
     {
 
-        this.updateSheetState();
+  
         time = Time.realtimeSinceStartup;
         yield return new WaitUntil(hasSecondPassed);
         fadingTime = fading.beginFade(1);
         yield return StartCoroutine(CoroutineUtil.WaitForRealSeconds(fadingTime));
-        SceneManager.UnloadScene("Exemple");
-        SceneManager.UnloadScene("Question");
-        SceneManager.UnloadScene("QuestionWithoutAnswerText");
+        currentSheet.endSheet();
         fading.beginFade(-1);
         answerGiven();
+        this.updateSheetState();
 
     }
 
@@ -381,17 +339,17 @@ public class Questionnaire : MonoBehaviour{
         {
             index = profileSheets.FindIndex(x => x.sheetNumber == currentSheetNumber);
             if (isAnswerRight)
-                profileSheets[index].addSucces();
+                profileSheets[index].incrementSuccesCount();
             else
-                profileSheets[index].addFailure();
+                profileSheets[index].incrementFailureCount();
         }
         else
         {
             tmp = currentSheet;
             if (isAnswerRight)
-                tmp.addSucces();
+                tmp.incrementSuccesCount();
             else
-                tmp.addFailure();
+                tmp.incrementFailureCount();
 
             insertIndex = profileSheets.FindIndex(x => x.sheetNumber >= tmp.getSheetNumber());
             if (insertIndex == -1 || insertIndex == 0) //means there's no sheetNumber above this new one

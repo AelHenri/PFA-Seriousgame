@@ -23,7 +23,7 @@ public class FicheXml : MonoBehaviour {
 
     string nomFiche;
     string numeroFiche;
-    string style;
+    string type;
     string textExemple;
     string textReponse1;
     string textReponse2;
@@ -48,16 +48,16 @@ public class FicheXml : MonoBehaviour {
         nomFiche = vali.nomFiche.text;
         numeroFiche = vali.intputNumeroFiche.text;
         textExemple = vali.inputExemple.text;
-        if (!vali.isStyleTwo())
+        if (!vali.isTextReadingSheet())
         {
-            style = "normal";
+            type = "TextReadingSheet";
             textReponse1 = vali.inputReponse1.text;
             textReponse2 = vali.inputReponse2.text;
             textReponse3 = vali.inputReponse3.text;
         }
         else
         {
-            style = "noAnswerText";
+            type = "ReadingSheet";
         }
 
         cheminFiche = Application.dataPath + "/../Fiches/";
@@ -77,7 +77,7 @@ public class FicheXml : MonoBehaviour {
         fiche = new XDocument(new XElement("MCQSheet",
                                    new XElement("title", nomFiche ),
                                    new XElement("number", numeroFiche),
-                                   new XElement("style", style),
+                                   new XElement("type", type),
                                    new XElement("ExamplePart",
                                         new XElement("text", textExemple)
                                                 ),//</partieExemple>

@@ -2,7 +2,7 @@
 <MCQSheet>
   <title>chameau</title>
   <number>2</number>
-  <style>normal</style>
+  <type>TextReadingSheet</type>
   <ExamplePart>
     <text>Un chameau</text>
   </ExamplePart>

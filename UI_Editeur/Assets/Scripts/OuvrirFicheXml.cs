@@ -71,7 +71,6 @@ public class OuvrirFicheXml : MonoBehaviour {
 
         vali.nomFiche.text = ffs.Root.Element("title").Value;
         vali.intputNumeroFiche.text = ffs.Root.Element("number").Value;
-        Debug.Log(ffs.Root.Element("style").Value);
         vali.inputExemple.text = ffs.Root.Element("ExamplePart").Element("text").Value;
         vali.inputReponse1.text = ffs.Root.Element("QuestionPart").Element("answer1").Value;
         vali.inputReponse2.text = ffs.Root.Element("QuestionPart").Element("answer2").Value;

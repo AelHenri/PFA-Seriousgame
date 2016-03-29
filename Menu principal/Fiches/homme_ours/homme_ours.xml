@@ -2,7 +2,7 @@
 <MCQSheet>
   <title>homme_ours</title>
   <number>48</number>
-  <style>normal</style>
+  <type>TextReadingSheet</type>
   <ExamplePart>
     <text>Le bonhomme promène un ours</text>
   </ExamplePart>
