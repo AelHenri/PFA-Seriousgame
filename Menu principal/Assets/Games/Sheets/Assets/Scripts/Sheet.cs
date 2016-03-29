@@ -15,8 +15,6 @@ public abstract class Sheet : Comparer<Sheet>, IComparable<Sheet>
     protected Scene exempleScene;
     [NonSerialized]
     protected Scene questionScene;
-    [NonSerialized]
-    protected Scene questionSceneWithoutAnswerText;
 
     public string sheetName;
     private int successCount;

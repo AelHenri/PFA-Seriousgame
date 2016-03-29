@@ -38,7 +38,6 @@ public class Question : MonoBehaviour {
     Questionnaire questionnaire;
     Scene questionScene;
     Scene exempleScene;
-    Scene questionSceneWithoutAnswerText;
 
     // Use this for initialization
     void Start () {
@@ -49,7 +48,6 @@ public class Question : MonoBehaviour {
         
 
         questionScene = SceneManager.GetSceneByName("Question");
-        questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
         exempleScene = SceneManager.GetSceneByName("Exemple");
     }
 
@@ -58,29 +56,7 @@ public class Question : MonoBehaviour {
         questionnaire.showExemple();
     }
 
-    /*
-     * Loads the Exemple scene then wait for it to be fully loaded before destroying the Question scene 
-     * in order to avoid having a few frames shown without scene
-     *//*
-    IEnumerator loadExemple()
-    {
-        if (questionScene.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("Question");
-        }
-        else if (questionSceneWithoutAnswerText.isLoaded)
-        {
-            Debug.Log("KOUKO");
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("QuestionWithoutAnswerText");
-        }
-        else
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-    }
-    */
+
     public static Texture2D LoadPNG(string filePath)
     {
         Texture2D tex = null;
@@ -98,15 +74,11 @@ public class Question : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-
         if (img_question == null)
         {
             img_question = LoadPNG(rs.imgQuestionPath);
             rawImageQuestion.texture = img_question;
-
-        }
-        
+        }     
     }
 
     void playAnswerSound(bool isAnswerRight)
@@ -121,7 +93,6 @@ public class Question : MonoBehaviour {
             audioSource.clip = mistakeSound;
             audioSource.Play();
         }
-
     }
 
     public void answer1Chosen()

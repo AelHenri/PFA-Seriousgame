@@ -12,6 +12,9 @@ public class TextReadingSheet : ReadingSheet
         answers[0] = xmlFile.Root.Element("QuestionPart").Element("answer1").Value;
         answers[1] = xmlFile.Root.Element("QuestionPart").Element("answer2").Value;
         answers[2] = xmlFile.Root.Element("QuestionPart").Element("answer3").Value;
+
+        
+        questionScene = SceneManager.GetSceneByName("TextReadingSheetQuestion");
     }
 
 
@@ -21,15 +24,10 @@ public class TextReadingSheet : ReadingSheet
     {
         if (questionScene.isLoaded)
         {
+            Debug.Log("KOUKUO");
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
             yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("Question");
-        }
-        else if (questionSceneWithoutAnswerText.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("QuestionWithoutAnswerText");
+            SceneManager.UnloadScene("TextReadingSheetQuestion");
         }
         else
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
@@ -41,19 +39,13 @@ public class TextReadingSheet : ReadingSheet
     {
         if (exempleScene.isLoaded)
         {
-            if (this.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (this.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+            SceneManager.LoadScene("TextReadingSheetQuestion", LoadSceneMode.Additive);
             yield return questionScene.isLoaded;
             SceneManager.UnloadScene("Exemple");
         }
         else
         {
-            if (this.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (this.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+            SceneManager.LoadScene("TextReadingSheetQuestion", LoadSceneMode.Additive);
         }
     }
 }

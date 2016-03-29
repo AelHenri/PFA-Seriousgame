@@ -28,8 +28,7 @@ public class ReadingSheet : Sheet
             rightAnswer = 3;
 
         exempleScene = SceneManager.GetSceneByName("Exemple");
-        questionScene = SceneManager.GetSceneByName("Question");
-        questionSceneWithoutAnswerText = SceneManager.GetSceneByName("QuestionWithoutAnswerText");
+        questionScene = SceneManager.GetSceneByName("ReadingSheetQuestion");
 
     }
 
@@ -66,13 +65,7 @@ public class ReadingSheet : Sheet
         {
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
             yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("Question");
-        }
-        else if (questionSceneWithoutAnswerText.isLoaded)
-        {
-            SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
-            SceneManager.UnloadScene("QuestionWithoutAnswerText");
+            SceneManager.UnloadScene("ReadingSheetQuestion");
         }
         else
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
@@ -87,19 +80,13 @@ public class ReadingSheet : Sheet
     {
         if (exempleScene.isLoaded)
         {
-            if (this.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (this.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+            SceneManager.LoadScene("ReadingSheetQuestion", LoadSceneMode.Additive);
             yield return questionScene.isLoaded;
             SceneManager.UnloadScene("Exemple");
         }
         else
         {
-            if (this.sheetStyle == "normal")
-                SceneManager.LoadScene("Question", LoadSceneMode.Additive);
-            else if (this.sheetStyle == "noAnswerText")
-                SceneManager.LoadScene("QuestionWithoutAnswerText", LoadSceneMode.Additive);
+            SceneManager.LoadScene("ReadingSheetQuestion", LoadSceneMode.Additive);
         }
     }
 
