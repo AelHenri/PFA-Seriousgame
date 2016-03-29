@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	public bool bonusPresent = false;
 	public float[] timers = new float[4];
 	public int level = 1;
-	public int levelMax = 1;
+	public int levelMax = 4;
 	private bool doingSetup;
 	//public int nbKeys; if we want to count the total number of keys
 

@@ -76,6 +76,7 @@ public abstract class Sheet : Comparer<Sheet>, IComparable<Sheet>
 
     public abstract IEnumerator loadExemple();
     public abstract IEnumerator loadQuestion();
+    public abstract void endSheet();
 
     /*
      * Needed in order to be able to use List<Sheet>.Sort(), the number of the Sheet represent it's difficulty

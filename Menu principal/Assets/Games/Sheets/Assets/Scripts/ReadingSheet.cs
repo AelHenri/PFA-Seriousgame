@@ -61,6 +61,7 @@ public class ReadingSheet : Sheet
      override
    public IEnumerator loadExemple()
     {
+        questionScene = SceneManager.GetSceneByName("ReadingSheetQuestion"); //if we don't do this the value of isLoaded doesn't seem to be refreshed, thus bypassing the if()
         if (questionScene.isLoaded)
         {
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
@@ -78,6 +79,7 @@ public class ReadingSheet : Sheet
      override
   public  IEnumerator loadQuestion()
     {
+        exempleScene = SceneManager.GetSceneByName("Exemple"); //if we don't do this the value of isLoaded doesn't seem to be refreshed, thus bypassing the if()
         if (exempleScene.isLoaded)
         {
             SceneManager.LoadScene("ReadingSheetQuestion", LoadSceneMode.Additive);
@@ -90,6 +92,12 @@ public class ReadingSheet : Sheet
         }
     }
 
+    override
+        public void endSheet()
+    {
+        SceneManager.UnloadScene("Exemple");
+        SceneManager.UnloadScene("ReadingSheetQuestion");
+    }
 
 
 

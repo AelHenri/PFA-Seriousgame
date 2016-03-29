@@ -22,11 +22,11 @@ public class TextReadingSheet : ReadingSheet
     override
     public IEnumerator loadExemple()
     {
+        questionScene = SceneManager.GetSceneByName("TextReadingSheetQuestion"); //if we don't do this the value of isLoaded doesn't seem to be refreshed, thus bypassing the if()
         if (questionScene.isLoaded)
         {
-            Debug.Log("KOUKUO");
             SceneManager.LoadScene("Exemple", LoadSceneMode.Additive);
-            yield return exempleScene.isLoaded;
+            yield return exempleScene.isLoaded == true;
             SceneManager.UnloadScene("TextReadingSheetQuestion");
         }
         else
@@ -37,15 +37,23 @@ public class TextReadingSheet : ReadingSheet
     override
  public IEnumerator loadQuestion()
     {
+        exempleScene = SceneManager.GetSceneByName("Exemple"); //if we don't do this the value of isLoaded doesn't seem to be refreshed, thus bypassing the if()
         if (exempleScene.isLoaded)
         {
             SceneManager.LoadScene("TextReadingSheetQuestion", LoadSceneMode.Additive);
-            yield return questionScene.isLoaded;
+            yield return questionScene.isLoaded == true;
             SceneManager.UnloadScene("Exemple");
         }
         else
         {
             SceneManager.LoadScene("TextReadingSheetQuestion", LoadSceneMode.Additive);
         }
+    }
+
+    override
+        public void endSheet()
+    {
+        SceneManager.UnloadScene("Exemple");
+        SceneManager.UnloadScene("TextReadingSheetQuestion");
     }
 }
