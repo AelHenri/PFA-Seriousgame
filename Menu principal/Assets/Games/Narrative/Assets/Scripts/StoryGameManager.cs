@@ -14,6 +14,7 @@ public class StoryGameManager : MonoBehaviour {
 
     public static StoryGameManager instance = null;
     public float characterDelay = 0.5f;
+    public int numberOfQuestions = 1;
 
     public CharacterElements[] characters;
     private Dictionary<string, Texture> characterDic;
