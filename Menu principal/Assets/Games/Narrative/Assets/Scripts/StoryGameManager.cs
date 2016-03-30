@@ -53,12 +53,14 @@ public class StoryGameManager : MonoBehaviour {
         ObjectsTable = new List<string>();
         PNJTable.Add("Pixie");
         PNJTable.Add("Gaby");
-        PNJTable.Add("Philibert");
+        //PNJTable.Add("Philibert");
         //PNJTable.Add("Camille");
         //PNJTable.Add("Victor");
+        //PNJTable.Add("Olivier-happy");
 
         //ObjectsTable.Add("Lunettes");
         //ObjectsTable.Add("Seve");
+        //ObjectsTable.Add("Secret");
         InitGame();
 	
 	}
@@ -209,5 +211,10 @@ public class StoryGameManager : MonoBehaviour {
     public bool isMessagesFinished()
     {
         return messageFinished;
+    }
+
+    public void EndGame()
+    {
+        Debug.Log("END GAME");
     }
 }
