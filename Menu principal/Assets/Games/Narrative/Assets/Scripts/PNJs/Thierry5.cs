@@ -112,6 +112,7 @@ public class Thierry5 : PNJ{
         if (StoryGameManager.instance.HasObject("Lunettes"))
         {
             displayDialog(1, 3);
+            StoryGameManager.instance.AddObject("Secret");
         }
         else
         {
