@@ -62,7 +62,8 @@ public class StoryPlayer : MonoBehaviour
                 sceneManager.level++;
             } */
 
-            Application.LoadLevel(Application.loadedLevel);
+            StoryGameManager.instance.NextLevel();
+            //Application.LoadLevel(Application.loadedLevel);
         }
         else if (trig.tag == "TP")
         {

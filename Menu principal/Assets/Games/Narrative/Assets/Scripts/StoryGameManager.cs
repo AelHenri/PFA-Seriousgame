@@ -15,11 +15,14 @@ public class StoryGameManager : MonoBehaviour {
     public static StoryGameManager instance = null;
     public float characterDelay = 0.5f;
     public int numberOfQuestions = 1;
+    public float fadingTime = 0.5f;
 
     public CharacterElements[] characters;
     private Dictionary<string, Texture> characterDic;
     private bool displayPortrait = false;
     private Texture currentPortrait;
+
+    private Fading fader;
 
     private StorySceneManager scene;
     private List<string> PNJTable;
@@ -33,6 +36,12 @@ public class StoryGameManager : MonoBehaviour {
     private Text messageBoxText;
     private string[] message;
     private DialogElements[] dialog;
+
+    private Text endText;
+    private Text theEnd;
+    private GameObject endImage;
+    private GameObject theEndHolder;
+    private bool waitingForEnd = false;
 
     private StoryPlayer player;
 
@@ -49,6 +58,8 @@ public class StoryGameManager : MonoBehaviour {
         scene = GetComponent<StorySceneManager>();
         player = (StoryPlayer)FindObjectOfType(typeof(StoryPlayer));
         InitCharacterDic();
+
+        fader = GameObject.Find("Navigator").GetComponent<Fading>();
 
         PNJTable = new List<string>();
         ObjectsTable = new List<string>();
@@ -77,13 +88,20 @@ public class StoryGameManager : MonoBehaviour {
 
     void InitGame()
     {
-        Debug.Log("Scène :");
-        Debug.Log(scene.level);
         firstScene = true;
         scene.SetupScene();
         messageBox = GameObject.Find("MessageBox");
         messageBoxText = GameObject.Find("MessageText").GetComponent<Text>();
         messageBox.SetActive(false);
+
+        endImage = GameObject.Find("EndBox");
+        endText = GameObject.Find("EndText").GetComponent<Text>();
+        theEndHolder = GameObject.Find("TheEnd");
+        theEnd = theEndHolder.GetComponent<Text>();
+
+        endText.text = "coucou";
+        endImage.SetActive(false);
+        theEndHolder.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -112,6 +130,20 @@ public class StoryGameManager : MonoBehaviour {
                     //messageFinished = true;
                 }
                
+        }
+
+        if (waitingForEnd && !messageBoxEnabled)
+        {
+            
+            if (Input.GetMouseButton(0))
+            {
+                if (messageFinished)
+                {
+                    StopAllCoroutines();
+                    GameState.quitNarrative();
+                }
+                
+            }
         }
     }
 
@@ -214,8 +246,31 @@ public class StoryGameManager : MonoBehaviour {
         return messageFinished;
     }
 
+    private IEnumerator TransitionCoroutine()
+    {
+        fadingTime = fader.beginFade(1);
+        yield return StartCoroutine(Questionnaire.CoroutineUtil.WaitForRealSeconds(fadingTime));
+        Application.LoadLevel(Application.loadedLevel);
+        fader.beginFade(-1);
+    }
+
+    public void NextLevel()
+    {
+        StartCoroutine(TransitionCoroutine());
+    }
+
     public void EndGame()
     {
-        Debug.Log("END GAME");
+        StoryPlayer.paralyzed = true;
+
+        theEnd.text = "The End";
+        endText.text = "Tu as finis le jeu !";
+
+        endImage.SetActive(true);
+        theEndHolder.SetActive(true);
+
+        waitingForEnd = true;
+
+        //GameState.quitNarrative();
     }
 }
