@@ -124,9 +124,7 @@ public class MazeGen : MonoBehaviour {
 	
 	// créer et affiche une cellule du labyrinthe
 	private void printCell(Cell c, int x, int y){
-		int folderNum = level;
-		if (level >= 3)
-			folderNum = 1;
+		int folderNum = (level - 1) % 3;
 
 		int pattern = getPatternFromCell(c);
 
