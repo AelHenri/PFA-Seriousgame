@@ -31,7 +31,8 @@ public class Olivier6 : PNJ{
             arrowsPlaced = true;
             if (StoryGameManager.instance.HasObject("Seve") && !hasAnsweredFalse)
             {
-                Application.LoadLevel(Application.loadedLevel);
+                StoryGameManager.instance.NextLevel();
+                //Application.LoadLevel(Application.loadedLevel);
             }
             else
             {
