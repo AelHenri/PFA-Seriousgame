@@ -49,8 +49,10 @@ public class Navigator : MonoBehaviour {
     }
    void OnApplicationPause(bool pauseStatus)
     {
+#if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         if(pauseStatus)
-            pauseGame();    
+            pauseGame();
+#endif
     }
 
 }
