@@ -128,6 +128,8 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate(){
 		
+		#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
+
 		if (moveHorizontal >= 0 && moveVertical>=0)
 			rb.velocity = new Vector3 ( Mathf.Min( moveHorizontal,maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
 		if (moveHorizontal >= 0 && moveVertical<=0)
@@ -136,5 +138,45 @@ public class Player : MonoBehaviour {
 			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Min( moveVertical,maxSpeed), 0);  
 		if (moveHorizontal <= 0 && moveVertical<=0)
 			rb.velocity = new Vector3 ( Mathf.Max( moveHorizontal,-maxSpeed),Mathf.Max( moveVertical,-maxSpeed), 0);  
+
+		#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+
+		float xDir = 0.0f;
+		float yDir = 0.0f;
+
+		if (Input.touchCount > 0) {
+			// The screen has been touched so store the touch
+			Touch touch = Input.GetTouch (0);
+			if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved) {
+
+				Vector3 touchPosition = Camera.main.ScreenToWorldPoint (new Vector3 (touch.position.x, touch.position.y, 10));                
+
+				// if the finger is far from player move toward him with velocity so that he doesn't go through walls
+				if (Vector3.Distance (touchPosition, transform.position) > 0.2f) {
+					xDir = ((touchPosition.x - transform.position.x) / (Mathf.Abs (touchPosition.x - transform.position.x))) * 8.0f;
+					if ((Mathf.Abs (touchPosition.x - transform.position.x)) < 0.1f) {
+						xDir = 0.0f;
+
+					}
+					yDir = ((touchPosition.y - transform.position.y) / (Mathf.Abs (touchPosition.y - transform.position.y))) * 8.0f;
+					if ((Mathf.Abs (touchPosition.y - transform.position.y)) < 0.1f) {
+						yDir = 0.0f;
+					}
+					rb.velocity = new Vector3 (xDir, yDir, 0);  			
+				}
+				//if it's very close change position 
+				else{
+					rb.velocity = new Vector3 ( 0,  0, 0);  
+					transform.position = Vector3.MoveTowards (transform.position, touchPosition, Time.deltaTime * 20.0f);
+				}
+			}
+		}
+		// if the player doesn't touch the screen, don't move
+		else
+			rb.velocity = new Vector3 ( 0,  0, 0);  
+	
+
+		#endif
+
 	}
 }
