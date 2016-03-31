@@ -1,27 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class Navigator : MonoBehaviour {
-    public Games[] games;// Stores playable games
-    public uint gamesNb;// Number of games in the navigator
-    public uint currentGame;
-
-
+    public List<GameObject> collectibles;
+    public List<GameObject> collectiblesLeftToFind;
 
     void Awake ()
     {
         DontDestroyOnLoad(transform.gameObject);//Has to remain between scenes
-        games = new Games[gamesNb];
  
         
     }
 
     // Use this for initialization
     void Start()
-    //Game loading?
     {
-        GameState.gameCurrentlyLoaded = 0;
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Additive);
 
     }
@@ -29,7 +24,7 @@ public class Navigator : MonoBehaviour {
 
 	
 	void Update () {
-        //Verifier les input du joueur
+        //Player input
 #if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -41,6 +36,7 @@ public class Navigator : MonoBehaviour {
             pauseGame();
         }
 #endif
+
     }
    void pauseGame()
     {

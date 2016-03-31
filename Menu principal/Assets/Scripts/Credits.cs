@@ -27,7 +27,7 @@ public class Credits : MonoBehaviour
     private void Update()
     {
         this.offset -= Time.unscaledDeltaTime * this.speed;
-        Debug.Log("Offset: " + offset);
+        Debug.Log("Credits: Offset =  " + offset);
         /*if (offset < -200 && !soundPlayed)
         {
             erwan.Play();

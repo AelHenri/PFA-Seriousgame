@@ -7,7 +7,6 @@ public class OptionsMenuButtons : MonoBehaviour
     private int previousPauseMenuLoaded;
     void Awake()
     {
-        //GameState.freezeTime();
         previousPauseMenuLoaded = GameState.pauseMenuLoaded;
         GameState.pauseMenuLoaded = 2;
     }

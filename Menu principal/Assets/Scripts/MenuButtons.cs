@@ -37,10 +37,6 @@ public class MenuButtons : MonoBehaviour {
                 break;
             case 1: //Options
                 Debug.Log("Sélection de options dans le menu");
-                //GameState.pauseMenuLoaded = false;
-                //GlobalQuestionnaire.startQuestionnaire();
-                //GameState.titleScreenOnlyLoaded = false;
-                //SceneManager.UnloadScene("PauseMenu");
                 SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
                 break;
             case 2: //Recommencer
@@ -51,7 +47,6 @@ public class MenuButtons : MonoBehaviour {
                 if (GameState.titleScreenOnlyLoaded == false)
                 {
                     GameState.pauseMenuLoaded = 0;
-                    //SceneManager.LoadSceneAsync("TitleScreen");
                     GameState.titleScreenOnlyLoaded = true;
                     GameState.unfreezeTime();
                     GameState.unfreezeTime();//Unfreeze again in case of a pending question
@@ -59,7 +54,6 @@ public class MenuButtons : MonoBehaviour {
                     GameState.quitLabyrinth();
                     GameState.quitBoard();
                         
-                    GameState.gameCurrentlyLoaded = 0;
                 }   
                 else
                 {

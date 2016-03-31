@@ -20,8 +20,6 @@ public class TitleScreen : MonoBehaviour {
         noSheetPanel.SetActive(false);
     }
 
-
-	// Use this for initialization
 	void Start () {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
         if (!questionnaire.areThereSheets())
@@ -31,8 +29,4 @@ public class TitleScreen : MonoBehaviour {
         }
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

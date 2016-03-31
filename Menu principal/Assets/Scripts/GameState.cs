@@ -7,9 +7,6 @@ public static class GameState  {
     public static int pauseMenuLoaded = 0;
     public static bool titleScreenOnlyLoaded = true;
 
-    //Games
-    public static int gameCurrentlyLoaded;
-    
     //Narrative game
     public static GameObject narrative;
     public static GameObject narrativeSound;

@@ -48,7 +48,7 @@ public class LoadOnClick : MonoBehaviour
         {
             SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
             GameState.pauseMenuLoaded = 0;
-            Debug.Log("Attempting to load asynchronously");
+            Debug.Log("Attempting to load scene asynchronously");
         }
         GameState.titleScreenOnlyLoaded = false;
     }

@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour {
 			GameObject.Find ("Timer").GetComponent<Timer> ().launch ();
 			Invoke ("HideLevelImage", levelStartDelay);
 			GameObject.Find ("Main Camera").GetComponent<CamCentering> ().centerCamera ();
-			audioSource.clip = music [(level - 1) % 3];
+			audioSource.clip = music [(level - 1) % 4];
 			audioSource.Play ();
 		}
 	}
