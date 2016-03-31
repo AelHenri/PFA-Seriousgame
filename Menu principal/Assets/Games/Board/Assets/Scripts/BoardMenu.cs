@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
+
 public class BoardMenu : MonoBehaviour {
 
     public CharacterSelection chars;
+    public BoardSave boardSave;
 
     public GameObject playerNumberPanel;
     public GameObject charSelectPanel;
@@ -86,19 +89,27 @@ public class BoardMenu : MonoBehaviour {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Create);
 
-        CoordinatorSerializable data = new CoordinatorSerializable();
+        CoordinatorSerializable data = new CoordinatorSerializable(Coordinator.nbPlayer, Coordinator.nbBonus);
         //a faire en plus propre, genre peut etre avec un construteur
 
-        data.nbPlayer = Coordinator.nbPlayer;
-        data.nbBonus =  Coordinator.nbBonus;
+ 
         data.playerSpritesNumber = playerSpritesNumber;
-        data.playerPos = new float[data.nbPlayer,4];
+
+          
         for (int i = 0; i < data.nbPlayer; i++)
         {
-            data.playerPos[i,0] = Coordinator.Players[i].transform.position.x;
-            data.playerPos[i,1] = Coordinator.Players[i].transform.position.y;
-            data.playerPos[i,2] = Coordinator.Players[i].transform.position.z;
+            data.playerPos[i] = new Vector3Serializer(Coordinator.Players[i].transform.position);
+           //data.playerCurrentStep[i] = Coordinator.Players[i].GetComponent<Move>().
+            Debug.Log(Coordinator.Players[i].GetComponent<Move>().startPosition.Count);
+            if (Coordinator.Players[i].GetComponent<Move>().startPosition.Count != 0)
+            {
+                for (int j = 0; j < Coordinator.Players[i].GetComponent<Move>().startPosition.Count; j++)
+                    data.savedStartPosition[i].Add(new Vector3Serializer(Coordinator.Players[i].GetComponent<Move>().startPosition[j]));
+            }
 
+                for (int j = 0; j < Coordinator.Players[i].GetComponent<Move>().endPosition.Count; j++)
+                    data.savedEndPosition[i].Add(new Vector3Serializer(Coordinator.Players[i].GetComponent<Move>().endPosition[j]));
+            
 
         }
         
@@ -120,15 +131,8 @@ public class BoardMenu : MonoBehaviour {
             CoordinatorSerializable data = (CoordinatorSerializable)bf.Deserialize(file);
             Coordinator.nbPlayer = data.nbPlayer;
             Coordinator.nbBonus = data.nbBonus;
-            for (int i = 0; i < data.nbPlayer; ++i)
-            {
-                Coordinator.playerSprites[i] = chars.characters[data.playerSpritesNumber[i]].GetComponent<SpriteRenderer>().sprite;
-                Coordinator.savecPos[i].x = data.playerPos[i, 0];
-                Coordinator.savecPos[i].y = data.playerPos[i, 1];
-                Coordinator.savecPos[i].z = data.playerPos[i, 2];
-                    
-            }
 
+            boardSave.translate(data);
             Coordinator.isFromSavedGame = true;
             SceneManager.LoadScene("BoardMain");
         }
@@ -136,13 +140,50 @@ public class BoardMenu : MonoBehaviour {
 	
 }
 [Serializable]
-class CoordinatorSerializable
+public class CoordinatorSerializable
 {
-    public  int nbPlayer;
-    public  int nbBonus;
-    public  int[] playerSpritesNumber;
-    public float[,] playerPos;
+    public int nbPlayer;
+    public int nbBonus;
+    public int[] playerSpritesNumber;
+    public Vector3Serializer[] playerPos;
+    public List<Vector3Serializer>[] savedStartPosition;
+    public List<Vector3Serializer>[] savedEndPosition;
+    public int[] playerCurrentStep;
+
+    public CoordinatorSerializable(int nbPlayers, int nbBonus)
+    {
+        this.nbPlayer = nbPlayers;
+        this.nbBonus = nbBonus;
+        this.playerPos = new Vector3Serializer[nbPlayer];
+
+        this.savedStartPosition = new List<Vector3Serializer>[nbPlayer];
+        this.savedEndPosition = new List<Vector3Serializer>[nbPlayer];
+        for (int i = 0; i < nbPlayer; i++)
+        {
+            savedStartPosition[i] = new List<Vector3Serializer>();
+            savedEndPosition[i] = new List<Vector3Serializer>();
+        }
+    }
 
 
-    
+}
+
+
+[Serializable]
+public class Vector3Serializer
+{
+    public float x;
+    public float y;
+    public float z;
+
+    public Vector3Serializer(Vector3 v3)
+    {
+        x = v3.x;
+        y = v3.y;
+        z = v3.z;
+    }
+    public Vector3 toVector3()
+    {
+        return new Vector3(x, y, z);
+    } 
 }
