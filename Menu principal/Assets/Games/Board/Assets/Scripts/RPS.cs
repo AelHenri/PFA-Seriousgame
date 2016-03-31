@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RPS : MonoBehaviour {
 
-    public static int nbLine = 300;
+    public static int nbLine = 100;
     public float radius = 4.0f;
     public float radiusext = 4.2f;
     public float speed = 100f;
@@ -46,9 +46,11 @@ public class RPS : MonoBehaviour {
                                                                          0,
                                                                          radius * Mathf.Sin(2 * Mathf.PI * i / nbLine)));
             lines[2 * i].material.color = colors[i / (nbLine / nbPlayer)];
+            lines[2 * i].SetWidth(0.3f, 0.3f);
             lines[2 * i + 1].SetPosition(0, transform.position);
             lines[2 * i + 1].SetPosition(1, transform.position + new Vector3(radiusext * Mathf.Cos(2 * Mathf.PI * i / nbLine), -0.1f, radiusext * Mathf.Sin(2 * Mathf.PI * i / nbLine)));
             lines[2 * i + 1].material.color = Color.black;
+            lines[2 * i + 1].SetWidth(0.3f, 0.3f);
         }
 
         for (int i = 0; i < nbPlayer; ++i)
