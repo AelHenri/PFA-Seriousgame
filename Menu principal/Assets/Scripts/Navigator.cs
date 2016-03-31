@@ -31,7 +31,7 @@ public class Navigator : MonoBehaviour {
             pauseGame();
         }
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-        if (Input.GetKeyDown(KeyCode.Menu))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             pauseGame();
         }
