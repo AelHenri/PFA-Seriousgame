@@ -19,6 +19,7 @@ public class Player : MonoBehaviour {
 	private float restartLevelDelay = 1f;
 	private Questionnaire questionnaire;
 
+	public int nbQuestions = 2;
 	public Text KeyText;// show after a question
 	public Text EndingText; // shown at exit point
 
@@ -66,14 +67,14 @@ public class Player : MonoBehaviour {
 			}
 
 		} else if (other.tag == "key") {
-			questionnaire.startQuestionnaire (2);	
+			questionnaire.startQuestionnaire (nbQuestions);	
 			isAnswering = true;
 			collidedKey = other.gameObject;
 
 		} else if (other.tag == "gamebonus") {
 			Debug.Log ("collided a bonus");
 			collidedBonus = other.gameObject;
-			questionnaire.startQuestionnaire ();	
+			questionnaire.startQuestionnaire (nbQuestions);	
 			bonus = true;
 		}
 	}
@@ -83,7 +84,7 @@ public class Player : MonoBehaviour {
 		moveVertical = Input.GetAxis ("Vertical")*speed;
 		if (isAnswering) {
 				if (questionnaire.hasAnsweredAll) {
-					if (questionnaire.howManyRightAnswers > 0) {
+				if (questionnaire.howManyRightAnswers > nbQuestions/2) {
 						// globalKeys = globalKeys + 1;
 						localKeys = localKeys + 1;
 						collidedKey.SetActive(false);
