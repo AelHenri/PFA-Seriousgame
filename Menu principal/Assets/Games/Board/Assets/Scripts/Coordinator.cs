@@ -45,8 +45,19 @@ public class Coordinator : MonoBehaviour {
     private float timeEnd = 0f;
     private float timeEOT = 0f;
     private float timeDice = 0f;
+    private float timeEvent = 0f;
     private bool relaunch = false;
     private bool endOfTurn;
+    private bool eventTime;
+    private bool eventQuestion;
+    private int eventPlayer;
+    private bool eventInit = true;
+    private bool eventMove = false;
+    private bool eventEnd = false;
+    private Move m1, m2;
+    private int winner = -1;
+    private bool draw = false;
+
 
     public Animator animator;
 
@@ -119,20 +130,40 @@ public class Coordinator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        /* TESTING PURPOSE*/
-        /*
-        if (currentPlayer == 1)
-        {
-            Debug.Log("Saved");
-            int turn = 0;
-            turn++;
-            if (turn == 4)
-                BoardMenu.Save();
-        }
-        */
         time += Time.deltaTime;
+        if(!end)
+            for(int i = 0; i < nbPlayer; ++i)
+                if (playerPos[i] == m.nbTiles - 1)
+                    {
+                        end = true;
+                        timeEnd = time;
+                        if (winner != -1)
+                            draw = true;
+                        winner = i;
+                    }
 
-        if(endOfTurn && (time - timeEOT) > 2f)
+        if (end && (time - timeEnd) > 10f)
+        {
+            GameState.quitBoard();
+        }
+
+        if (end)
+        {
+            d.gameObject.SetActive(false);
+            for (int i = 0; i < nbBonus; ++i)
+                bonus[currentPlayer][i].SetActive(false);
+            Canvas.SetActive(true);
+            Text t = TextComp.GetComponent<Text>();
+            if (!draw)
+                t.text = "Bravo Joueur " + (winner + 1) + ", tu as gagné !";
+            else
+                t.text = "Egalité";
+            if(timeEnd == 0f)
+                timeEnd = time;
+            return;
+        }
+
+        if (endOfTurn && (time - timeEOT) > 5f)
         {
             endOfTurn = false;
             TurnEnd();
@@ -147,22 +178,105 @@ public class Coordinator : MonoBehaviour {
         if (relaunch)
             return;
 
-        if(end && (time - timeEnd) > 10f)
+        if(eventTime)
         {
-            GameState.quitBoard();
+            if (eventInit)
+            {
+                RPSTemp = Instantiate(RPS);
+                RPS rps = RPSTemp.GetComponent<RPS>();
+                rps.Players = new GameObject[nbPlayer - 1];
+                int count = 0;
+                for (int i = 0; i < nbPlayer; ++i)
+                    if (i != currentPlayer)
+                        rps.Players[count++] = Players[i];
+                rps.nbPlayer = nbPlayer - 1;
+                RPSTemp.gameObject.SetActive(true);
+                eventPlayer = -1;
+                eventInit = false;
+            }
+
+            if (RPSTemp == null)
+            {
+                Debug.Log(eventPlayer);
+                eventInit = true;
+                eventQuestion = true;
+                eventTime = false;
+                timeEvent = time;
+                return;
+            }
+
+            if (RPSTemp.GetComponent<RPS>().end && eventPlayer == -1)
+            {
+                eventPlayer = RPSTemp.GetComponent<RPS>().currentArrowPos;
+                if (eventPlayer >= currentPlayer)
+                    eventPlayer++;
+                Debug.Log(eventPlayer);
+            }
+            return;
         }
 
-        if(end)
+        if(eventQuestion && (time - timeEvent) > 3f)
         {
-            d.gameObject.SetActive(false);
-            for (int i = 0; i < nbBonus; ++i)
-                bonus[currentPlayer][i].SetActive(false); 
+            Canvas.SetActive(false);
+            if (!questionnaireLaunched)
+            {
+                questionnaire.startQuestionnaire();
+                questionnaireLaunched = true;
+            }
+            else
+            {
+                if (questionnaire.hasAnswered)
+                {
+                    questionnaireLaunched = false;
+                    if (questionnaire.isAnswerRight)
+                    {
+                        d.gameObject.SetActive(true);
+                        eventMove = true;
+                        timeEvent = time;
+                    }
+                    else
+                    {
+                        endOfTurn = true;
+                        timeEOT = time;
+                    }
+                    eventQuestion = false;
+                }
+            }
+            return;
+        }
+
+        if(eventQuestion)
+        {
             Canvas.SetActive(true);
             Text t = TextComp.GetComponent<Text>();
-            t.text = "Bravo Joueur " + (currentPlayer + 1) + ", tu as gagné !";
+            t.text = "Joueur " + (eventPlayer + 1) + " aide Joueur " + (currentPlayer + 1);
             timeEnd = time;
             return;
         }
+
+        if(eventMove && (time - timeEvent) > 3f)
+        {
+            m1 = Players[currentPlayer].GetComponent<Move>();
+            m2 = Players[eventPlayer].GetComponent<Move>();
+            Move(m1, 4, currentPlayer);
+            Move(m2, 4, eventPlayer);
+            eventMove = false;
+            eventEnd = true;
+            return;
+        }
+
+        if(eventEnd)
+        {
+            if(!m1.moving && !m2.moving)
+            {
+                eventEnd = false;
+                endOfTurn = true;
+                timeEOT = time;
+            }
+            return;
+        }
+
+        
 
         if(beginOfTurn)
         {
@@ -256,11 +370,6 @@ public class Coordinator : MonoBehaviour {
         //Happen when player move is over
         if(!move.moving && rolled)
         {
-            if(playerPos[currentPlayer] == m.nbTiles - 1)
-            {
-                end = true;
-                return;
-            }
             TileBehavior();
         }    
     }
@@ -350,11 +459,10 @@ public class Coordinator : MonoBehaviour {
         }
         else if (tileType == Tile.TileType.Event)
         {
-            Debug.Log("Dice tile");
+            Debug.Log("Event tile");
+            eventTime = true;
+            eventInit = true;
             rolled = false;
-            beginOfTurn = true;
-            timeDice = time;
-            relaunch = true;
         }
         else if (tileType == Tile.TileType.Warp && !warping)
         {
