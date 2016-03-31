@@ -3,10 +3,15 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour {
-
+    ProfileManager profileManager;
     void Awake()
     {
         GameState.freezeTime();
+    }
+
+    void Start()
+    {
+        profileManager = GameObject.Find("Navigator").GetComponent<ProfileManager>();
     }
 
     void Update()
@@ -53,6 +58,7 @@ public class MenuButtons : MonoBehaviour {
                     GameState.quitNarrative();
                     GameState.quitLabyrinth();
                     GameState.quitBoard();
+                    profileManager.saveExistingProfile(profileManager.getCurrentProfile());
                         
                 }   
                 else

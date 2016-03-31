@@ -39,6 +39,7 @@ public class ProfileManager : MonoBehaviour {
 
         profilesDir = Path.GetFullPath(profilesDir);
 
+        
         if (!Directory.Exists(profilesDir))
         {
             profilesPath = null;
@@ -51,7 +52,6 @@ public class ProfileManager : MonoBehaviour {
 
         if (profilesPath == null)
         {
-            Debug.Log("Pas de profils dans le dossier");
             return;
         }
 
@@ -65,10 +65,12 @@ public class ProfileManager : MonoBehaviour {
      */
     public void refreshProfiles()
     {
-
+        profilesPath = Directory.GetFiles(profilesDir, "*.profile", SearchOption.AllDirectories);
+        profilesCount = profilesPath.Length;
         profiles = new Profile[profilesCount];
         for (int i = 0; i < profilesCount; i++)
         {
+            Debug.Log(profilesDir);
             profiles[i] = loadExistingProfile(profilesPath[i]);
         }
     }
@@ -93,7 +95,7 @@ public class ProfileManager : MonoBehaviour {
         file.Close();
     }
 
-    void saveExistingProfile(Profile profileToBeSaved)
+    public void saveExistingProfile(Profile profileToBeSaved)
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(Application.dataPath + "/../Profiles/" + profileToBeSaved.getFileName(), FileMode.Create);
@@ -138,6 +140,10 @@ public class ProfileManager : MonoBehaviour {
     public int getCurrentProfileIndex()
     {
         return currentProfileIndex;
+    }
+    public Profile getCurrentProfile()
+    {
+        return currentProfile;
     }
     void OnApplicationQuit()
     {
