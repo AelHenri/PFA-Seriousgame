@@ -46,7 +46,7 @@ public class ProfileManager : MonoBehaviour {
 
         if (profilesPath == null)
         {
-            Debug.Log("Pas de profiles dans le dossier");
+            Debug.Log("Pas de profils dans le dossier");
             return;
         }
 

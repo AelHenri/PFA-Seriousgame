@@ -46,4 +46,14 @@ public class Profile {
     {
         return lastName;
     }
+
+    public bool getIsGameFinished(int game)
+    {
+        return isGameFinished[game];
+    }
+
+    public List<bool> getCollectedObjects()
+    {
+        return collectedObjects;
+    }
 }
