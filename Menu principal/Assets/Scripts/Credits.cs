@@ -28,13 +28,13 @@ public class Credits : MonoBehaviour
     {
         this.offset -= Time.unscaledDeltaTime * this.speed;
         Debug.Log("Offset: " + offset);
-        if (offset < -200 && !soundPlayed) // Screen.height)
+        /*if (offset < -200 && !soundPlayed)
         {
             erwan.Play();
             soundPlayed = true;
             
-        }
-        if(offset < -300 || Input.anyKeyDown)
+        }*/
+        if(offset < (-1)* (transform.GetComponent<RectTransform>().anchorMax.y - transform.GetComponent<RectTransform>().anchorMin.y) * Screen.height || Input.anyKeyDown)
         {
             SceneManager.UnloadScene("Credits");
         }
@@ -48,23 +48,58 @@ public class Credits : MonoBehaviour
         var position = new Rect(0, this.offset, this.viewArea.width, this.viewArea.height);
         var text = @"PFA - Serious Game
 
+Une idée originale de
+    Borel Hugo,
+    Fichant Le Fur Florian,
+    Grelet Léo, 
+    Le Moigne Yves,
+    Montaigu Thomas,
+    Rakotosaona Lalatiana,
+    Toussaint Henri
 
-Réalisation, Musique, Histoire, Graphisme, Voix:
+Jeu narratif:
+    Voix:
+        Fichant Le Fur Florian,
+        Grelet Léo,
+        Toussaint Henri
 
-Borel Hugo,
-Fichant Le Fur Florian,
-Grelet Léo, 
-Le Moigne Yves,
-Montaigu Thomas,
-Rakotosaona Lalatiana,
-Toussaint Henri
+    Réalisation & Design:
+        Toussaint Henri
+
+Jeu de labyrinthe:
+    Réalisation:
+        Le Moigne Yves,
+        Rakotosaona Lalatiana
+
+    Design:
+        Le Moigne Yves
+
+Jeu de plateau:
+    Réalisation & Design:
+        Borel Hugo
+
+Menus & Profils & QCM:
+    Réalisation:
+        Fichant Le Fur Florian,
+        Montaigu Thomas
+
+Editeur de fiches:
+    Réalisation:
+        Montaigu Thomas
+
+Design général:
+        Le Moigne Yves
+
+Musique:
+        Grelet Léo
 
 
 
+Avec les conseils avisés de M. Raphaël Marczak,
+et Mme Myriam Desainte-Catherine,
 
-(et un peu Internet)
 
-
+Merci et bon jeu!
 
 ";
 
