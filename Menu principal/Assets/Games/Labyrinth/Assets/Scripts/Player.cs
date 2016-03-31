@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 	public int speed = 10;
 	public int maxSpeed = 3;
+	public float touchSpeed = 8.0f;
 	public Rigidbody2D rb;
 	public static int localKeys;
 	//public int globalKeys; if we want to count the total number of keys
@@ -154,12 +155,12 @@ public class Player : MonoBehaviour {
 
 				// if the finger is far from player move toward him with velocity so that he doesn't go through walls
 				if (Vector3.Distance (touchPosition, transform.position) > 0.2f) {
-					xDir = ((touchPosition.x - transform.position.x) / (Mathf.Abs (touchPosition.x - transform.position.x))) * 8.0f;
+				xDir = ((touchPosition.x - transform.position.x) / (Mathf.Abs (touchPosition.x - transform.position.x))) * touchSpeed;
 					if ((Mathf.Abs (touchPosition.x - transform.position.x)) < 0.1f) {
 						xDir = 0.0f;
 
 					}
-					yDir = ((touchPosition.y - transform.position.y) / (Mathf.Abs (touchPosition.y - transform.position.y))) * 8.0f;
+					yDir = ((touchPosition.y - transform.position.y) / (Mathf.Abs (touchPosition.y - transform.position.y))) * touchSpeed;
 					if ((Mathf.Abs (touchPosition.y - transform.position.y)) < 0.1f) {
 						yDir = 0.0f;
 					}
