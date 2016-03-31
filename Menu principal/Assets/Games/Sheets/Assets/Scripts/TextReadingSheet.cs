@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
+[Serializable]
 public class TextReadingSheet : ReadingSheet
 {
+    [NonSerialized]
     public string[] answers;
 
     public TextReadingSheet(string Path) : base(Path)

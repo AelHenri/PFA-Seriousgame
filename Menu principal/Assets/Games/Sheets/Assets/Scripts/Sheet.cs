@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-
+[Serializable]
 public abstract class Sheet : Comparer<Sheet>, IComparable<Sheet>
 {
 
@@ -20,8 +20,12 @@ public abstract class Sheet : Comparer<Sheet>, IComparable<Sheet>
     private int successCount;
     private int failureCount;
     public int sheetNumber;
+
+    [NonSerialized]
     public string textExemple;
+    [NonSerialized]
     public string imgExemplePath;
+    [NonSerialized]
     protected string dirName;
 
     //TODO should not ne used

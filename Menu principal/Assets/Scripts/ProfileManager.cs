@@ -30,8 +30,13 @@ public class ProfileManager : MonoBehaviour {
     void Start() {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
 
+        #if UNITY_ANDROID
+                profilesDir = Application.persistentDataPath + "/../../../../SeriousGame/Profiles";
+        #endif
+        #if UNITY_EDITOR
+                profilesDir = Application.dataPath + "/../Profiles";
+        #endif
 
-        profilesDir = Application.dataPath + "/../Profiles";
         profilesDir = Path.GetFullPath(profilesDir);
 
         if (!Directory.Exists(profilesDir))
@@ -60,9 +65,6 @@ public class ProfileManager : MonoBehaviour {
      */
     public void refreshProfiles()
     {
-        /* Gets all the profiles */
-        profilesPath = Directory.GetFiles(profilesDir, "*.profile", SearchOption.AllDirectories);
-        profilesCount = profilesPath.Length;
 
         profiles = new Profile[profilesCount];
         for (int i = 0; i < profilesCount; i++)

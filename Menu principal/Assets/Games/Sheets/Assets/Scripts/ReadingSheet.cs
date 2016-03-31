@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 [Serializable]
 public class ReadingSheet : Sheet
 {
- 
+    [NonSerialized]
     public string imgQuestionPath;
+    [NonSerialized]
     int rightAnswer;
     
 
