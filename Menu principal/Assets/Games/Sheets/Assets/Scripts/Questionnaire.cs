@@ -67,8 +67,17 @@ public class Questionnaire : MonoBehaviour{
         availableSheet = new List<Sheet>();
         uncorrectlyAnsweredSheet = new List<Sheet>();
         correctlyAnsweredSheet = new List<Sheet>();
+        /*
+        #if UNITY_ANDROID
+            sheetsDirectoryPath = Application.persistentDataPath + "/../../../../SeriousGame/Fiches";
+        #endif
+        #if UNITY_EDITOR
+            sheetsDirectoryPath = Application.dataPath + "/../Fiches";
+        #endif
+        */
+        sheetsDirectoryPath = Application.persistentDataPath + "/../../../../SeriousGame/Fiches";
 
-        sheetsDirectoryPath = Application.dataPath + "/../Fiches";
+
         sheetsDirectoryPath = Path.GetFullPath(sheetsDirectoryPath); // Returns a nice formated path String, no more: "dir/../another_dir"
 
         if (!Directory.Exists(sheetsDirectoryPath))
