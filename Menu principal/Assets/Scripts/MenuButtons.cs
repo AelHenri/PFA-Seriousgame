@@ -11,7 +11,7 @@ public class MenuButtons : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && GameState.pauseMenuLoaded == 1)
         {
             LoadOnClick(0);//Reprendre la partie
         }
@@ -23,7 +23,7 @@ public class MenuButtons : MonoBehaviour {
         {
             case 0: //Reprendre la partie
                 Debug.Log("Sélection de reprendre la partie dans le menu");
-                GameState.pauseMenuLoaded = false;
+                GameState.pauseMenuLoaded = 0;
                 GameState.unfreezeTime();
                 SceneManager.UnloadScene("PauseMenu");
                 break;
@@ -42,7 +42,7 @@ public class MenuButtons : MonoBehaviour {
                 Debug.Log("Sélection de quitter la partie dans le menu");
                 if (GameState.titleScreenOnlyLoaded == false)
                 {
-                    GameState.pauseMenuLoaded = false;
+                    GameState.pauseMenuLoaded = 0;
                     //SceneManager.LoadSceneAsync("TitleScreen");
                     GameState.titleScreenOnlyLoaded = true;
                     GameState.unfreezeTime();

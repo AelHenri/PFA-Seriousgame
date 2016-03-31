@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public static class GameState  {
     //Pause menu
-    public static bool pauseMenuLoaded = false;
+    public static int pauseMenuLoaded = 0;
     public static bool titleScreenOnlyLoaded = true;
 
     //Games

@@ -35,14 +35,12 @@ public class Navigator : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("menu loaded: " + GameState.pauseMenuLoaded);
-            if (!GameState.pauseMenuLoaded)
+            if (GameState.pauseMenuLoaded == 0)
             {
                 SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
-                GameState.pauseMenuLoaded = true;
+                GameState.pauseMenuLoaded = 1;
             }
         }
-        //Verifier les achievements du joueur
-        //Verifier les statistiques du joueur
 
     }
 

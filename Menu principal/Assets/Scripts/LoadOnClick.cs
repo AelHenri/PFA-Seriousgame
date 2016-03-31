@@ -9,16 +9,6 @@ public class LoadOnClick : MonoBehaviour
 
 
 
-   /* public void SetActiveRecursively(GameObject rootObject, bool active)
-    {
-        rootObject.SetActive(active);
-
-        foreach (Transform childTransform in rootObject.transform)
-        {
-            SetActiveRecursively(childTransform.gameObject, active);
-
-        }
-    }*/
 
     public void LoadScene(string level)
     {
@@ -30,11 +20,8 @@ public class LoadOnClick : MonoBehaviour
         }
         else
         {
-            AsyncOperation async = SceneManager.LoadSceneAsync(level);
-            GameState.pauseMenuLoaded = false;
-            //yield return async;
-            //yield return 0;
-            //SceneManager.LoadScene(level);
+            SceneManager.LoadSceneAsync(level);
+            GameState.pauseMenuLoaded = 0;    
         }
         //SetActiveRecursively(loadingImage, false);
         GameState.titleScreenOnlyLoaded = false;
@@ -59,14 +46,10 @@ public class LoadOnClick : MonoBehaviour
         }
         else
         {
-            AsyncOperation async = SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
-            GameState.pauseMenuLoaded = false;
+            SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
+            GameState.pauseMenuLoaded = 0;
             Debug.Log("Attempting to load asynchronously");
-            //yield return async;
-            //yield return 0;
-            //SceneManager.LoadScene(level);
         }
-        //SetActiveRecursively(loadingImage, false);
         GameState.titleScreenOnlyLoaded = false;
     }
 }
