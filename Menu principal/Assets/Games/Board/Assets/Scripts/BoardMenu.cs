@@ -58,6 +58,7 @@ public class BoardMenu : MonoBehaviour {
     {
         playerNumberAnim.hidePanel();
         yield return new WaitUntil(playerNumberAnim.isPanelNowHidden);
+        playerNumberPanel.SetActive(false);
         charSelectPanel.SetActive(true);
         CurrenChoosingPlayerPanel.SetActive(true);
 
