@@ -50,6 +50,7 @@ public class Player : MonoBehaviour {
 		EndingText.gameObject.SetActive (false);
 	}
 
+	// actions on collision with keys, exit and bonus
 	private void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "exit") {
 			if (localKeys < GameManager.instance.level) {
@@ -83,6 +84,7 @@ public class Player : MonoBehaviour {
 	void Update () {
 		moveHorizontal = (Input.GetAxis ("Horizontal"))*speed;
 		moveVertical = Input.GetAxis ("Vertical")*speed;
+		// actions after answer
 		if (isAnswering) {
 				if (questionnaire.hasAnsweredAll) {
 				if (questionnaire.howManyRightAnswers > nbQuestions/2) {

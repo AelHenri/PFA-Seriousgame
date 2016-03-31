@@ -8,11 +8,9 @@ public static class MazeAccessB{
 	
 public class GameBonus : MonoBehaviour {
 	public void Start () {
-		MazeAccessB.mazeSet = 0;
-			
+		MazeAccessB.mazeSet = 0;			
 		GameManager.instance.SetBonus (this);
 		transform.position = new Vector3 (1, 5.0f, 0);
-		Debug.Log ("moving the bonus here");
 	}
 		
 	public void MoveBonus (int i) {

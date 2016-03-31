@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour {
 		doingSetup = true;
 		bonusPresent = false;
 
+		// images and text management
 		gameText = GameObject.Find ("gameText");
 		gameText.GetComponent<Text> ().text = "Bravo! Tu as gagné un cornichon!";
 		gameText.SetActive (false);
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour {
 		endGameText.SetActive (false);
 
 		endGameImage.SetActive (false);
+		// end of game
 		if (level == levelMax + 1) {
 			timerText.SetActive (false);
 			endGameText.SetActive (true);
@@ -109,7 +111,7 @@ public class GameManager : MonoBehaviour {
 			scores.SetActive (true);
 			Invoke ("endGame", 7.0f);
 			enabled = false;
-		} else {
+		} else { // end of level
 			levelText.text = "Niveau " + level;
 			levelImage.SetActive (true);
 			keys.Clear ();
