@@ -17,7 +17,7 @@ public class MenuButtons : MonoBehaviour {
             LoadOnClick(0);//Reprendre la partie
         }
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-        if (Input.GetKeyDown(KeyCode.Menu) && GameState.pauseMenuLoaded == 1)
+        if (Input.GetKeyDown(KeyCode.Escape) && GameState.pauseMenuLoaded == 1)
         {
             LoadOnClick(0);//Reprendre la partie
         }
