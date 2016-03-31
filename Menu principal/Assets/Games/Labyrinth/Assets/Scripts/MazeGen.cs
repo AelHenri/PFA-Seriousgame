@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/* Structure des cellules du labyrinthe
- * true si on peut passer, false sinon
- */
+/*cells structure
+if we can go : true
+else : false
+*/
 struct Cell{
 	public bool left;
 	public bool right;
@@ -38,7 +39,7 @@ public class MazeGen : MonoBehaviour {
 	Cell[,] mazeData;
 	
 	public void SetupScene (int level) {
-		// Inititalisation des données du labyrinthe
+		// Inititalisation of the labyrinth data
 		this.level = level;
 		width =(int) Mathf.Floor(level*2.7f) + 1;
 		height = (int)Mathf.Floor (level * 1.5f) + 2;//2 + 1;
@@ -47,18 +48,17 @@ public class MazeGen : MonoBehaviour {
 		mazeData = new Cell[width, height];
 		deadEnd = new List<Point>();
 		
-		// Génération du labyrinthe
+		//  labyrinth generation
 		generateMaze ();
-		
-		// Placement de la case de fin
+
 		mazeData [width - 1, height / 2].right = true;
 		
-		// generation de la sortie et de l'entrée
+		// beginning and exit placement
 		Cell tempCell = new Cell();
 		tempCell.left = true;
 		tempCell.right = true;
 		
-		// Placement de début
+		// beginning placement
 		mazeData [0, height / 2].left = true;
 		printCell (tempCell, -1, height/2);
 		Transform gradStart = Instantiate(gradiant, new Vector3(-1, height/2, -5), Quaternion.identity) as Transform;
@@ -66,7 +66,7 @@ public class MazeGen : MonoBehaviour {
 		Transform arrow1 = Instantiate(arrow, new Vector3(-2, height/2, -5), Quaternion.identity) as Transform;
 		arrow1.parent = GameObject.Find("Maze").transform;
 		
-		// Placement de la fin
+		// exit placement
 		mazeData [0, height / 2].left = true;
 		printCell (tempCell, width, height/2);
 		Transform gradEnd = Instantiate(gradiant, new Vector3(width, height/2, -5), new Quaternion(0, 0, 90, 0)) as Transform;
@@ -74,7 +74,7 @@ public class MazeGen : MonoBehaviour {
 		Transform arrow2 = Instantiate(arrow, new Vector3(width + 1, height/2, -5), Quaternion.identity) as Transform;
 		arrow2.parent = GameObject.Find("Maze").transform;
 
-		// Affichage du labyrinthe
+		//  labyrinth display
 		for (int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++){
 				printCell(mazeData[i, j], i, j);
@@ -87,11 +87,10 @@ public class MazeGen : MonoBehaviour {
 			LayoutBonus (bonus);
 		}
 	}
-	
-	/* Les numeros des patterns respectent une conversion binaire
-	 * Le  bit le plus faible correspont au booleen up, le second left, puis down, et enfin right.
-	 * EX : 1101 correspond au pattern avec juste un mur a gauche
-	 */
+
+	/*the patterns numbers respect a binary conversion
+	the lefter bit corresponds to up, the second left then down and right
+	Example : 1101 has just one wall at left*/
 	public void LayoutKeys(GameObject[] keys,int nbkeys){
 		for (int i = 0; i < nbkeys; i++) {
 			Instantiate(keys[0], new Vector2(1,i), Quaternion.identity);
@@ -121,9 +120,9 @@ public class MazeGen : MonoBehaviour {
 		
 		return r;
 	}
-	
-	// créer et affiche une cellule du labyrinthe
-	private void printCell(Cell c, int x, int y){
+
+	// creates and displays a cell 
+		private void printCell(Cell c, int x, int y){
 		int folderNum = (level - 1) % 3;
 
 		int pattern = getPatternFromCell(c);
@@ -134,9 +133,9 @@ public class MazeGen : MonoBehaviour {
 		newCell.parent = GameObject.Find("Maze").transform;
 	}
 	
-	private bool[,] isVisited; // Les variables statiques n'existant pas en c# on utilise un attribut.
+	private bool[,] isVisited; 
 	private void generateMaze(){
-		// on initialise les donnees de l'algorithme
+		// algorithm data initialisation
 		isVisited = new bool[width, height];
 		
 		// on lance la generation
@@ -144,20 +143,20 @@ public class MazeGen : MonoBehaviour {
 	}
 	
 	private void recursiveGeneration(int x, int y){
-		// on marque la case courante comme visitee
+		// current cell is visited
 		isVisited [x, y] = true;
-		
-		/* Generation de l'ordre de visite des cases voisines dans 
-		 * un tableau de taille 4 (nombre de direction possible
-		 * Pour cela on creer le tableau et on le melange.
-		 * Les directions sont 0 haut, 1 gauche, 2 bas, 3 droite
-		 */
-		// on initialise le tableau
+
+		/*genration of order of visit of the neighbour cell
+		in a table of 4 raw and lines
+		create a table and mix
+		the directions are 0 up, 1 left, 2 bottom, 3 right */
+		//table initialisation
 		int[] order = new int[4];
 		for (int i = 0; i < 4; i++)
 			order [i] = i;
-		
-		// Puis on mélange l'ordre de visite 3 fois
+
+		// mix the order of visit 3 times
+
 		for (int j = 0; j < 3; j++) {
 			for (int i = 0; i < 4; i++) {
 				int tmp, n = Random.Range (0, 4);
@@ -167,32 +166,31 @@ public class MazeGen : MonoBehaviour {
 			}
 		}
 		
-		// On initialise un booleen qui permettra de savoir si on doit ajouter la case au cul de sac
 		bool isDeadEnd = true;
-		// Et enfin, on effectue les visites selon l'ordre defini precedemment
+		// visit by order defined previously
 		for (int i = 0; i < 4; i++) {
-			// haut
+			// up
 			if (order [i] == 0 && y < (height - 1) && (!isVisited [x, y + 1])) {
 				mazeData [x, y].up = true;
 				mazeData [x, y + 1].down = true;
 				isDeadEnd = false;
 				recursiveGeneration (x, y + 1);
 			}
-			// gauche
+			// left
 			else if (order [i] == 1 && x > 0 && (!isVisited [x - 1, y])) {
 				mazeData [x, y].left = true;
 				mazeData [x - 1, y].right = true;
 				isDeadEnd = false;
 				recursiveGeneration (x - 1, y);
 			}
-			// bas
+			// bottom
 			else if (order [i] == 2 && y > 0 && (!isVisited [x, y - 1])) {
 				mazeData [x, y].down = true;
 				mazeData [x, y - 1].up = true;
 				isDeadEnd = false;
 				recursiveGeneration (x, y - 1);
 			}
-			// droite
+			// right
 			else if (order [i] == 3 && x < (width - 1) && (!isVisited [x + 1, y])) {
 				mazeData [x, y].right = true;
 				mazeData [x + 1, y].left = true;
