@@ -210,6 +210,7 @@ public class Questionnaire : MonoBehaviour{
 
     public void setAnswer(bool answer)
     {
+        hasAnswered = true;
         isAnswerRight = answer;
     }
 
