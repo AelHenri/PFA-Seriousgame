@@ -27,22 +27,34 @@ public class Navigator : MonoBehaviour {
     }
 
 
-
-
 	
 	void Update () {
         //Verifier les input du joueur
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("menu loaded: " + GameState.pauseMenuLoaded);
-            if (GameState.pauseMenuLoaded == 0)
-            {
-                SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
-                GameState.pauseMenuLoaded = 1;
-            }
+            pauseGame();
         }
-
+#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+        if (Input.GetKeyDown(KeyCode.Menu))
+        {
+            pauseGame();
+        }
+#endif
     }
-
+   void pauseGame()
+    {
+        Debug.Log("menu loaded: " + GameState.pauseMenuLoaded);
+        if (GameState.pauseMenuLoaded == 0)
+        {
+            SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+            GameState.pauseMenuLoaded = 1;
+        }
+    }
+   void OnApplicationPause(bool pauseStatus)
+    {
+        if(pauseStatus)
+            pauseGame();    
+    }
 
 }

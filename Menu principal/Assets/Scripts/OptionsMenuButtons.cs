@@ -14,10 +14,17 @@ public class OptionsMenuButtons : MonoBehaviour
 
     void Update()
     {
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape) && GameState.pauseMenuLoaded == 2)
         {
             LoadOnClick(3);//Reprendre la partie
         }
+#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+        if (Input.GetKeyDown(KeyCode.Menu) && GameState.pauseMenuLoaded == 2)
+        {
+            LoadOnClick(3);//Reprendre la partie
+        }
+#endif
     }
 
     public void LoadOnClick(int optionsNb)
