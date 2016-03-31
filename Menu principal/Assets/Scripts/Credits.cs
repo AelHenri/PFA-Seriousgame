@@ -54,7 +54,7 @@ Une idée originale de
     Grelet Léo, 
     Le Moigne Yves,
     Montaigu Thomas,
-    Rakotosaona Lalatiana,
+    Rakotosaona Lalatiana Marie-Julie,
     Toussaint Henri
 
 Jeu narratif:
@@ -69,7 +69,7 @@ Jeu narratif:
 Jeu de labyrinthe:
     Réalisation:
         Le Moigne Yves,
-        Rakotosaona Lalatiana
+        Rakotosaona Lalatiana Marie-Julie
 
     Design:
         Le Moigne Yves
