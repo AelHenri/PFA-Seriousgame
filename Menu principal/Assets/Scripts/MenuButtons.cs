@@ -58,7 +58,7 @@ public class MenuButtons : MonoBehaviour {
                     GameState.quitNarrative();
                     GameState.quitLabyrinth();
                     GameState.quitBoard();
-                    profileManager.saveExistingProfile(profileManager.getCurrentProfile());
+                    profileManager.saveCurrentProfile();
                         
                 }   
                 else

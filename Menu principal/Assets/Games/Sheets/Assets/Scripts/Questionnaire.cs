@@ -181,7 +181,7 @@ public class Questionnaire : MonoBehaviour{
             yield return new WaitUntil(() => this.hasAnswered);
         yield return null;
     }
-
+    
 
     public IEnumerator endQuestionnaire()
     {
@@ -256,7 +256,9 @@ public class Questionnaire : MonoBehaviour{
         }
 
         if (currentProfile != null)
+        {
             updateSheetsInfos();
+        }
         sortAllSheetList();
         changeCurrentSheet();
     }

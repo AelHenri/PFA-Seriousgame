@@ -30,25 +30,24 @@ public class ProfileManager : MonoBehaviour {
     void Start() {
         questionnaire = GameObject.Find("Navigator").GetComponent<Questionnaire>();
 
-        #if UNITY_ANDROID
-                profilesDir = Application.persistentDataPath + "/../../../../SeriousGame/Profiles";
-        #endif
-        #if UNITY_EDITOR
-                profilesDir = Application.dataPath + "/../Profiles";
-        #endif
+            #if UNITY_ANDROID
+                    profilesDir = Application.persistentDataPath + "/../../../../SeriousGame/Profiles"; //Doesn't Work, we need to enable Write Access
+            #endif
+            #if UNITY_EDITOR
+            profilesDir = Application.dataPath + "/../Profiles";
+            #endif
 
         profilesDir = Path.GetFullPath(profilesDir);
 
         
         if (!Directory.Exists(profilesDir))
         {
-            profilesPath = null;
-            profiles = null;
+            Directory.CreateDirectory(profilesDir);
         }
-     else
-        {
-            refreshProfiles();
-        }
+     
+ 
+        refreshProfiles();
+        
 
         if (profilesPath == null)
         {
@@ -108,10 +107,7 @@ public class ProfileManager : MonoBehaviour {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(path, FileMode.Open);
         Profile profile = (Profile)bf.Deserialize(file);
-        /*
-        Debug.Log("Prénom: " + profile.getFirstName() + "Nom: " + profile.getLastName());
-        Debug.Log("Sheet count: " + profile.getSheetList().Count);
-        Debug.Log(profile.getSheetList()[0]);*/
+        
         
         file.Close();
         return profile;
@@ -145,7 +141,8 @@ public class ProfileManager : MonoBehaviour {
     {
         return currentProfile;
     }
-    void OnApplicationQuit()
+
+    public void saveCurrentProfile()
     {
         if (currentProfile != null)
         {
@@ -153,4 +150,14 @@ public class ProfileManager : MonoBehaviour {
             saveExistingProfile(currentProfile);
         }
     }
+    void OnApplicationQuit()
+    {
+        saveCurrentProfile();
+    }
+     void OnApplicationPause()
+    {
+        saveCurrentProfile();
+    }
+
+
 }
