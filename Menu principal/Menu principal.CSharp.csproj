@@ -85,8 +85,6 @@
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Games\Labyrinth\Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\CameraManager.cs" />
-    <Compile Include="Assets\Games\Narrative\Assets\Scripts\ChoicesManager.cs" />
-    <Compile Include="Assets\Games\Narrative\Assets\Scripts\DialogManager.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJ.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJBehaviour.cs" />
     <Compile Include="Assets\Games\Narrative\Assets\Scripts\PNJs\Camille2.cs" />

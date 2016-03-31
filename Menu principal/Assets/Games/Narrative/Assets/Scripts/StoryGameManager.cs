@@ -42,6 +42,7 @@ public class StoryGameManager : MonoBehaviour {
     private GameObject endImage;
     private GameObject theEndHolder;
     private bool waitingForEnd = false;
+    private bool waitingForInput = false;
 
     private StoryPlayer player;
 
@@ -116,6 +117,24 @@ public class StoryGameManager : MonoBehaviour {
             }
         }
 
+        if (waitingForEnd && !messageBoxEnabled)
+        {
+
+            if (Input.anyKeyDown)
+            {
+                GameState.quitNarrative();
+
+            }
+        }
+
+        /*if (waitingForInput)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                GameState.quitNarrative();
+            }
+        }*/
+
         if (messageBoxEnabled)
         {
             
@@ -132,19 +151,7 @@ public class StoryGameManager : MonoBehaviour {
                
         }
 
-        if (waitingForEnd && !messageBoxEnabled)
-        {
-            
-            if (Input.GetMouseButton(0))
-            {
-                if (messageFinished)
-                {
-                    StopAllCoroutines();
-                    GameState.quitNarrative();
-                }
-                
-            }
-        }
+        
     }
 
     void InitCharacterDic()
@@ -232,7 +239,7 @@ public class StoryGameManager : MonoBehaviour {
 
     IEnumerator WaitForKeyDown()
     {
-        while (!Input.GetMouseButton(0))
+        while (!Input.anyKeyDown)
             yield return null;
     }
 
@@ -264,7 +271,7 @@ public class StoryGameManager : MonoBehaviour {
         StoryPlayer.paralyzed = true;
 
         theEnd.text = "The End";
-        endText.text = "Tu as finis le jeu !";
+        endText.text = "Tu as fini le jeu !";
 
         endImage.SetActive(true);
         theEndHolder.SetActive(true);

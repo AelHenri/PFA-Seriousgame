@@ -31,7 +31,6 @@ public class PNJ : MonoBehaviour {
     private BoxCollider2D boxCollider;
     private Animator animator;
     private StoryGameManager gameManager;
-    private DialogManager dialogManager;
 
     private bool isAnswering = false;
 
@@ -170,7 +169,6 @@ public class PNJ : MonoBehaviour {
 
     protected void displayDialog(int i, int j)
     {
-        Debug.Log(dialog.Length);
         DialogElements[] messages = new DialogElements[j-i];
         for (int k = 0; k< j-i; k++)
         {
